@@ -1,0 +1,21 @@
+# Exclude .vscode folder
+.vscode/
+
+# Exclude venv folder
+venv/
+
+# Exclude Django static files
+static/
+
+# Exclude Django media files
+media/
+
+# Exclude Django compiled files
+*.pyc
+*.pyo
+*.pyd
+*.pyc.*
+__pycache__/
+
+# Exclude env file
+.env
