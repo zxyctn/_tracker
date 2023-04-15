@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     "groups",
     "weekdays",
     "exercises",
+    "sets",
+    "records",
+    "fields",
 ]
 
 MIDDLEWARE = [
