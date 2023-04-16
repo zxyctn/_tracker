@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Input from './components/Input';
+import Multiselect from './components/Multiselect';
+import PasswordField from './components/PasswordField';
+import RadioGroup from './components/RadioGroup';
+import TextField from './components/TextField';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const field_options = [
+    { label: 'Weights', value: 'W' },
+    { label: 'Speed', value: 'S' },
+    { label: 'Elevation', value: 'E' },
+    { label: 'Difficulty', value: 'D' },
+  ];
+
+  const goal_options = [
+    { label: 'Reps', value: 'REP' },
+    { label: 'Duration', value: 'DUR' },
+    { label: 'Distance', value: 'DIS' },
+    { label: 'Calories', value: 'CAL' },
+  ];
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='w-screen h-screen flex justify-center items-center p-5 gap-10'>
+      <div className='grid gap-10'>
+        <Input type={false} name='fields'>
+          <Multiselect options={field_options} />
+        </Input>
+        <Input type={false} name='goal type'>
+          <RadioGroup options={goal_options} />
+        </Input>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
 
-export default App
+      <div className='grid gap-3'>
+        <Input type={true} name='username'>
+          <TextField />
+        </Input>
+        <Input type={true} name='email'>
+          <TextField type='email' />
+        </Input>
+        <Input type={true} name='password'>
+          <PasswordField />
+        </Input>
+
+        <button className='btn btn-primary text-xl'>LOGIN</button>
+      </div>
+    </div>
+  );
+};
+
+export default App;
