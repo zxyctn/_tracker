@@ -1,5 +1,6 @@
 import Input from './components/Input';
 import Multiselect from './components/Multiselect';
+import NumberField from './components/NumberField';
 import PasswordField from './components/PasswordField';
 import RadioGroup from './components/RadioGroup';
 import TextField from './components/TextField';
@@ -17,6 +18,11 @@ const App = () => {
     { label: 'Duration', value: 'DUR' },
     { label: 'Distance', value: 'DIS' },
     { label: 'Calories', value: 'CAL' },
+  ];
+
+  const speed_units = [
+    { label: 'KM/H', value: 'kph' },
+    { label: 'MPH', value: 'mph' },
   ];
 
   return (
@@ -42,6 +48,12 @@ const App = () => {
         </Input>
 
         <button className='btn btn-primary text-xl'>LOGIN</button>
+      </div>
+
+      <div className='grid gap-3'>
+        <Input type={false} name='speed'>
+          <NumberField step={0.5} units={speed_units} />
+        </Input>
       </div>
     </div>
   );

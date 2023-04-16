@@ -19,6 +19,7 @@ export type MultiselectOptionProps = {
 
 export type RadioGroupProps = {
   options: Option[];
+  layout?: string;
 };
 
 export type RadioProps = {
@@ -33,4 +34,9 @@ export type RadioCircleProps = {
 
 export type TextFieldProps = {
   type?: string;
+};
+
+export type NumberFieldProps = {
+  step: number;
+  units?: Option[];
 };

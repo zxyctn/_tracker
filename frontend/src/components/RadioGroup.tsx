@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { RadioGroupProps } from '../types';
 import Radio from './Radio';
 
-const RadioGroup = ({ options }: RadioGroupProps) => {
+const RadioGroup = ({ options, layout = 'grid' }: RadioGroupProps) => {
   const [checked, setChecked] = useState('REP');
 
   const handleChange = (option: string) => {
@@ -10,7 +10,7 @@ const RadioGroup = ({ options }: RadioGroupProps) => {
   };
 
   return (
-    <div className='grid gap-1'>
+    <div className={`${layout} gap-1`}>
       {options.map((option) => (
         <Radio
           option={option}
