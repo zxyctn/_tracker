@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { RadioGroupProps } from '../types';
 import Radio from './Radio';
 
-const RadioGroup = ({ options, layout = 'grid' }: RadioGroupProps) => {
-  const [checked, setChecked] = useState('REP');
+const RadioGroup = ({ options, initial, layout = 'grid' }: RadioGroupProps) => {
+  const [checked, setChecked] = useState(initial);
 
   const handleChange = (option: string) => {
     setChecked(option);

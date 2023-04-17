@@ -1,11 +1,10 @@
-import Input from './components/Input';
-import Multiselect from './components/Multiselect';
-import NumberField from './components/NumberField';
-import PasswordField from './components/PasswordField';
-import RadioGroup from './components/RadioGroup';
-import TextField from './components/TextField';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Logo from './components/Logo';
 
 const App = () => {
+  const [isEdit, setIsEdit] = useState(false);
+
   const field_options = [
     { label: 'Weights', value: 'W' },
     { label: 'Speed', value: 'S' },
@@ -26,13 +25,26 @@ const App = () => {
   ];
 
   return (
-    <div className='w-screen h-screen flex justify-center items-center p-5 gap-10'>
-      <div className='grid gap-10'>
+    <div className='p-5 w-screen h-screen'>
+      <div className='w-full h-full grid'>
+        <Logo isEdit={isEdit} />
+        <div className='grid justify-center h-min place-content-stretch'>
+          <Outlet />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+/*
+
+<div className='grid gap-10'>
         <Input type={false} name='fields'>
           <Multiselect options={field_options} />
         </Input>
         <Input type={false} name='goal type'>
-          <RadioGroup options={goal_options} />
+          <RadioGroup initial='REP' options={goal_options} />
         </Input>
       </div>
 
@@ -54,9 +66,8 @@ const App = () => {
         <Input type={false} name='speed'>
           <NumberField step={0.5} units={speed_units} />
         </Input>
-      </div>
-    </div>
-  );
-};
 
-export default App;
+        <Logo isEdit={false} />
+      </div>
+
+*/

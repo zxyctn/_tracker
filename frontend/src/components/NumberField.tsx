@@ -41,7 +41,7 @@ const NumberField = ({ step, units }: NumberFieldProps) => {
         </button>
       </div>
 
-      <RadioGroup options={units ?? []} layout='flex' />
+      <RadioGroup options={units ?? []} layout='flex' initial='kph' />
     </div>
   );
 };

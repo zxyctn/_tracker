@@ -19,6 +19,7 @@ export type MultiselectOptionProps = {
 
 export type RadioGroupProps = {
   options: Option[];
+  initial: string;
   layout?: string;
 };
 
@@ -39,4 +40,8 @@ export type TextFieldProps = {
 export type NumberFieldProps = {
   step: number;
   units?: Option[];
+};
+
+export type LogoProps = {
+  isEdit: boolean;
 };
