@@ -2,7 +2,21 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          100: '#ccfff0',
+          200: '#bfffec',
+          300: '#99ffe0',
+          400: '#4dffc9',
+          500: '#00FFB2',
+          600: '#00e6a0',
+          700: '#00bf86',
+          800: '#00996b',
+          900: '#007d57',
+        },
+      },
+    },
   },
   daisyui: {
     themes: [

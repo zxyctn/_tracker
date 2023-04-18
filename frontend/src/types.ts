@@ -45,3 +45,42 @@ export type NumberFieldProps = {
 export type LogoProps = {
   isEdit: boolean;
 };
+
+// Data types
+export type FieldType = {
+  field: string;
+  unit: string;
+  value: number;
+};
+
+export type SetType = {
+  id: number;
+  fields: FieldType[];
+  goal: number;
+};
+
+export type RecordType = {
+  id: number;
+  created_at: Date;
+  set: SetType;
+};
+
+export type ExerciseType = {
+  id: number;
+  name: string;
+  description: string;
+  sets: SetType[];
+  history: RecordType[];
+};
+
+export type GroupType = {
+  id: number;
+  name: string;
+  exercises: ExerciseType[];
+};
+
+export type WeekdayType = {
+  day: string;
+  groups: GroupType[];
+  active: boolean;
+};

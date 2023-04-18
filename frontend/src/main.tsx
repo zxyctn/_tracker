@@ -6,6 +6,8 @@ import App from './App';
 import Error from './routes/Error';
 import Login from './routes/Login';
 import Register from './routes/Register';
+import Weekdays from './routes/Weekdays';
+import Weekday from './routes/Weekday';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +15,16 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <Error />,
     children: [
+      {
+        path: '/',
+        element: <Weekdays />,
+        children: [
+          {
+            path: ':weekday',
+            element: <Weekday />,
+          },
+        ],
+      },
       {
         path: 'login',
         element: <Login />,
