@@ -3,7 +3,7 @@ import TextField from '../components/TextField';
 
 const Login = () => {
   return (
-    <form className='grid gap-3'>
+    <form className='grid gap-3 w-max'>
       <Input type={true} name='username'>
         <TextField />
       </Input>

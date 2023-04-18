@@ -26,10 +26,10 @@ const App = () => {
   // ];
 
   return (
-    <div className='p-5 w-screen h-screen'>
-      <div className='w-full h-full grid'>
+    <div className='w-screen h-screen'>
+      <div className='w-full h-full grid items-center justify-center'>
         <Logo isEdit={isEdit} />
-        <div className='grid justify-center h-min w-full'>
+        <div className='flex justify-center h-min w-screen sm:w-full p-5'>
           <Outlet />
         </div>
         <ActionButton />

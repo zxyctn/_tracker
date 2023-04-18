@@ -6,7 +6,7 @@ const Logo = ({ isEdit }: LogoProps) => {
     <button
       className={`btn ${
         isEdit ? 'btn-secondary' : 'btn-primary'
-      } text-xl w-min lowercase rounded-none rounded-tl-xl rounded-br-xl`}
+      } text-xl w-min lowercase rounded-none rounded-tl-xl rounded-br-xl fixed top-5 left-5`}
     >
       <Link to='/'>_tracker</Link>
     </button>
