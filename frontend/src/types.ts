@@ -48,7 +48,7 @@ export type LogoProps = {
 
 // Data types
 export type FieldType = {
-  field: string;
+  type: string;
   unit: string;
   value: number;
 };
@@ -56,6 +56,8 @@ export type FieldType = {
 export type SetType = {
   id: number;
   fields: FieldType[];
+  type: string;
+  unit: string | null;
   goal: number;
 };
 
@@ -69,18 +71,19 @@ export type ExerciseType = {
   id: number;
   name: string;
   description: string;
-  sets: SetType[];
-  history: RecordType[];
+  sets: number[]; // Set IDs
+  history: number[]; // Record IDs
 };
 
 export type GroupType = {
   id: number;
   name: string;
-  exercises: ExerciseType[];
+  exercises: number[]; // Exercise IDs
 };
 
-export type WeekdayType = {
-  day: string;
-  groups: GroupType[];
-  active: boolean;
+export type WeekdaysType = {
+  [key: string]: {
+    groups: number[]; // Group IDs
+    active: boolean;
+  };
 };
