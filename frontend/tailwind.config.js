@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
+        dark: {
           100: '#ccfff0',
           200: '#bfffec',
           300: '#99ffe0',
@@ -14,6 +14,17 @@ export default {
           700: '#00bf86',
           800: '#00996b',
           900: '#007d57',
+        },
+        light: {
+          100: '#dfccff',
+          200: '#d8bfff',
+          300: '#c099ff',
+          400: '#904dff',
+          500: '#6100FF',
+          600: '#5700e6',
+          700: '#4900bf',
+          800: '#3a0099',
+          900: '#30007d',
         },
       },
     },
@@ -40,4 +51,5 @@ export default {
     ],
   },
   plugins: [require('daisyui')],
+  darkMode: 'class',
 };
