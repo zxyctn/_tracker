@@ -1,15 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
+import { WeekdaysType } from '../types';
 
 const Weekdays = () => {
-  const weekdays = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ];
+  const weekdays: WeekdaysType = useLoaderData() as WeekdaysType;
 
   const textColors = [
     'text-light-200 dark:text-dark-200',
@@ -23,7 +16,7 @@ const Weekdays = () => {
 
   return (
     <div className='grid gap-1 w-full'>
-      {weekdays.map((weekday, index) => (
+      {Object.keys(weekdays).map((weekday, index) => (
         <button
           className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl ${textColors[index]}`}
           key={index}

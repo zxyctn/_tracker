@@ -81,9 +81,12 @@ export type GroupType = {
   exercises: number[]; // Exercise IDs
 };
 
+export type WeekdayType = {
+  groups: number[]; // Group IDs
+  active: boolean;
+  day: string;
+};
+
 export type WeekdaysType = {
-  [key: string]: {
-    groups: number[]; // Group IDs
-    active: boolean;
-  };
+  [key: string]: WeekdayType;
 };

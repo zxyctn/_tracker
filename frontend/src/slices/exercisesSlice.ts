@@ -1,9 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ExerciseType } from '../types';
 
+const localStorageData = window?.localStorage?.getItem('exercises');
+const initialState = localStorageData
+  ? (JSON.parse(localStorageData) as ExerciseType[])
+  : <ExerciseType[]>[];
+window.localStorage.setItem('exercises', JSON.stringify(initialState));
+
 export const exercisesSlice = createSlice({
   name: 'exercises',
-  initialState: <ExerciseType[]>[],
+  initialState: initialState,
   reducers: {
     add: (
       state,
@@ -16,6 +22,7 @@ export const exercisesSlice = createSlice({
         }
         return exercise;
       });
+      window.localStorage.setItem('exercises', JSON.stringify(state));
     },
     remove: (
       state,
@@ -29,7 +36,7 @@ export const exercisesSlice = createSlice({
         }
         return exercise;
       });
-      return state;
+      window.localStorage.setItem('exercises', JSON.stringify(state));
     },
     edit: (
       state,
@@ -41,6 +48,7 @@ export const exercisesSlice = createSlice({
         }
         return exercise;
       });
+      window.localStorage.setItem('exercises', JSON.stringify(state));
     },
   },
 });

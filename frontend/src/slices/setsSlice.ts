@@ -1,9 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FieldType, SetType } from '../types';
 
+const localStorageData = window?.localStorage?.getItem('sets');
+const initialState = localStorageData
+  ? (JSON.parse(localStorageData) as SetType[])
+  : <SetType[]>[];
+window.localStorage.setItem('sets', JSON.stringify(initialState));
+
 export const setsSlice = createSlice({
   name: 'sets',
-  initialState: <SetType[]>[],
+  initialState: initialState,
   reducers: {
     addField: (
       state,
@@ -15,6 +21,7 @@ export const setsSlice = createSlice({
         }
         return set;
       });
+      window.localStorage.setItem('sets', JSON.stringify(state));
     },
     removeField: (
       state,
@@ -28,6 +35,7 @@ export const setsSlice = createSlice({
         }
         return set;
       });
+      window.localStorage.setItem('sets', JSON.stringify(state));
     },
     editField: (
       state,
@@ -44,6 +52,7 @@ export const setsSlice = createSlice({
         }
         return set;
       });
+      window.localStorage.setItem('sets', JSON.stringify(state));
     },
     setType: (state, action: PayloadAction<{ set: number; type: string }>) => {
       state = state.map((set) => {
@@ -60,6 +69,7 @@ export const setsSlice = createSlice({
         }
         return set;
       });
+      window.localStorage.setItem('sets', JSON.stringify(state));
     },
     setGoal: (state, action: PayloadAction<{ set: number; goal: number }>) => {
       state = state.map((set) => {
@@ -68,6 +78,7 @@ export const setsSlice = createSlice({
         }
         return set;
       });
+      window.localStorage.setItem('sets', JSON.stringify(state));
     },
   },
 });

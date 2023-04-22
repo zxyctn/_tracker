@@ -1,7 +1,10 @@
 import { useLoaderData } from 'react-router-dom';
+import { WeekdayType } from '../types';
 
 const Weekday = () => {
-  return <div>Weekday</div>;
+  const weekday = useLoaderData() as WeekdayType;
+
+  return <div>{weekday.day}</div>;
 };
 
 export default Weekday;
