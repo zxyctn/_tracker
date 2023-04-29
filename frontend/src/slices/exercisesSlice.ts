@@ -1,10 +1,33 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ExerciseType } from '../types';
+import setsSlice, { deactivate } from './setsSlice';
 
 const localStorageData = window?.localStorage?.getItem('exercises');
 const initialState = localStorageData
   ? (JSON.parse(localStorageData) as ExerciseType[])
-  : <ExerciseType[]>[];
+  : <ExerciseType[]>[
+      {
+        id: 1,
+        name: 'Bench press',
+        description: 'Bench press description',
+        sets: [1],
+        history: [1],
+      },
+      {
+        id: 2,
+        name: 'Dumbbell incline bench press',
+        description: 'Dumbbell incline bench press description',
+        sets: [2],
+        history: [2],
+      },
+      {
+        id: 3,
+        name: 'Incline dumbbell flyes',
+        description: 'Incline dumbbell flyes description',
+        sets: [3],
+        history: [3],
+      },
+    ];
 window.localStorage.setItem('exercises', JSON.stringify(initialState));
 
 export const exercisesSlice = createSlice({
@@ -33,6 +56,10 @@ export const exercisesSlice = createSlice({
           exercise.sets = exercise.sets.filter(
             (set) => set !== action.payload.set
           );
+          const set = exercise.sets.find((set) => set === action.payload.set);
+          if (!set) {
+            deactivate({ id: action.payload.set });
+          }
         }
         return exercise;
       });

@@ -16,7 +16,7 @@ const initialState = localStorageData
   ? (JSON.parse(localStorageData) as WeekdaysType)
   : weekdays.reduce((acc: WeekdaysType, day: string) => {
       acc[day] = {
-        groups: [],
+        groups: [1],
         active: true,
         day: day,
       };

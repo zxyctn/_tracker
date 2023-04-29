@@ -4,13 +4,74 @@ import { FieldType, SetType } from '../types';
 const localStorageData = window?.localStorage?.getItem('sets');
 const initialState = localStorageData
   ? (JSON.parse(localStorageData) as SetType[])
-  : <SetType[]>[];
+  : <SetType[]>[
+      {
+        id: 1,
+        fields: [
+          {
+            type: 'W',
+            unit: 'KG',
+            value: 10,
+          },
+        ],
+        type: 'REP',
+        unit: null,
+        goal: 10,
+        active: true,
+      },
+      {
+        id: 2,
+        fields: [
+          {
+            type: 'W',
+            unit: 'KG',
+            value: 12,
+          },
+        ],
+        type: 'REP',
+        unit: null,
+        goal: 12,
+        active: true,
+      },
+      {
+        id: 3,
+        fields: [
+          {
+            type: 'W',
+            unit: 'KG',
+            value: 8,
+          },
+        ],
+        type: 'REP',
+        unit: null,
+        goal: 12,
+        active: true,
+      },
+    ];
 window.localStorage.setItem('sets', JSON.stringify(initialState));
 
 export const setsSlice = createSlice({
   name: 'sets',
   initialState: initialState,
   reducers: {
+    activate: (state, action: PayloadAction<{ id: number }>) => {
+      state = state.map((set) => {
+        if (set.id === action.payload.id) {
+          set.active = true;
+        }
+        return set;
+      });
+      window.localStorage.setItem('sets', JSON.stringify(state));
+    },
+    deactivate: (state, action: PayloadAction<{ id: number }>) => {
+      state = state.map((set) => {
+        if (set.id === action.payload.id) {
+          set.active = false;
+        }
+        return set;
+      });
+      window.localStorage.setItem('sets', JSON.stringify(state));
+    },
     addField: (
       state,
       action: PayloadAction<{ set: number; field: FieldType }>
@@ -83,7 +144,15 @@ export const setsSlice = createSlice({
   },
 });
 
-export const { addField, removeField, editField, setType, setUnit, setGoal } =
-  setsSlice.actions;
+export const {
+  activate,
+  deactivate,
+  addField,
+  removeField,
+  editField,
+  setType,
+  setUnit,
+  setGoal,
+} = setsSlice.actions;
 
 export default setsSlice.reducer;

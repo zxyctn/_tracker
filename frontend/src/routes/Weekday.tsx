@@ -1,10 +1,31 @@
-import { useLoaderData } from 'react-router-dom';
-import { WeekdayType } from '../types';
+import { Link, useLoaderData, useMatches } from 'react-router-dom';
+import { GroupType, WeekdayType } from '../types';
+import { getTextColors } from '../shared';
 
 const Weekday = () => {
-  const weekday = useLoaderData() as WeekdayType;
+  const { data, groups } = useLoaderData() as {
+    data: WeekdayType;
+    groups: GroupType[];
+  };
 
-  return <div>{weekday.day}</div>;
+  const textColors = getTextColors(groups.length);
+
+  return (
+    <>
+      {data.groups.length > 0 ? (
+        groups.map((group, index) => (
+          <button
+            className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl ${textColors[index]}`}
+            key={index}
+          >
+            <Link to={`groups/${group.id}`}>{group.name}</Link>
+          </button>
+        ))
+      ) : (
+        <h1>...</h1>
+      )}
+    </>
+  );
 };
 
 export default Weekday;

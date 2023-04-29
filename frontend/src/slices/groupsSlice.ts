@@ -4,7 +4,13 @@ import { GroupType } from '../types';
 const localStorageData = window?.localStorage?.getItem('groups');
 const initialState = localStorageData
   ? (JSON.parse(localStorageData) as GroupType[])
-  : <GroupType[]>[];
+  : <GroupType[]>[
+      {
+        id: 1,
+        name: 'Chest',
+        exercises: [1, 2, 3],
+      },
+    ];
 window.localStorage.setItem('groups', JSON.stringify(initialState));
 
 export const groupsSlice = createSlice({

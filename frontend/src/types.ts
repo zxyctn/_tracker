@@ -44,6 +44,7 @@ export type NumberFieldProps = {
 
 export type LogoProps = {
   isEdit: boolean;
+  closeMenu: () => void;
 };
 
 // Data types
@@ -59,12 +60,13 @@ export type SetType = {
   type: string;
   unit: string | null;
   goal: number;
+  active: boolean;
 };
 
 export type RecordType = {
   id: number;
   created_at: Date;
-  set: SetType;
+  set: number;
 };
 
 export type ExerciseType = {
@@ -89,4 +91,32 @@ export type WeekdayType = {
 
 export type WeekdaysType = {
   [key: string]: WeekdayType;
+};
+
+export type UserType = {
+  id: number;
+  username: string;
+  email: string;
+};
+
+export type BreadcumbType = {
+  name: string;
+  path: string;
+};
+
+export type AppSliceType = {
+  filterBy: string;
+  user: null | UserType;
+  edit: boolean;
+  breadcrumbs: BreadcumbType[];
+};
+
+export type WeekdayLoaderType = {
+  data: WeekdayType;
+  groups: GroupType[];
+};
+
+export type GroupLoaderType = {
+  data: GroupType | undefined;
+  exercises: ExerciseType[];
 };
