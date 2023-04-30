@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppSliceType, BreadcumbType, UserType } from '../types';
+import { Params } from 'react-router-dom';
+import store from '../store';
 
 const localStorageData = window?.localStorage?.getItem('app');
 const initialState = localStorageData
@@ -8,7 +10,7 @@ const initialState = localStorageData
       filterBy: 'weekdays',
       user: null,
       edit: false,
-      breadcrumbs: [],
+      breadcrumbs: <BreadcumbType[]>[],
     };
 window.localStorage.setItem('app', JSON.stringify(initialState));
 
@@ -32,24 +34,10 @@ export const appSlice = createSlice({
       state.breadcrumbs = action.payload;
       window.localStorage.setItem('app', JSON.stringify(state));
     },
-    pushBreadcrumb: (state, action: PayloadAction<BreadcumbType>) => {
-      state.breadcrumbs = [...state.breadcrumbs, action.payload];
-      window.localStorage.setItem('app', JSON.stringify(state));
-    },
-    popBreadcrumb: (state) => {
-      state.breadcrumbs.pop();
-      window.localStorage.setItem('app', JSON.stringify(state));
-    },
   },
 });
 
-export const {
-  setFilterBy,
-  setUser,
-  setEdit,
-  setBreadcrumbs,
-  pushBreadcrumb,
-  popBreadcrumb,
-} = appSlice.actions;
+export const { setFilterBy, setUser, setEdit, setBreadcrumbs } =
+  appSlice.actions;
 
 export default appSlice.reducer;

@@ -10,7 +10,7 @@ const initialState = localStorageData
         id: 1,
         name: 'Bench press',
         description: 'Bench press description',
-        sets: [1],
+        sets: [1, 4, 5, 6],
         history: [1],
       },
       {

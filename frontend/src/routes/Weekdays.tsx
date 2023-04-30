@@ -14,7 +14,7 @@ const Weekdays = () => {
             className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl ${textColors[index]}`}
             key={index}
           >
-            <Link to={`/weekdays/${weekday.toLowerCase()}`}>{weekday}</Link>
+            <Link to={`/d/${weekday.toLowerCase()}`}>{weekday}</Link>
           </button>
         ))
       ) : (

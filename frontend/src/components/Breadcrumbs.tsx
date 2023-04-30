@@ -13,10 +13,6 @@ const Breadcrumbs = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(app.breadcrumbs);
-  }, [app.breadcrumbs]);
-
   return (
     <div className='absolute w-screen overflow-auto px-5 mt-20'>
       <div className='flex gap-1'>
@@ -24,7 +20,7 @@ const Breadcrumbs = () => {
           <Link
             to={breadcrumb.path}
             key={index}
-            className={`flex gap-1 font-medium whitespace-nowrap ${
+            className={`flex gap-1 font-semibold whitespace-nowrap ${
               index === app.breadcrumbs.length - 1
                 ? 'text-primary'
                 : 'text-primary/40'

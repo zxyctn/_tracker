@@ -120,3 +120,8 @@ export type GroupLoaderType = {
   data: GroupType | undefined;
   exercises: ExerciseType[];
 };
+
+export type ExerciseLoaderType = {
+  data: ExerciseType | undefined;
+  sets: SetType[];
+};

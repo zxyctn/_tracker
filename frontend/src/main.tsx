@@ -17,9 +17,10 @@ import Weekdays from './routes/Weekdays';
 import Weekday from './routes/Weekday';
 import Groups from './routes/Groups';
 import Group from './routes/Group';
-import { pushBreadcrumb, setBreadcrumbs } from './slices/appSlice';
+import { setBreadcrumbs } from './slices/appSlice';
 import Exercise from './routes/Exercise';
 import { ExerciseType } from './types';
+import { getBreadcrumbs } from './shared';
 
 export function rootLoader() {
   const { app } = store.getState();
@@ -40,42 +41,30 @@ export function groupsLoader() {
   return groups;
 }
 
-export function exerciseLoader({ params, request }: LoaderFunctionArgs) {
+export function exerciseLoader({ params }: LoaderFunctionArgs) {
   const exercise = parseInt(params.exercise as string);
-  const exerciseData = store
-    .getState()
-    .exercises.find((e) => e.id === exercise) as ExerciseType;
-
-  const { sets } = store.getState();
+  const { exercises, sets } = store.getState();
+  const exerciseData = exercises.find((e) => e.id === exercise) as ExerciseType;
   const exerciseSets = exerciseData.sets.map((set) =>
     sets.find((s) => s.id === set)
   );
 
-  store.dispatch(
-    pushBreadcrumb({
-      name: exerciseData.name,
-      path: request.url,
-    })
-  );
+  store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
 
   return {
     data: exerciseData,
-    exercises: exerciseSets,
+    sets: exerciseSets,
   };
 }
 
-export function groupLoader({ params, request }: LoaderFunctionArgs) {
+export function groupLoader({ params }: LoaderFunctionArgs) {
   const group = parseInt(params.group as string);
   const groupData = store.getState().groups.find((g) => g.id === group);
+  const groupExercises = store
+    .getState()
+    .exercises.filter((exercise) => groupData?.exercises.includes(exercise.id));
 
-  const { exercises } = store.getState();
-  const groupExercises = exercises.filter((exercise) =>
-    groupData?.exercises.includes(exercise.id)
-  );
-
-  store.dispatch(
-    pushBreadcrumb({ name: groupData?.name as string, path: request.url })
-  );
+  store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
 
   return {
     data: groupData,
@@ -83,18 +72,15 @@ export function groupLoader({ params, request }: LoaderFunctionArgs) {
   };
 }
 
-export function weekdayLoader({ params, request }: LoaderFunctionArgs) {
+export function weekdayLoader({ params }: LoaderFunctionArgs) {
   const { weekday } = params;
   const weekdayData = store.getState().weekdays[weekday as string];
 
-  const { groups } = store.getState();
-  const weekdayGroups = groups.filter((group) =>
-    weekdayData.groups.includes(group.id)
-  );
+  const weekdayGroups = store
+    .getState()
+    .groups.filter((group) => weekdayData.groups.includes(group.id));
 
-  store.dispatch(
-    pushBreadcrumb({ name: weekday as string, path: request.url })
-  );
+  store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
 
   return {
     data: weekdayData,
@@ -110,37 +96,37 @@ const router = createBrowserRouter([
     loader: rootLoader,
     children: [
       {
-        path: 'weekdays',
+        path: 'd',
         element: <Weekdays />,
         loader: weekdaysLoader,
       },
       {
-        path: 'weekdays/:weekday',
+        path: 'd/:weekday',
         loader: weekdayLoader,
         element: <Weekday />,
       },
       {
-        path: 'weekdays/:weekday/groups/:group',
+        path: 'd/:weekday/g/:group',
         loader: groupLoader,
         element: <Group />,
       },
       {
-        path: 'weekdays/:weekday/groups/:group/exercises/:exercise',
+        path: 'd/:weekday/g/:group/e/:exercise',
         loader: exerciseLoader,
         element: <Exercise />,
       },
       {
-        path: 'groups',
+        path: 'g',
         element: <Groups />,
         loader: groupsLoader,
       },
       {
-        path: 'groups/:group',
+        path: 'g/:group',
         loader: groupLoader,
         element: <Group />,
       },
       {
-        path: 'groups/:group/exercises/:exercise',
+        path: 'g/:group/e/:exercise',
         loader: exerciseLoader,
         element: <Exercise />,
       },

@@ -23,13 +23,14 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (state.user === null && location.pathname !== '/register') {
+    // TODO: change the first '!==' to '===' when the app is ready
+    if (state.user !== null && location.pathname !== '/register') {
       navigate('/login');
     } else if (location.pathname === '/') {
       if (state.filterBy === 'weekdays') {
-        navigate('/weekdays');
+        navigate('/d');
       } else {
-        navigate('/groups');
+        navigate('/g');
       }
     }
   }, [state, navigate]);

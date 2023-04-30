@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import { popBreadcrumb, pushBreadcrumb } from '../slices/appSlice';
 import { GroupLoaderType } from '../types';
 import { getTextColors } from '../shared';
 
 const Group = () => {
-  const { data, exercises } = useLoaderData() as GroupLoaderType;
+  const { exercises } = useLoaderData() as GroupLoaderType;
   const textColors = getTextColors(exercises.length);
 
   return (
@@ -16,7 +14,7 @@ const Group = () => {
             className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl ${textColors[index]}`}
             key={index}
           >
-            <Link to={`exercises/${exercise.id}`}>{exercise.name}</Link>
+            <Link to={`e/${exercise.id}`}>{exercise.name}</Link>
           </button>
         ))
       ) : (

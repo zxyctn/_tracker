@@ -16,7 +16,7 @@ const initialState = localStorageData
         ],
         type: 'REP',
         unit: null,
-        goal: 10,
+        goal: 12,
         active: true,
       },
       {
@@ -45,6 +45,48 @@ const initialState = localStorageData
         type: 'REP',
         unit: null,
         goal: 12,
+        active: true,
+      },
+      {
+        id: 4,
+        fields: [
+          {
+            type: 'W',
+            unit: 'KG',
+            value: 12,
+          },
+        ],
+        type: 'REP',
+        unit: null,
+        goal: 10,
+        active: true,
+      },
+      {
+        id: 5,
+        fields: [
+          {
+            type: 'W',
+            unit: 'KG',
+            value: 14,
+          },
+        ],
+        type: 'REP',
+        unit: null,
+        goal: 10,
+        active: true,
+      },
+      {
+        id: 6,
+        fields: [
+          {
+            type: 'W',
+            unit: 'KG',
+            value: 16,
+          },
+        ],
+        type: 'REP',
+        unit: null,
+        goal: 8,
         active: true,
       },
     ];
