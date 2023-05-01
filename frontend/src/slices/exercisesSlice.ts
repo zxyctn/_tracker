@@ -11,7 +11,7 @@ const initialState = localStorageData
         name: 'Bench press',
         description: 'Bench press description',
         sets: [1, 4, 5, 6],
-        history: [1],
+        history: [1, 4, 5, 6],
       },
       {
         id: 2,
@@ -26,6 +26,13 @@ const initialState = localStorageData
         description: 'Incline dumbbell flyes description',
         sets: [3],
         history: [3],
+      },
+      {
+        id: 4,
+        name: 'Running',
+        description: 'Running description',
+        sets: [7],
+        history: [7],
       },
     ];
 window.localStorage.setItem('exercises', JSON.stringify(initialState));

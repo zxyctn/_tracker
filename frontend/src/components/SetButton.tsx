@@ -15,12 +15,12 @@ const SetButton = ({
 
   return (
     <button
-      className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl ${text}`}
+      className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl justify-start overflow-auto ${text}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <Link to={`s/${set.id}`}>
-        <div className='flex justify-between gap-16'>
+      <Link to={`s/${set.id}`} className='w-full h-full'>
+        <div className={`flex justify-between gap-5`}>
           {set.fields.map((field) => (
             <div key={field.value} className='flex items-center gap-1'>
               <span>{field.value}</span>
@@ -31,24 +31,26 @@ const SetButton = ({
                     : `text-white dark:text-black ${bg}`
                 }  p-1 rounded-sm text-xs transition-colors duration-100 font-bold`}
               >
-                {field.unit}
+                {field.unit ? field.unit : field.type}
               </div>
             </div>
           ))}
-
-          <div className='flex items-center gap-1'>
-            <span>{set.goal}</span>
-            {set.unit && (
-              <div
-                className={`${
-                  hover
-                    ? 'bg-white dark:bg-black text-primary'
-                    : `text-white dark:text-black ${bg}`
-                }  p-1 rounded-sm text-xs transition-colors duration-100 font-bold`}
-              >
-                {set.unit}
-              </div>
-            )}
+          <div className='flex items-center gap-5 w-full'>
+            {set.fields.length && <span className=''>×</span>}
+            <span className='flex gap-1 items-center'>
+              {set.goal}
+              {(set.unit || set.type !== 'REP') && (
+                <div
+                  className={`${
+                    hover
+                      ? 'bg-white dark:bg-black text-primary'
+                      : `text-white dark:text-black ${bg}`
+                  }  p-1 rounded-sm text-xs transition-colors duration-100 font-bold h-min`}
+                >
+                  {set.unit ? set.unit : set.type !== 'REP' ? set.type : ''}
+                </div>
+              )}
+            </span>
           </div>
         </div>
       </Link>

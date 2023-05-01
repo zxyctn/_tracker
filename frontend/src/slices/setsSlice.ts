@@ -89,6 +89,25 @@ const initialState = localStorageData
         goal: 8,
         active: true,
       },
+      {
+        id: 7,
+        fields: [
+          {
+            type: 'S',
+            unit: 'KPH',
+            value: 10.0,
+          },
+          {
+            type: 'E',
+            unit: null,
+            value: 11.0,
+          },
+        ],
+        type: 'CAL',
+        unit: null,
+        goal: 150,
+        active: true,
+      },
     ];
 window.localStorage.setItem('sets', JSON.stringify(initialState));
 

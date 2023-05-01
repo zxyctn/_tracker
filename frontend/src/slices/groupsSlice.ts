@@ -10,6 +10,11 @@ const initialState = localStorageData
         name: 'Chest',
         exercises: [1, 2, 3],
       },
+      {
+        id: 2,
+        name: 'Cardio',
+        exercises: [4],
+      },
     ];
 window.localStorage.setItem('groups', JSON.stringify(initialState));
 

@@ -6,9 +6,8 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store';
-import './index.css';
 
+import './index.css';
 import App from './App';
 import Error from './routes/Error';
 import Login from './routes/Login';
@@ -17,13 +16,15 @@ import Weekdays from './routes/Weekdays';
 import Weekday from './routes/Weekday';
 import Groups from './routes/Groups';
 import Group from './routes/Group';
-import { setBreadcrumbs } from './slices/appSlice';
 import Exercise from './routes/Exercise';
-import { ExerciseType } from './types';
+import store from './store';
 import { getBreadcrumbs } from './shared';
+import { setBreadcrumbs } from './slices/appSlice';
+import { ExerciseType } from './types';
 
 export function rootLoader() {
   const { app } = store.getState();
+  store.dispatch(setBreadcrumbs([]));
   return app;
 }
 
@@ -42,8 +43,17 @@ export function groupsLoader() {
 }
 
 export function exerciseLoader({ params }: LoaderFunctionArgs) {
+  const { exercises, sets, groups } = store.getState();
+  const group = parseInt(params.group as string);
   const exercise = parseInt(params.exercise as string);
-  const { exercises, sets } = store.getState();
+
+  if (!groups.find((g) => g.id === group)?.exercises.includes(exercise)) {
+    throw new Response('Unauthorized', {
+      status: 401,
+      statusText: 'Unauthorized',
+    });
+  }
+
   const exerciseData = exercises.find((e) => e.id === exercise) as ExerciseType;
   const exerciseSets = exerciseData.sets.map((set) =>
     sets.find((s) => s.id === set)
@@ -58,11 +68,21 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
 }
 
 export function groupLoader({ params }: LoaderFunctionArgs) {
+  const { groups, exercises, weekdays } = store.getState();
+  const weekday = params.weekday as string;
   const group = parseInt(params.group as string);
-  const groupData = store.getState().groups.find((g) => g.id === group);
-  const groupExercises = store
-    .getState()
-    .exercises.filter((exercise) => groupData?.exercises.includes(exercise.id));
+
+  if (weekday && !weekdays[weekday].groups.includes(group)) {
+    throw new Response('Unauthorized', {
+      status: 401,
+      statusText: 'Unauthorized',
+    });
+  }
+
+  const groupData = groups.find((g) => g.id === group);
+  const groupExercises = exercises.filter((exercise) =>
+    groupData?.exercises.includes(exercise.id)
+  );
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
 
@@ -86,6 +106,21 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
     data: weekdayData,
     groups: weekdayGroups,
   };
+}
+
+export function loginLoader() {
+  store.dispatch(setBreadcrumbs([]));
+  return {};
+}
+
+export function logoutLoader() {
+  store.dispatch(setBreadcrumbs([]));
+  return {};
+}
+
+export function registerLoader() {
+  store.dispatch(setBreadcrumbs([]));
+  return {};
 }
 
 const router = createBrowserRouter([
@@ -132,10 +167,12 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
+        loader: loginLoader,
         element: <Login />,
       },
       {
         path: 'register',
+        loader: registerLoader,
         element: <Register />,
       },
     ],
