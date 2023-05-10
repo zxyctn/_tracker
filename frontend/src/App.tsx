@@ -36,13 +36,12 @@ const App = () => {
   }, [state, navigate]);
 
   return (
-    <div className='w-screen h-screen'>
+    <div className='block w-screen h-screen'>
+      <Logo isEdit={isEdit} closeMenu={() => setIsMenuOpen(false)} />
       <Breadcrumbs />
-      <div className='w-full h-full grid items-center justify-center'>
-        <Logo isEdit={isEdit} closeMenu={() => setIsMenuOpen(false)} />
-
-        <div className='flex justify-center h-min w-screen sm:w-full p-5'>
-          <div className='grid gap-1'>
+      <div className='grid items-center justify-center place-self-stretch h-screen'>
+        <div className='h-min justify-center sm:w-full p-5'>
+          <div className='grow grid gap-1'>
             <Outlet />
           </div>
         </div>

@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
   };
 
   return (
-    <div className='absolute w-screen overflow-auto px-5 mt-20'>
+    <div className='fixed w-screen overflow-auto px-5 mt-20'>
       <div className='flex gap-1'>
         {app.breadcrumbs.map((breadcrumb, index) => (
           <Link

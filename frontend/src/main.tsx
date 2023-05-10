@@ -17,10 +17,11 @@ import Weekday from './routes/Weekday';
 import Groups from './routes/Groups';
 import Group from './routes/Group';
 import Exercise from './routes/Exercise';
+import Set from './routes/Set';
 import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
-import { ExerciseType } from './types';
+import { ExerciseType, SetType } from './types';
 
 export function rootLoader() {
   const { app } = store.getState();
@@ -40,6 +41,27 @@ export function groupsLoader() {
 
   store.dispatch(setBreadcrumbs([]));
   return groups;
+}
+
+export function setLoader({ params }: LoaderFunctionArgs) {
+  const { groups, exercises, sets } = store.getState();
+  const set = parseInt(params.set as string);
+  const exercise = parseInt(params.exercise as string);
+
+  if (!exercises.find((e) => e.id === exercise)?.sets.includes(set)) {
+    throw new Response('Unauthorized', {
+      status: 401,
+      statusText: 'Unauthorized',
+    });
+  }
+
+  const setData = sets.find((s) => s.id === set) as SetType;
+
+  store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+
+  return {
+    data: setData,
+  };
 }
 
 export function exerciseLoader({ params }: LoaderFunctionArgs) {
@@ -68,8 +90,8 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
 }
 
 export function groupLoader({ params }: LoaderFunctionArgs) {
+  const { weekday } = params;
   const { groups, exercises, weekdays } = store.getState();
-  const weekday = params.weekday as string;
   const group = parseInt(params.group as string);
 
   if (weekday && !weekdays[weekday].groups.includes(group)) {
@@ -94,11 +116,12 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
 
 export function weekdayLoader({ params }: LoaderFunctionArgs) {
   const { weekday } = params;
-  const weekdayData = store.getState().weekdays[weekday as string];
+  const { weekdays, groups } = store.getState();
+  const weekdayData = weekdays[weekday as string];
 
-  const weekdayGroups = store
-    .getState()
-    .groups.filter((group) => weekdayData.groups.includes(group.id));
+  const weekdayGroups = groups.filter((group) =>
+    weekdayData.groups.includes(group.id)
+  );
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
 
@@ -151,6 +174,11 @@ const router = createBrowserRouter([
         element: <Exercise />,
       },
       {
+        path: 'd/:weekday/g/:group/e/:exercise/s/:set',
+        loader: setLoader,
+        element: <Set />,
+      },
+      {
         path: 'g',
         element: <Groups />,
         loader: groupsLoader,
@@ -164,6 +192,11 @@ const router = createBrowserRouter([
         path: 'g/:group/e/:exercise',
         loader: exerciseLoader,
         element: <Exercise />,
+      },
+      {
+        path: 'g/:group/e/:exercise/s/:set',
+        loader: setLoader,
+        element: <Set />,
       },
       {
         path: 'login',

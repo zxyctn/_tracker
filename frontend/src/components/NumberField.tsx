@@ -18,10 +18,10 @@ const NumberField = ({ step, units }: NumberFieldProps) => {
     <div className='grid gap-1'>
       <div className='flex gap-1'>
         <button
-          className='btn btn-secondary aspect-square p-0'
+          className='btn btn-primary aspect-square p-0'
           onClick={decrement}
         >
-          <Dash width={24} height={24} />
+          <Dash width={24} height={24} className='stroke-black' />
         </button>
         <input
           type='number'
@@ -31,13 +31,13 @@ const NumberField = ({ step, units }: NumberFieldProps) => {
           onInput={(e: ChangeEvent<HTMLInputElement>) =>
             setValue(parseFloat(e.target.value))
           }
-          className='w-min border-2 border-secondary bg-transparent rounded-md p-2 text-secondary outline-secondary text-center text-xl font-medium'
+          className='min-w-min w-11/12 bg-primary-content rounded-md text-primary outline-primary text-center text-3xl font-medium'
         />
         <button
-          className='btn btn-secondary aspect-square p-0'
+          className='btn btn-primary aspect-square p-0'
           onClick={increment}
         >
-          <Plus width={24} height={24} />
+          <Plus width={24} height={24} className='stroke-current stroke-1' />
         </button>
       </div>
 

@@ -15,7 +15,7 @@ const SetButton = ({
 
   return (
     <button
-      className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl justify-start overflow-auto ${text}`}
+      className={`h-min w-full btn btn-ghost font-bold hover:bg-primary hover:text-white dark:hover:text-black text-3xl justify-start overflow-auto ${text}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

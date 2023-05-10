@@ -5,7 +5,7 @@ const Radio = ({ option, checked, changeHandler }: RadioProps) => {
   return (
     <button
       className={`flex gap-4 btn grow font-bold justify-start text-xl ${
-        checked ? 'btn-secondary' : 'btn-ghost text-secondary'
+        checked ? 'btn-primary' : 'btn-ghost text-primary'
       }`}
       onClick={() => changeHandler(option.value)}
       key={option.label}

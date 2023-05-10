@@ -1,7 +1,7 @@
 import { Params } from 'react-router-dom';
 
 import store from './store';
-import { BreadcumbType, SetType } from './types';
+import { BreadcumbType, SetType, UnitsType } from './types';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -29,6 +29,30 @@ const bgColors = [
   'bg-light-900 dark:bg-dark-900',
 ];
 
+export const units: UnitsType = {
+  W: [
+    { label: 'KG', value: 'kg' },
+    { label: 'LBS', value: 'lb' },
+  ],
+  S: [
+    { label: 'KPH', value: 'kph' },
+    { label: 'MPH', value: 'mph' },
+  ],
+  E: [],
+  D: [],
+};
+
+export const labels: { [key: string]: string } = {
+  W: 'Weight',
+  S: 'Speed',
+  E: 'Elevation',
+  D: 'Difficulty',
+  REP: 'Reps',
+  DUR: 'Duration',
+  DIS: 'Distance',
+  CAL: 'Calories',
+};
+
 export const getTextColors = (length: number) => {
   const mid = textColors.length / 2;
   const begin = mid - length / 2;
@@ -47,10 +71,14 @@ export const getBgColors = (length: number) => {
 
 export const getSetInfo = (set: number) => {
   const { sets } = store.getState();
-  const { unit, goal, fields } = sets.find((s) => s.id === set) as SetType;
+  const { unit, goal, fields, type } = sets.find(
+    (s) => s.id === set
+  ) as SetType;
 
-  const goalStr = `${goal}${unit || ''}`;
-  const fieldsRep = fields.map((field) => `${field.value}${field.unit}`);
+  const goalStr = `${goal}${unit || (type === 'REP' ? '' : 'CAL')}`;
+  const fieldsRep = fields.map(
+    (field) => `${field.value}${field.unit ?? field.type}`
+  );
   let fieldsStr = fieldsRep.join(', ');
   fieldsStr = fieldsRep.length > 1 ? `[${fieldsStr}]` : fieldsStr;
 

@@ -111,6 +111,10 @@ export type AppSliceType = {
   breadcrumbs: BreadcumbType[];
 };
 
+export type UnitsType = {
+  [key: string]: Option[];
+};
+
 export type WeekdayLoaderType = {
   data: WeekdayType;
   groups: GroupType[];
@@ -124,4 +128,8 @@ export type GroupLoaderType = {
 export type ExerciseLoaderType = {
   data: ExerciseType | undefined;
   sets: SetType[];
+};
+
+export type SetLoaderType = {
+  data: SetType | undefined;
 };
