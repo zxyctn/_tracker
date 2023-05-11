@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
+import { setEdit } from '../slices/appSlice';
+import store from '../store';
 
 // TODO: Filter components by user authentication status
 const Menu = ({ closeMenu }: { closeMenu: () => void }) => {
+  const enableEdit = () => store.dispatch(setEdit(!store.getState().app.edit));
+  const disableEdit = () => store.dispatch(setEdit(false));
+
   const components = [
-    <Link to={'/edit'}>Edit</Link>, // TODO: Figure out how to edit the current page when edit is active
+    <div onClick={enableEdit}>Edit</div>,
     <Link to={'/preferences'}>Preferences</Link>,
     <Link to={'/stats'}>Statistics</Link>,
     'Log Out', // TODO: Add log out button with a confirm modal

@@ -10,6 +10,8 @@ import ActionButton from './components/ActionButton';
 import Menu from './components/Menu';
 import { AppSliceType } from './types';
 import Breadcrumbs from './components/Breadcrumbs';
+import store from './store';
+import { setEdit } from './slices/appSlice';
 
 const App = () => {
   const state = useLoaderData() as AppSliceType;
@@ -20,6 +22,16 @@ const App = () => {
 
   const menuToggler = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const completeEdit = () => {
+    setIsEdit(false);
+    store.dispatch(setEdit(false));
+  };
+
+  const cancelEdit = () => {
+    setIsEdit(false);
+    store.dispatch(setEdit(false));
   };
 
   useEffect(() => {
@@ -35,17 +47,27 @@ const App = () => {
     }
   }, [state, navigate]);
 
+  useEffect(() => {
+    setIsEdit(store.getState().app.edit);
+  }, [store.getState().app.edit]);
+
   return (
     <div className='block w-screen h-screen'>
       <Logo isEdit={isEdit} closeMenu={() => setIsMenuOpen(false)} />
-      <Breadcrumbs />
+      <Breadcrumbs isEdit={isEdit} />
       <div className='grid items-center justify-center place-self-stretch h-screen'>
         <div className='h-min justify-center sm:w-full p-5'>
           <div className='grow grid gap-1'>
-            <Outlet />
+            <Outlet context={isEdit} />
           </div>
         </div>
-        <ActionButton clickHandler={menuToggler} theme={isMenuOpen} />
+        <ActionButton
+          isEdit={isEdit}
+          menuClickHandler={menuToggler}
+          completeEditHandler={completeEdit}
+          cancelEditHandler={cancelEdit}
+          theme={isMenuOpen}
+        />
         {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
       </div>
     </div>

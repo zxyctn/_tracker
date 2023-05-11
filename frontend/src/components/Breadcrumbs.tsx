@@ -3,7 +3,7 @@ import store from '../store';
 import { Link } from 'react-router-dom';
 import { setBreadcrumbs } from '../slices/appSlice';
 
-const Breadcrumbs = () => {
+const Breadcrumbs = ({ isEdit }: { isEdit: boolean }) => {
   const { app } = store.getState();
 
   const handleNavigation = (breadcrumb: { name: string; path: string }) => {
