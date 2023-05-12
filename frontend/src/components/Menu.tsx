@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { setEdit } from '../slices/appSlice';
+import { setEdit } from '../slices/actionsSlice';
 import store from '../store';
 
 // TODO: Filter components by user authentication status
 const Menu = ({ closeMenu }: { closeMenu: () => void }) => {
-  const enableEdit = () => store.dispatch(setEdit(!store.getState().app.edit));
+  const enableEdit = () =>
+    store.dispatch(setEdit(!store.getState().actions.edit));
   const disableEdit = () => store.dispatch(setEdit(false));
 
   const components = [

@@ -11,11 +11,13 @@ import Menu from './components/Menu';
 import { AppSliceType } from './types';
 import Breadcrumbs from './components/Breadcrumbs';
 import store from './store';
-import { setEdit } from './slices/appSlice';
+import { setEdit, setUpdate } from './slices/actionsSlice';
 
 const App = () => {
   const state = useLoaderData() as AppSliceType;
   const [isEdit, setIsEdit] = useState(false);
+  const [canAdd, setCanAdd] = useState(false);
+  const [canUpdate, setCanUpdate] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,8 +27,8 @@ const App = () => {
   };
 
   const completeEdit = () => {
-    setIsEdit(false);
-    store.dispatch(setEdit(false));
+    setCanUpdate(true);
+    store.dispatch(setUpdate(true));
   };
 
   const cancelEdit = () => {
@@ -48,27 +50,37 @@ const App = () => {
   }, [state, navigate]);
 
   useEffect(() => {
-    setIsEdit(store.getState().app.edit);
-  }, [store.getState().app.edit]);
+    setIsEdit(store.getState().actions.edit);
+    setCanAdd(store.getState().actions.add);
+    setCanUpdate(store.getState().actions.update);
+  }, [store.getState().actions]);
 
   return (
-    <div className='block w-screen h-screen'>
-      <Logo isEdit={isEdit} closeMenu={() => setIsMenuOpen(false)} />
-      <Breadcrumbs isEdit={isEdit} />
-      <div className='grid items-center justify-center place-self-stretch h-screen'>
-        <div className='h-min justify-center sm:w-full p-5'>
+    <div className='grid place-content-stretch place-items-stretch w-screen h-screen'>
+      <div className='row-span-1'>
+        <div className='grid grid-flow-row gap-3 p-5'>
+          <Logo isEdit={isEdit} closeMenu={() => setIsMenuOpen(false)} />
+          <Breadcrumbs isEdit={isEdit} />
+        </div>
+      </div>
+
+      <div className='grid items-center justify-center row-span-auto'>
+        <div className='justify-center sm:w-full p-5'>
           <div className='grow grid gap-1'>
-            <Outlet context={isEdit} />
+            <Outlet context={[isEdit, canUpdate]} />
           </div>
         </div>
+      </div>
+      {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
+      <div className='row-span-1 place-self-end'>
         <ActionButton
           isEdit={isEdit}
+          canAdd={canAdd}
           menuClickHandler={menuToggler}
           completeEditHandler={completeEdit}
           cancelEditHandler={cancelEdit}
           theme={isMenuOpen}
         />
-        {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
       </div>
     </div>
   );
