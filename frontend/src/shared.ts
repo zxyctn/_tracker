@@ -1,7 +1,7 @@
 import { Params } from 'react-router-dom';
 
 import store from './store';
-import { BreadcumbType, SetType, UnitsType } from './types';
+import { BreadcumbType, SetComponentProps, SetType, UnitsType } from './types';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -31,12 +31,12 @@ const bgColors = [
 
 export const units: UnitsType = {
   W: [
-    { label: 'KG', value: 'kg' },
-    { label: 'LBS', value: 'lb' },
+    { label: 'KG', value: 'KG' },
+    { label: 'LBS', value: 'LBS' },
   ],
   S: [
-    { label: 'KPH', value: 'kph' },
-    { label: 'MPH', value: 'mph' },
+    { label: 'KPH', value: 'KPH' },
+    { label: 'MPH', value: 'MPH' },
   ],
   E: [],
   D: [],
@@ -71,11 +71,11 @@ export const getBgColors = (length: number) => {
 
 export const getSetInfo = (set: number) => {
   const { sets } = store.getState();
-  const { unit, goal, fields, type } = sets.find(
-    (s) => s.id === set
-  ) as SetType;
+  const { goal, fields } = sets.find((s) => s.id === set) as SetType;
 
-  const goalStr = `${goal}${unit || (type === 'REP' ? '' : 'CAL')}`;
+  const goalStr = `${goal.value}${
+    goal.unit || (goal.type === 'REP' ? '' : 'CAL')
+  }`;
   const fieldsRep = fields.map(
     (field) => `${field.value}${field.unit ?? field.type}`
   );
@@ -118,3 +118,10 @@ export const getBreadcrumbs = (params: Params) => {
 
   return breadcrumbs;
 };
+
+export const setBtnClass = ({ hover, selected, edit, bg }: SetComponentProps) =>
+  `setBtn ${
+    hover || (selected && !edit)
+      ? `bg-white dark:bg-black ${edit ? 'text-secondary' : 'text-primary'}`
+      : `text-white dark:text-black ${edit ? 'bg-secondary' : bg}`
+  }`;
