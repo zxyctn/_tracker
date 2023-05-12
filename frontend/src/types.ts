@@ -21,12 +21,14 @@ export type RadioGroupProps = {
   options: Option[];
   initial: string;
   layout?: string;
+  edit: boolean;
 };
 
 export type RadioProps = {
   option: Option;
   checked: boolean;
   changeHandler: (option: string) => void;
+  edit: boolean;
 };
 
 export type RadioCircleProps = {
@@ -39,12 +41,38 @@ export type TextFieldProps = {
 
 export type NumberFieldProps = {
   step: number;
-  units?: Option[];
+  edit: boolean;
+  field: FieldType;
+  onChange: (field: FieldType) => void;
 };
 
 export type LogoProps = {
   isEdit: boolean;
   closeMenu: () => void;
+};
+
+export type ActionButtonProps = {
+  menuClickHandler: () => void;
+  completeEditHandler: () => void;
+  cancelEditHandler: () => void;
+  theme: boolean;
+  isEdit: boolean;
+  canAdd: boolean;
+};
+
+export type SetButtonProps = {
+  set: SetType;
+  bg: string;
+  text: string;
+  edit: boolean;
+};
+
+export type SetComponentProps = {
+  set: SetType;
+  hover: boolean;
+  selected: boolean;
+  edit: boolean;
+  bg: string;
 };
 
 // Data types
@@ -57,9 +85,7 @@ export type FieldType = {
 export type SetType = {
   id: number;
   fields: FieldType[];
-  type: string;
-  unit: string | null;
-  goal: number;
+  goal: FieldType;
   active: boolean;
 };
 
@@ -107,8 +133,13 @@ export type BreadcumbType = {
 export type AppSliceType = {
   filterBy: string;
   user: null | UserType;
-  edit: boolean;
   breadcrumbs: BreadcumbType[];
+};
+
+export type ActionsSliceType = {
+  edit: boolean;
+  add: boolean;
+  update: boolean;
 };
 
 export type UnitsType = {
