@@ -2,46 +2,69 @@ import { ChangeEvent, useState } from 'react';
 import { Dash, Plus } from 'react-bootstrap-icons';
 import { NumberFieldProps } from '../types';
 import RadioGroup from './RadioGroup';
+import { units } from '../shared';
 
-const NumberField = ({ step, units }: NumberFieldProps) => {
-  const [value, setValue] = useState(0.0);
+const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
+  const [value, setValue] = useState(field.value);
+  const [updatedField, setUpdatedField] = useState(field);
 
   const increment = () => {
-    setValue((current) => current + step);
+    edit && setValue((current) => current + step);
+    setUpdatedField(() => {
+      const updated = { ...field, value: value + step };
+      onChange(updated);
+      return updated;
+    });
   };
 
   const decrement = () => {
-    setValue((current) => current - step);
+    edit && setValue((current) => current - step);
+    setUpdatedField(() => {
+      const updated = { ...field, value: value - step };
+      onChange(updated);
+      return updated;
+    });
   };
 
   return (
     <div className='grid gap-1'>
-      <div className='flex gap-1'>
+      <div className='flex gap-1 w-full'>
         <button
-          className='btn btn-primary aspect-square p-0'
+          className={`btn aspect-square p-0 ${
+            edit ? 'btn-secondary' : 'btn-primary'
+          }`}
           onClick={decrement}
         >
-          <Dash width={24} height={24} className='stroke-black' />
+          <Dash width={24} height={24} className='stroke-current' />
         </button>
         <input
           type='number'
           step={0.5}
           min={0}
+          max={9999}
           value={value}
           onInput={(e: ChangeEvent<HTMLInputElement>) =>
             setValue(parseFloat(e.target.value))
           }
-          className='min-w-min w-11/12 bg-primary-content rounded-md text-primary outline-primary text-center text-3xl font-medium'
+          className={edit ? 'editNumberField gorw' : 'viewNumberField grow'}
+          disabled={!edit}
         />
         <button
-          className='btn btn-primary aspect-square p-0'
+          className={`btn aspect-square p-0 ${
+            edit ? 'btn-secondary' : 'btn-primary'
+          }`}
           onClick={increment}
         >
-          <Plus width={24} height={24} className='stroke-current stroke-1' />
+          <Plus width={24} height={24} className='stroke-current' />
         </button>
       </div>
 
-      <RadioGroup options={units ?? []} layout='flex' initial='kph' />
+      <RadioGroup
+        options={units[field.type] ?? []}
+        layout='flex'
+        initial={field.unit}
+        edit={edit}
+      />
     </div>
   );
 };

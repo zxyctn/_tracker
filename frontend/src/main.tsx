@@ -21,11 +21,13 @@ import Set from './routes/Set';
 import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
+import { setAdd } from './slices/actionsSlice';
 import { ExerciseType, SetType } from './types';
 
 export function rootLoader() {
   const { app } = store.getState();
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(setAdd(false));
   return app;
 }
 
@@ -33,6 +35,7 @@ export function weekdaysLoader() {
   const { weekdays } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(setAdd(false));
   return weekdays;
 }
 
@@ -40,11 +43,12 @@ export function groupsLoader() {
   const { groups } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(setAdd(true));
   return groups;
 }
 
 export function setLoader({ params }: LoaderFunctionArgs) {
-  const { groups, exercises, sets } = store.getState();
+  const { exercises, sets, app } = store.getState();
   const set = parseInt(params.set as string);
   const exercise = parseInt(params.exercise as string);
 
@@ -58,6 +62,7 @@ export function setLoader({ params }: LoaderFunctionArgs) {
   const setData = sets.find((s) => s.id === set) as SetType;
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setAdd(false));
 
   return {
     data: setData,
@@ -82,6 +87,7 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
   );
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setAdd(true));
 
   return {
     data: exerciseData,
@@ -107,6 +113,7 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
   );
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setAdd(true));
 
   return {
     data: groupData,
@@ -124,6 +131,7 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
   );
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setAdd(true));
 
   return {
     data: weekdayData,
