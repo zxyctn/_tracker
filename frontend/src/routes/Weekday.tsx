@@ -14,10 +14,7 @@ const Weekday = () => {
     <>
       {data.groups.length > 0 ? (
         groups.map((group, index) => (
-          <button
-            className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl min-w-full ${textColors[index]}`}
-            key={index}
-          >
+          <button className={`coloredBtn ${textColors[index]}`} key={index}>
             <Link to={`g/${group.id}`}>{group.name}</Link>
           </button>
         ))

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import store from '../store';
 import { Link } from 'react-router-dom';
 import { setBreadcrumbs } from '../slices/appSlice';
@@ -14,16 +13,16 @@ const Breadcrumbs = ({ isEdit }: { isEdit: boolean }) => {
   };
 
   return (
-    <div className='fixed w-screen overflow-auto px-5 mt-20'>
+    <div className='w-full overflow-auto'>
       <div className='flex gap-1'>
         {app.breadcrumbs.map((breadcrumb, index) => (
           <Link
             to={breadcrumb.path}
             key={index}
-            className={`flex gap-1 font-semibold whitespace-nowrap ${
+            className={`flex gap-1 font-semibold whitespace-nowrap transition-all ease-linear duration-300 ${
               index === app.breadcrumbs.length - 1
-                ? 'text-primary'
-                : 'text-primary/40'
+                ? `${isEdit ? 'text-secondary' : 'text-primary'}`
+                : `${isEdit ? 'text-secondary/40' : 'text-primary/40'}`
             }`}
             onClick={() => handleNavigation(breadcrumb)}
           >

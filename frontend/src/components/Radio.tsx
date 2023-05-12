@@ -1,13 +1,17 @@
 import { RadioProps } from '../types';
 import RadioCircle from './RadioCircle';
 
-const Radio = ({ option, checked, changeHandler }: RadioProps) => {
+const Radio = ({ option, checked, changeHandler, edit }: RadioProps) => {
   return (
     <button
       className={`flex gap-4 btn grow font-bold justify-start text-xl ${
-        checked ? 'btn-primary' : 'btn-ghost text-primary'
+        checked
+          ? edit
+            ? 'btn-secondary'
+            : 'btn-primary'
+          : `btn-ghost ${edit ? 'text-secondary' : 'text-primary'}`
       }`}
-      onClick={() => changeHandler(option.value)}
+      onClick={() => edit && changeHandler(option.value)}
       key={option.label}
     >
       <RadioCircle checked={checked} />

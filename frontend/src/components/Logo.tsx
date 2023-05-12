@@ -6,7 +6,7 @@ const Logo = ({ isEdit, closeMenu }: LogoProps) => {
     <button
       className={`btn ${
         isEdit ? 'btn-secondary' : 'btn-primary'
-      } text-xl w-min lowercase rounded-none rounded-tl-xl rounded-br-xl fixed top-5 left-5 z-50`}
+      } text-xl w-min lowercase rounded-none rounded-tl-xl rounded-br-xl  transition-all ease-linear duration-300`}
       onClick={closeMenu}
     >
       <Link to='/'>_tracker</Link>

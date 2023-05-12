@@ -10,10 +10,7 @@ const Group = () => {
     <div className='grid gap-1'>
       {exercises.length > 0 ? (
         exercises.map((exercise, index) => (
-          <button
-            className={`h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl ${textColors[index]}`}
-            key={index}
-          >
+          <button className={`coloredBtn ${textColors[index]}`} key={index}>
             <Link to={`e/${exercise.id}`}>{exercise.name}</Link>
           </button>
         ))
