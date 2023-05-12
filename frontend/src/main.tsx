@@ -48,7 +48,7 @@ export function groupsLoader() {
 }
 
 export function setLoader({ params }: LoaderFunctionArgs) {
-  const { exercises, sets, app } = store.getState();
+  const { exercises, sets } = store.getState();
   const set = parseInt(params.set as string);
   const exercise = parseInt(params.exercise as string);
 

@@ -1,4 +1,4 @@
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useLoaderData, useNavigate, useOutletContext } from 'react-router-dom';
 
 import Input from '../components/Input';
 import NumberField from '../components/NumberField';
@@ -15,6 +15,7 @@ const Set = () => {
   const { fields, goal } = data as SetType;
 
   const [updatedSet, setUpdatedSet] = useState<SetType>(data as SetType);
+  const navigate = useNavigate();
 
   const editFn = () => {
     store.dispatch(setSet(updatedSet));
