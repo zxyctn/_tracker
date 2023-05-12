@@ -3,7 +3,7 @@ import Input from '../components/Input';
 
 const Register = () => {
   return (
-    <form className='grid gap-3'>
+    <form className='grid gap-3 place-content-center place-items-center'>
       <Input type={true} name='username'>
         <TextField />
       </Input>
@@ -17,7 +17,7 @@ const Register = () => {
         <TextField type='password' />
       </Input>
 
-      <button className='btn btn-primary text-xl'>Register</button>
+      <button className='btn btn-primary text-xl w-full'>Register</button>
     </form>
   );
 };
