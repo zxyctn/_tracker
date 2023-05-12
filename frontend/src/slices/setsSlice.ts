@@ -14,9 +14,11 @@ const initialState = localStorageData
             value: 10,
           },
         ],
-        type: 'REP',
-        unit: null,
-        goal: 12,
+        goal: {
+          type: 'REP',
+          unit: '',
+          value: 12,
+        },
         active: true,
       },
       {
@@ -28,9 +30,11 @@ const initialState = localStorageData
             value: 12,
           },
         ],
-        type: 'REP',
-        unit: null,
-        goal: 12,
+        goal: {
+          type: 'REP',
+          unit: '',
+          value: 12,
+        },
         active: true,
       },
       {
@@ -42,9 +46,11 @@ const initialState = localStorageData
             value: 8,
           },
         ],
-        type: 'REP',
-        unit: null,
-        goal: 12,
+        goal: {
+          type: 'REP',
+          unit: '',
+          value: 12,
+        },
         active: true,
       },
       {
@@ -56,9 +62,11 @@ const initialState = localStorageData
             value: 12,
           },
         ],
-        type: 'REP',
-        unit: null,
-        goal: 10,
+        goal: {
+          type: 'REP',
+          unit: '',
+          value: 10,
+        },
         active: true,
       },
       {
@@ -70,9 +78,11 @@ const initialState = localStorageData
             value: 14,
           },
         ],
-        type: 'REP',
-        unit: null,
-        goal: 10,
+        goal: {
+          type: 'REP',
+          unit: '',
+          value: 10,
+        },
         active: true,
       },
       {
@@ -84,9 +94,11 @@ const initialState = localStorageData
             value: 16,
           },
         ],
-        type: 'REP',
-        unit: null,
-        goal: 8,
+        goal: {
+          type: 'REP',
+          unit: '',
+          value: 8,
+        },
         active: true,
       },
       {
@@ -103,9 +115,11 @@ const initialState = localStorageData
             value: 11.0,
           },
         ],
-        type: 'CAL',
-        unit: null,
-        goal: 150,
+        goal: {
+          type: 'CAL',
+          unit: '',
+          value: 150,
+        },
         active: true,
       },
     ];
@@ -133,70 +147,11 @@ export const setsSlice = createSlice({
       });
       window.localStorage.setItem('sets', JSON.stringify(state));
     },
-    addField: (
-      state,
-      action: PayloadAction<{ set: number; field: FieldType }>
-    ) => {
+    setSet: (state, action: PayloadAction<SetType>) => {
+      console.log(action.payload);
       state = state.map((set) => {
-        if (set.id === action.payload.set) {
-          set.fields.push(action.payload.field);
-        }
-        return set;
-      });
-      window.localStorage.setItem('sets', JSON.stringify(state));
-    },
-    removeField: (
-      state,
-      action: PayloadAction<{ set: number; type: string }>
-    ) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.set) {
-          set.fields = set.fields.filter(
-            (field) => field.type !== action.payload.type
-          );
-        }
-        return set;
-      });
-      window.localStorage.setItem('sets', JSON.stringify(state));
-    },
-    editField: (
-      state,
-      action: PayloadAction<{ set: number; type: string; value: FieldType }>
-    ) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.set) {
-          set.fields = set.fields.map((field) => {
-            if (field.type === action.payload.type) {
-              field = action.payload.value;
-            }
-            return field;
-          });
-        }
-        return set;
-      });
-      window.localStorage.setItem('sets', JSON.stringify(state));
-    },
-    setType: (state, action: PayloadAction<{ set: number; type: string }>) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.set) {
-          set.type = action.payload.type;
-        }
-        return set;
-      });
-    },
-    setUnit: (state, action: PayloadAction<{ set: number; unit: string }>) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.set) {
-          set.unit = action.payload.unit;
-        }
-        return set;
-      });
-      window.localStorage.setItem('sets', JSON.stringify(state));
-    },
-    setGoal: (state, action: PayloadAction<{ set: number; goal: number }>) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.set) {
-          set.goal = action.payload.goal;
+        if (set.id === action.payload.id) {
+          set = action.payload;
         }
         return set;
       });
@@ -205,15 +160,6 @@ export const setsSlice = createSlice({
   },
 });
 
-export const {
-  activate,
-  deactivate,
-  addField,
-  removeField,
-  editField,
-  setType,
-  setUnit,
-  setGoal,
-} = setsSlice.actions;
+export const { activate, deactivate, setSet } = setsSlice.actions;
 
 export default setsSlice.reducer;
