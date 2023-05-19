@@ -22,6 +22,7 @@ export type RadioGroupProps = {
   initial: string;
   layout?: string;
   edit: boolean;
+  onChange: (option: string) => void;
 };
 
 export type RadioProps = {
@@ -55,6 +56,8 @@ export type ActionButtonProps = {
   menuClickHandler: () => void;
   completeEditHandler: () => void;
   cancelEditHandler: () => void;
+  enableEditHandler: () => void;
+  disableEditHandler: () => void;
   theme: boolean;
   isEdit: boolean;
   canAdd: boolean;
@@ -140,6 +143,7 @@ export type ActionsSliceType = {
   edit: boolean;
   add: boolean;
   update: boolean;
+  move: boolean;
 };
 
 export type UnitsType = {

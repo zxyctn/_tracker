@@ -6,24 +6,17 @@ import { units } from '../shared';
 
 const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
   const [value, setValue] = useState(field.value);
-  const [updatedField, setUpdatedField] = useState(field);
 
   const increment = () => {
-    edit && setValue((current) => current + step);
-    setUpdatedField(() => {
-      const updated = { ...field, value: value + step };
-      onChange(updated);
-      return updated;
-    });
+    onChange({ ...field, value: value + step });
   };
 
   const decrement = () => {
-    edit && setValue((current) => current - step);
-    setUpdatedField(() => {
-      const updated = { ...field, value: value - step };
-      onChange(updated);
-      return updated;
-    });
+    onChange({ ...field, value: value - step });
+  };
+
+  const unitChange = (unit: string) => {
+    onChange({ ...field, unit });
   };
 
   return (
@@ -61,6 +54,7 @@ const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
 
       <RadioGroup
         options={units[field.type] ?? []}
+        onChange={unitChange}
         layout='flex'
         initial={field.unit}
         edit={edit}
