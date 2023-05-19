@@ -1,27 +1,22 @@
+import { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate, useOutletContext } from 'react-router-dom';
 
 import Input from '../components/Input';
 import NumberField from '../components/NumberField';
-import { labels } from '../shared';
-import { FieldType, SetLoaderType, SetType } from '../types';
 import store from '../store';
-import { useEffect, useState } from 'react';
+import { labels } from '../shared';
 import { setSet } from '../slices/setsSlice';
 import { setEdit, setUpdate } from '../slices/actionsSlice';
+import { FieldType, SetLoaderType, SetType } from '../types';
 
 const Set = () => {
   const [edit, update] = useOutletContext() as [boolean, boolean];
+
   const { data } = useLoaderData() as SetLoaderType;
   const { fields, goal } = data as SetType;
 
   const [updatedSet, setUpdatedSet] = useState<SetType>(data as SetType);
   const navigate = useNavigate();
-
-  const editFn = () => {
-    store.dispatch(setSet(updatedSet));
-    store.dispatch(setEdit(false));
-    store.dispatch(setUpdate(false));
-  };
 
   const updateSet = (field: FieldType) => {
     const currentField = fields.find((f) => f.type === field.type);
@@ -38,11 +33,15 @@ const Set = () => {
     }
   };
 
+  const editFn = () => {
+    store.dispatch(setSet(updatedSet));
+    store.dispatch(setEdit(false));
+    store.dispatch(setUpdate(false));
+    navigate(-1);
+  };
+
   useEffect(() => {
-    console.log(edit, update);
-    if (edit && update) {
-      editFn();
-    }
+    edit && update && editFn();
   }, [update, edit]);
 
   return (

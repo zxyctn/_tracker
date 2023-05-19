@@ -22,7 +22,7 @@ import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
 import { setAdd } from './slices/actionsSlice';
-import { ExerciseType, SetType } from './types';
+import type { ExerciseType, SetType } from './types';
 
 export function rootLoader() {
   const { app } = store.getState();

@@ -29,7 +29,7 @@ const SetButton = ({ set, bg, text, edit }: SetButtonProps) => {
   };
 
   return (
-    <button
+    <div
       className={`coloredBtn ${
         selected && !edit
           ? `selectedBtn`
@@ -47,7 +47,7 @@ const SetButton = ({ set, bg, text, edit }: SetButtonProps) => {
           <SetGoal {...config} />
         </div>
       </div>
-    </button>
+    </div>
   );
 };
 
