@@ -1,7 +1,14 @@
 import { Params } from 'react-router-dom';
 
 import store from './store';
-import { BreadcumbType, SetComponentProps, SetType, UnitsType } from './types';
+import {
+  BreadcumbType,
+  ExerciseType,
+  SetComponentProps,
+  SetType,
+  UnitsType,
+} from './types';
+import { setAdd } from './slices/actionsSlice';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -51,6 +58,12 @@ export const labels: { [key: string]: string } = {
   DUR: 'Duration',
   DIS: 'Distance',
   CAL: 'Calories',
+};
+
+export const reorder = (arr: number[], oldIndex: number, newIndex: number) => {
+  const item = arr[oldIndex];
+  const newArr = arr.slice(0, oldIndex).concat(arr.slice(oldIndex + 1));
+  return newArr.slice(0, newIndex).concat([item], newArr.slice(newIndex));
 };
 
 export const getTextColors = (length: number) => {
