@@ -10,7 +10,7 @@ html {
 
 @layer components {
   .coloredBtn {
-    @apply h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl min-w-full transition-all ease-linear duration-100;
+    @apply h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl transition-all ease-linear duration-100;
   }
   .setBtn {
     @apply p-1 rounded-sm text-xs transition-colors duration-100 font-bold;
