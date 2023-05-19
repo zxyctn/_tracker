@@ -32,20 +32,24 @@ export const weekdaysSlice = createSlice({
     activate: (state, action: PayloadAction<{ day: string }>) => {
       state[action.payload.day].active = true;
       window.localStorage.setItem('weekdays', JSON.stringify(state));
+      return state;
     },
     deactivate: (state, action: PayloadAction<{ day: string }>) => {
       state[action.payload.day].active = false;
       window.localStorage.setItem('weekdays', JSON.stringify(state));
+      return state;
     },
     add: (state, action: PayloadAction<{ day: string; group: number }>) => {
       state[action.payload.day].groups.push(action.payload.group);
       window.localStorage.setItem('weekdays', JSON.stringify(state));
+      return state;
     },
     remove: (state, action: PayloadAction<{ day: string; id: number }>) => {
       state[action.payload.day].groups = state[
         action.payload.day
       ].groups.filter((group) => group !== action.payload.id);
       window.localStorage.setItem('weekdays', JSON.stringify(state));
+      return state;
     },
   },
 });

@@ -27,10 +27,12 @@ export const groupsSlice = createSlice({
     },
     add: (state, action: PayloadAction<{ group: GroupType }>) => {
       state.push(action.payload.group);
+      return state;
     },
     remove: (state, action: PayloadAction<{ id: number }>) => {
       state = state.filter((group) => group.id !== action.payload.id);
       window.localStorage.setItem('groups', JSON.stringify(state));
+      return state;
     },
     edit: (state, action: PayloadAction<{ id: number; value: GroupType }>) => {
       state = state.map((group) => {
@@ -40,6 +42,7 @@ export const groupsSlice = createSlice({
         return group;
       });
       window.localStorage.setItem('groups', JSON.stringify(state));
+      return state;
     },
     addExercise: (
       state,
@@ -52,6 +55,7 @@ export const groupsSlice = createSlice({
         return group;
       });
       window.localStorage.setItem('groups', JSON.stringify(state));
+      return state;
     },
     removeExercise: (
       state,
@@ -66,6 +70,7 @@ export const groupsSlice = createSlice({
         return group;
       });
       window.localStorage.setItem('groups', JSON.stringify(state));
+      return state;
     },
   },
 });

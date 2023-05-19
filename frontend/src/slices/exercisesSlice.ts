@@ -41,7 +41,7 @@ export const exercisesSlice = createSlice({
   name: 'exercises',
   initialState: initialState,
   reducers: {
-    add: (
+    addExercise: (
       state,
       action: PayloadAction<{ exercise: number; set: number; record: number }>
     ) => {
@@ -53,8 +53,9 @@ export const exercisesSlice = createSlice({
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
+      return state;
     },
-    remove: (
+    removeExercise: (
       state,
       action: PayloadAction<{ exercise: number; set: number }>
     ) => {
@@ -71,22 +72,25 @@ export const exercisesSlice = createSlice({
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
+      return state;
     },
-    edit: (
+    setExercise: (
       state,
       action: PayloadAction<{ exercise: number; value: ExerciseType }>
     ) => {
       state = state.map((exercise) => {
         if (exercise.id === action.payload.exercise) {
-          exercise = action.payload.value;
+          return action.payload.value;
         }
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
+      return state;
     },
   },
 });
 
-export const { add, remove, edit } = exercisesSlice.actions;
+export const { addExercise, removeExercise, setExercise } =
+  exercisesSlice.actions;
 
 export default exercisesSlice.reducer;

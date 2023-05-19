@@ -137,6 +137,7 @@ export const setsSlice = createSlice({
         return set;
       });
       window.localStorage.setItem('sets', JSON.stringify(state));
+      return state;
     },
     deactivate: (state, action: PayloadAction<{ id: number }>) => {
       state = state.map((set) => {
@@ -146,9 +147,9 @@ export const setsSlice = createSlice({
         return set;
       });
       window.localStorage.setItem('sets', JSON.stringify(state));
+      return state;
     },
     setSet: (state, action: PayloadAction<SetType>) => {
-      console.log(action.payload);
       state = state.map((set) => {
         if (set.id === action.payload.id) {
           set = action.payload;
@@ -156,6 +157,7 @@ export const setsSlice = createSlice({
         return set;
       });
       window.localStorage.setItem('sets', JSON.stringify(state));
+      return state;
     },
   },
 });
