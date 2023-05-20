@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { RadioGroupProps } from '../types';
+
 import Radio from './Radio';
+import type { RadioGroupProps } from '../types';
 
 const RadioGroup = ({
   options,

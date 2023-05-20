@@ -1,6 +1,7 @@
 import { Link, useLoaderData } from 'react-router-dom';
-import { WeekdaysType } from '../types';
+
 import { getTextColors } from '../shared';
+import type { WeekdaysType } from '../types';
 
 const Weekdays = () => {
   const weekdays: WeekdaysType = useLoaderData() as WeekdaysType;

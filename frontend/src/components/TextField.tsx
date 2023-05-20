@@ -1,4 +1,4 @@
-import { TextFieldProps } from '../types';
+import type { TextFieldProps } from '../types';
 
 const TextField = ({ type = 'text' }: TextFieldProps) => {
   return (

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExerciseType } from '../types';
-import setsSlice, { deactivate } from './setsSlice';
+
+import { deactivate } from './setsSlice';
+import type { ExerciseType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('exercises');
 const initialState = localStorageData

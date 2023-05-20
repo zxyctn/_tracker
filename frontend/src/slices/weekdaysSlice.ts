@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { WeekdaysType } from '../types';
+
+import type { WeekdaysType } from '../types';
 
 const weekdays = [
   'monday',

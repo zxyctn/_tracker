@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Square, CheckSquareFill } from 'react-bootstrap-icons';
-import { MultiselectOptionProps } from '../types';
+
+import type { MultiselectOptionProps } from '../types';
 
 const MultiselectOption = ({ option }: MultiselectOptionProps) => {
   const [checked, setChecked] = useState(false);

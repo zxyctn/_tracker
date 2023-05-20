@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { AppSliceType, BreadcumbType, UserType } from '../types';
+import type { AppSliceType, BreadcumbType, UserType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('app');
 const initialState = localStorageData

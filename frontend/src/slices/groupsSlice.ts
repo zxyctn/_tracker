@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GroupType } from '../types';
+
+import type { GroupType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('groups');
 const initialState = localStorageData

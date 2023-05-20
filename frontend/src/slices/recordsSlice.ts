@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RecordType } from '../types';
+
+import type { RecordType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('records');
 const initialState = localStorageData

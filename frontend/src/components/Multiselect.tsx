@@ -1,5 +1,5 @@
-import { MultiselectProps } from '../types';
 import MultiselectOption from './MultiselectOption';
+import type { MultiselectProps } from '../types';
 
 const Multiselect = ({ options }: MultiselectProps) => {
   return (

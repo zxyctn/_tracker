@@ -1,5 +1,6 @@
 import { Circle, CircleFill } from 'react-bootstrap-icons';
-import { RadioCircleProps } from '../types';
+
+import type { RadioCircleProps } from '../types';
 
 const RadioCircle = ({ checked }: RadioCircleProps) => {
   return (
