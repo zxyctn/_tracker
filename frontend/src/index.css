@@ -28,6 +28,6 @@ html {
     @apply numberField text-primary outline-primary bg-primary-content;
   }
   .actionBtn {
-    @apply p-0 aspect-square rounded-xl font-bold text-2xl z-50 transition-all ease-linear duration-300 m-auto;
+    @apply p-0 aspect-square rounded-xl font-bold text-2xl z-20 transition-all ease-linear duration-300 m-auto;
   }
 }

@@ -9,11 +9,13 @@ const DroppableComponent = ({
   type,
   children,
   onDragEnd,
+  onDragStart,
 }: {
   id: string;
   type: string;
   children: React.ReactNode;
   onDragEnd: OnDragEndResponder;
+  onDragStart?: OnDragEndResponder;
 }) => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
