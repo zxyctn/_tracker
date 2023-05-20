@@ -42,13 +42,12 @@ export type TextFieldProps = {
 
 export type NumberFieldProps = {
   step: number;
-  edit: boolean;
+  goal: boolean;
   field: FieldType;
-  onChange: (field: FieldType) => void;
+  setId: number;
 };
 
 export type LogoProps = {
-  isEdit: boolean;
   closeMenu: () => void;
 };
 
@@ -59,8 +58,6 @@ export type ActionButtonProps = {
   enableEditHandler: () => void;
   disableEditHandler: () => void;
   theme: boolean;
-  isEdit: boolean;
-  canAdd: boolean;
 };
 
 export type SetButtonProps = {
@@ -80,6 +77,7 @@ export type SetComponentProps = {
 
 // Data types
 export type FieldType = {
+  goal?: boolean;
   type: string;
   unit: string;
   value: number;
@@ -88,7 +86,6 @@ export type FieldType = {
 export type SetType = {
   id: number;
   fields: FieldType[];
-  goal: FieldType;
   active: boolean;
 };
 
@@ -142,29 +139,14 @@ export type AppSliceType = {
 export type ActionsSliceType = {
   edit: boolean;
   add: boolean;
-  update: boolean;
-  move: boolean;
+  complete: boolean;
+  cancel: boolean;
 };
 
 export type UnitsType = {
   [key: string]: Option[];
 };
 
-export type WeekdayLoaderType = {
-  data: WeekdayType;
-  groups: GroupType[];
-};
-
-export type GroupLoaderType = {
-  data: GroupType | undefined;
-  exercises: ExerciseType[];
-};
-
-export type ExerciseLoaderType = {
-  data: ExerciseType | undefined;
-  sets: SetType[];
-};
-
-export type SetLoaderType = {
-  data: SetType | undefined;
+export type RouteLoaderType = {
+  id: number | string;
 };
