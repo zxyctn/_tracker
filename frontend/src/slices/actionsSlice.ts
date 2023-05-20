@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { ActionsSliceType } from '../types';
+import type { ActionsSliceType } from '../types';
 
 export const actionsSlice = createSlice({
   name: 'actions',
   initialState: <ActionsSliceType>{
     edit: false,
     add: false,
-    update: false,
-    move: false,
+    complete: false,
+    cancel: false,
   },
   reducers: {
     setEdit: (state, action: PayloadAction<boolean>) => {
@@ -19,17 +19,17 @@ export const actionsSlice = createSlice({
       state.add = action.payload;
       return state;
     },
-    setUpdate: (state, action: PayloadAction<boolean>) => {
-      state.update = action.payload;
+    setComplete: (state, action: PayloadAction<boolean>) => {
+      state.complete = action.payload;
       return state;
     },
-    setMove: (state, action: PayloadAction<boolean>) => {
-      state.move = action.payload;
+    setCancel: (state, action: PayloadAction<boolean>) => {
+      state.cancel = action.payload;
       return state;
     },
   },
 });
 
-export const { setEdit, setAdd, setUpdate, setMove } = actionsSlice.actions;
+export const { setEdit, setAdd, setComplete, setCancel } = actionsSlice.actions;
 
 export default actionsSlice.reducer;

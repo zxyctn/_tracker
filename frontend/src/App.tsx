@@ -5,19 +5,19 @@ import {
   useNavigate,
   useLocation,
 } from 'react-router-dom';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+
 import Logo from './components/Logo';
-import ActionButton from './components/ActionButton';
 import Menu from './components/Menu';
-import { AppSliceType } from './types';
+import ActionButton from './components/ActionButton';
 import Breadcrumbs from './components/Breadcrumbs';
 import store from './store';
-import { setEdit, setUpdate } from './slices/actionsSlice';
+import { onDragEndSet } from './shared';
+import { setCancel, setComplete, setEdit } from './slices/actionsSlice';
+import type { AppSliceType } from './types';
 
 const App = () => {
   const state = useLoaderData() as AppSliceType;
-  const [isEdit, setIsEdit] = useState(false);
-  const [canAdd, setCanAdd] = useState(false);
-  const [canUpdate, setCanUpdate] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,17 +27,45 @@ const App = () => {
   };
 
   const completeEdit = () => {
-    setCanUpdate(true);
-    store.dispatch(setUpdate(true));
+    store.dispatch(setComplete(true));
   };
 
   const cancelEdit = () => {
-    setIsEdit(false);
+    store.dispatch(setCancel(true));
+  };
+
+  const enableEdit = () => {
+    store.dispatch(setEdit(true));
+  };
+
+  const disableEdit = () => {
     store.dispatch(setEdit(false));
   };
 
+  const onDragEnd = (result: DropResult) => {
+    const { type, source, destination, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    switch (type) {
+      case 'EXERCISE':
+        onDragEndSet(result);
+
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
-    // TODO: change the first '!==' to '===' when the app is ready
     if (state.user !== null && location.pathname !== '/register') {
       navigate('/login');
     } else if (location.pathname === '/') {
@@ -49,40 +77,38 @@ const App = () => {
     }
   }, [state, navigate]);
 
-  useEffect(() => {
-    setIsEdit(store.getState().actions.edit);
-    setCanAdd(store.getState().actions.add);
-    setCanUpdate(store.getState().actions.update);
-  }, [store.getState().actions]);
-
   return (
-    <div className='grid place-content-stretch place-items-stretch w-screen h-screen'>
-      <div className='row-span-1'>
-        <div className='grid grid-flow-row gap-3 p-5'>
-          <Logo isEdit={isEdit} closeMenu={() => setIsMenuOpen(false)} />
-          <Breadcrumbs isEdit={isEdit} />
-        </div>
-      </div>
-
-      <div className='grid items-center justify-center row-span-auto'>
-        <div className='justify-center sm:w-full p-5'>
-          <div className='grow grid gap-1'>
-            <Outlet context={[isEdit, canUpdate]} />
+    <>
+      <div className='grid place-content-stretch place-items-stretch w-screen h-screen relative'>
+        <div className='row-span-1'>
+          <div className='grid grid-flow-row gap-3 p-5'>
+            <Logo closeMenu={() => setIsMenuOpen(false)} />
+            <Breadcrumbs />
           </div>
         </div>
+
+        <div className='grid items-center justify-center row-span-auto'>
+          <div className='justify-center sm:w-full p-5'>
+            <div className='grow grid gap-'>
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Outlet />
+              </DragDropContext>
+            </div>
+          </div>
+        </div>
+        {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
+        <div className='row-span-1 place-self-end z-30'>
+          <ActionButton
+            menuClickHandler={menuToggler}
+            completeEditHandler={completeEdit}
+            cancelEditHandler={cancelEdit}
+            enableEditHandler={enableEdit}
+            disableEditHandler={disableEdit}
+            theme={isMenuOpen}
+          />
+        </div>
       </div>
-      {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
-      <div className='row-span-1 place-self-end'>
-        <ActionButton
-          isEdit={isEdit}
-          canAdd={canAdd}
-          menuClickHandler={menuToggler}
-          completeEditHandler={completeEdit}
-          cancelEditHandler={cancelEdit}
-          theme={isMenuOpen}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 
