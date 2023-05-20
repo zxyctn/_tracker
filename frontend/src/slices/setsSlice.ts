@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FieldType, SetType } from '../types';
+
+import type { SetType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('sets');
 const initialState = localStorageData
@@ -12,13 +13,15 @@ const initialState = localStorageData
             type: 'W',
             unit: 'KG',
             value: 10,
+            goal: false,
+          },
+          {
+            goal: true,
+            type: 'REP',
+            unit: '',
+            value: 12,
           },
         ],
-        goal: {
-          type: 'REP',
-          unit: '',
-          value: 12,
-        },
         active: true,
       },
       {
@@ -28,13 +31,10 @@ const initialState = localStorageData
             type: 'W',
             unit: 'KG',
             value: 12,
+            goal: false,
           },
+          { goal: true, type: 'REP', unit: '', value: 12 },
         ],
-        goal: {
-          type: 'REP',
-          unit: '',
-          value: 12,
-        },
         active: true,
       },
       {
@@ -44,13 +44,10 @@ const initialState = localStorageData
             type: 'W',
             unit: 'KG',
             value: 8,
+            goal: false,
           },
+          { goal: true, type: 'REP', unit: '', value: 12 },
         ],
-        goal: {
-          type: 'REP',
-          unit: '',
-          value: 12,
-        },
         active: true,
       },
       {
@@ -60,13 +57,10 @@ const initialState = localStorageData
             type: 'W',
             unit: 'KG',
             value: 12,
+            goal: false,
           },
+          { goal: true, type: 'REP', unit: '', value: 10 },
         ],
-        goal: {
-          type: 'REP',
-          unit: '',
-          value: 10,
-        },
         active: true,
       },
       {
@@ -75,14 +69,11 @@ const initialState = localStorageData
           {
             type: 'W',
             unit: 'KG',
+            goal: false,
             value: 14,
           },
+          { goal: true, type: 'REP', unit: '', value: 10 },
         ],
-        goal: {
-          type: 'REP',
-          unit: '',
-          value: 10,
-        },
         active: true,
       },
       {
@@ -91,14 +82,11 @@ const initialState = localStorageData
           {
             type: 'W',
             unit: 'KG',
+            goal: false,
             value: 16,
           },
+          { goal: true, type: 'REP', unit: '', value: 8 },
         ],
-        goal: {
-          type: 'REP',
-          unit: '',
-          value: 8,
-        },
         active: true,
       },
       {
@@ -108,18 +96,16 @@ const initialState = localStorageData
             type: 'S',
             unit: 'KPH',
             value: 10.0,
+            goal: false,
           },
           {
             type: 'E',
-            unit: null,
+            unit: '',
             value: 11.0,
+            goal: false,
           },
+          { goal: true, type: 'CAL', unit: '', value: 150 },
         ],
-        goal: {
-          type: 'CAL',
-          unit: '',
-          value: 150,
-        },
         active: true,
       },
     ];

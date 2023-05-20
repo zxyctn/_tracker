@@ -1,14 +1,9 @@
 import { Params } from 'react-router-dom';
+import { DropResult } from '@hello-pangea/dnd';
 
 import store from './store';
-import {
-  BreadcumbType,
-  ExerciseType,
-  SetComponentProps,
-  SetType,
-  UnitsType,
-} from './types';
-import { setAdd } from './slices/actionsSlice';
+import { setExercise } from './slices/exercisesSlice';
+import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -82,15 +77,18 @@ export const getBgColors = (length: number) => {
   return bgColors.slice(begin, end);
 };
 
-export const getSetInfo = (set: number) => {
+export const getSetInfo = (id: number) => {
   const { sets } = store.getState();
-  const { goal, fields } = sets.find((s) => s.id === set) as SetType;
+  const set = sets.find((s) => s.id === id)!;
+  const fields = set.fields.filter((f) => !f.goal)!;
+  const goal = set.fields.find((f) => f.goal)!;
 
   const goalStr = `${goal.value}${
-    goal.unit || (goal.type === 'REP' ? '' : 'CAL')
+    goal.unit.length || (goal.type === 'REP' ? '' : 'CAL')
   }`;
   const fieldsRep = fields.map(
-    (field) => `${field.value}${field.unit ?? field.type}`
+    (field) =>
+      `${field.value}${field.unit.length > 0 ? field.unit : field.type}`
   );
   let fieldsStr = fieldsRep.join(', ');
   fieldsStr = fieldsRep.length > 1 ? `[${fieldsStr}]` : fieldsStr;
@@ -138,3 +136,44 @@ export const setBtnClass = ({ hover, selected, edit, bg }: SetComponentProps) =>
       ? `bg-white dark:bg-black ${edit ? 'text-secondary' : 'text-primary'}`
       : `text-white dark:text-black ${edit ? 'bg-secondary' : bg}`
   }`;
+
+export const extractID = (value: string, suffix: string): string => {
+  const regex = new RegExp(`${suffix}-(\\d+)`);
+  const match = value.match(regex);
+  if (match && match[1]) {
+    return match[1];
+  }
+  return '';
+};
+
+export const onDragEndSet = (result: DropResult) => {
+  const { destination, source } = result;
+  if (!destination) return;
+  if (destination.droppableId === source.droppableId) {
+    if (destination.index === source.index) return;
+    const { exercises, sets } = store.getState();
+
+    if (destination.droppableId !== 'delete') {
+      const exerciseID = extractID(source.droppableId, 'exercise');
+      const setID = extractID(result.draggableId, 'set');
+      const exercise = exercises.find((e) => e.id === parseInt(exerciseID));
+      if (!exercise) return;
+
+      const orderedSets = reorder(
+        exercise.sets,
+        source.index,
+        destination.index
+      );
+
+      store.dispatch(
+        setExercise({
+          exercise: exercise.id,
+          value: {
+            ...exercise,
+            sets: orderedSets,
+          },
+        })
+      );
+    }
+  }
+};
