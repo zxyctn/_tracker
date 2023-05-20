@@ -1,18 +1,21 @@
-import { Link, useLoaderData, useMatches } from 'react-router-dom';
-import { GroupType, WeekdayType } from '../types';
+import { Link, useLoaderData } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import { getTextColors } from '../shared';
+import type { RootState } from '../store';
+import type { RouteLoaderType } from '../types';
 
 const Weekday = () => {
-  const { data, groups } = useLoaderData() as {
-    data: WeekdayType;
-    groups: GroupType[];
-  };
-
+  const { id } = useLoaderData() as RouteLoaderType;
+  const weekday = useSelector((state: RootState) => state.weekdays[id]);
+  const groups = useSelector((state: RootState) =>
+    state.groups.filter((g) => weekday.groups.includes(g.id))
+  );
   const textColors = getTextColors(groups.length);
 
   return (
     <>
-      {data.groups.length > 0 ? (
+      {groups.length > 0 ? (
         groups.map((group, index) => (
           <button className={`coloredBtn ${textColors[index]}`} key={index}>
             <Link to={`g/${group.id}`}>{group.name}</Link>

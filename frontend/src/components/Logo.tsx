@@ -1,11 +1,15 @@
-import { LogoProps } from '../types';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const Logo = ({ isEdit, closeMenu }: LogoProps) => {
+import type { RootState } from '../store';
+import type { LogoProps } from '../types';
+
+const Logo = ({ closeMenu }: LogoProps) => {
+  const edit = useSelector((state: RootState) => state.actions.edit);
   return (
     <button
       className={`btn ${
-        isEdit ? 'btn-secondary' : 'btn-primary'
+        edit ? 'btn-secondary' : 'btn-primary'
       } text-xl w-min lowercase rounded-none rounded-tl-xl rounded-br-xl  transition-all ease-linear duration-300`}
       onClick={closeMenu}
     >

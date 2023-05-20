@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import appSlice from './slices/appSlice';
 import weekdaysSlice from './slices/weekdaysSlice';
 import groupsSlice from './slices/groupsSlice';
@@ -7,7 +8,7 @@ import setsSlice from './slices/setsSlice';
 import exercisesSlice from './slices/exercisesSlice';
 import actionsSlice from './slices/actionsSlice';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
     app: appSlice,
     actions: actionsSlice,
@@ -18,3 +19,6 @@ export default configureStore({
     sets: setsSlice,
   },
 });
+
+export default store;
+export type RootState = ReturnType<typeof store.getState>;

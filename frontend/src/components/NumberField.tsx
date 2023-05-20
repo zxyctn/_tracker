@@ -1,23 +1,41 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Dash, Plus } from 'react-bootstrap-icons';
-import { NumberFieldProps } from '../types';
-import RadioGroup from './RadioGroup';
-import { units } from '../shared';
+import { useSelector } from 'react-redux';
 
-const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
+import RadioGroup from './RadioGroup';
+import store from '../store';
+import { units } from '../shared';
+import { setSet } from '../slices/setsSlice';
+import type { RootState } from '../store';
+import type { FieldType, NumberFieldProps } from '../types';
+
+const NumberField = ({ step, field, setId }: NumberFieldProps) => {
+  const edit = useSelector((state: RootState) => state.actions.edit);
+  const cancel = useSelector((state: RootState) => state.actions.cancel);
+  const set = useSelector(
+    (state: RootState) => state.sets.find((s) => s.id === setId)!
+  );
+  const [initialField] = useState(field);
   const [value, setValue] = useState(field.value);
 
-  const increment = () => {
-    onChange({ ...field, value: value + step });
+  const updateValue = (newValue: FieldType) => {
+    store.dispatch(
+      setSet({
+        ...set,
+        fields: set.fields.map((f) =>
+          f.type === newValue.type ? newValue : f
+        ),
+      })
+    );
   };
 
-  const decrement = () => {
-    onChange({ ...field, value: value - step });
-  };
-
-  const unitChange = (unit: string) => {
-    onChange({ ...field, unit });
-  };
+  useEffect(() => {
+    if (edit && cancel) {
+      updateValue(initialField);
+    } else if (edit) {
+      setValue(field.value);
+    }
+  }, [edit, cancel, set]);
 
   return (
     <div className='grid gap-1'>
@@ -26,7 +44,7 @@ const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
           className={`btn aspect-square p-0 ${
             edit ? 'btn-secondary' : 'btn-primary'
           }`}
-          onClick={decrement}
+          onClick={() => updateValue({ ...field, value: value - step })}
         >
           <Dash width={24} height={24} className='stroke-current' />
         </button>
@@ -37,7 +55,7 @@ const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
           max={9999}
           value={value}
           onInput={(e: ChangeEvent<HTMLInputElement>) =>
-            setValue(parseFloat(e.target.value))
+            updateValue({ ...field, value: parseFloat(e.target.value) })
           }
           className={edit ? 'editNumberField gorw' : 'viewNumberField grow'}
           disabled={!edit}
@@ -46,7 +64,7 @@ const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
           className={`btn aspect-square p-0 ${
             edit ? 'btn-secondary' : 'btn-primary'
           }`}
-          onClick={increment}
+          onClick={() => updateValue({ ...field, value: value + step })}
         >
           <Plus width={24} height={24} className='stroke-current' />
         </button>
@@ -54,7 +72,7 @@ const NumberField = ({ step, edit, field, onChange }: NumberFieldProps) => {
 
       <RadioGroup
         options={units[field.type] ?? []}
-        onChange={unitChange}
+        onChange={(option: string) => updateValue({ ...field, unit: option })}
         layout='flex'
         initial={field.unit}
         edit={edit}

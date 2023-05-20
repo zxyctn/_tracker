@@ -1,47 +1,30 @@
 import { useState } from 'react';
-import {
-  XLg,
-  PlusLg,
-  Check,
-  DashLg,
-  List,
-  PencilFill,
-} from 'react-bootstrap-icons';
+import { XLg, PlusLg, Check, List, PencilFill } from 'react-bootstrap-icons';
+import { useSelector } from 'react-redux';
 
-import { ActionButtonProps } from '../types';
+import type { RootState } from '../store';
+import type { ActionButtonProps } from '../types';
 
 const ActionButton = ({
   menuClickHandler,
   completeEditHandler,
   cancelEditHandler,
   enableEditHandler,
-  disableEditHandler,
   theme,
-  isEdit,
-  canAdd,
 }: ActionButtonProps) => {
   const [expanded, setExpanded] = useState(false);
+  const edit = useSelector((state: RootState) => state.actions.edit);
+  const add = useSelector((state: RootState) => state.actions.add);
 
   return (
     <div className='w-full h-full items-end justify-end align-bottom'>
-      {isEdit ? (
+      {edit ? (
         <div className='grid grid-cols-1 overflow-auto'>
           <div className='flex gap-1.5 w-min overflow-auto p-5'>
             <button
-              className={`${
-                canAdd ? '' : 'hidden'
-              } btn btn-secondary actionBtn`}
+              className={`${add ? '' : 'hidden'} btn btn-secondary actionBtn`}
               onClick={completeEditHandler}
-              disabled={!canAdd}
-            >
-              <DashLg className='stroke-current stroke-1 p-0.5' />
-            </button>
-            <button
-              className={`${
-                canAdd ? '' : 'hidden'
-              } btn btn-secondary actionBtn`}
-              onClick={completeEditHandler}
-              disabled={!canAdd}
+              disabled={!add}
             >
               <PlusLg className='stroke-current stroke-1 p-0.5' />
             </button>

@@ -1,9 +1,18 @@
+import { useSelector } from 'react-redux';
 import { Link, useLoaderData } from 'react-router-dom';
-import { GroupLoaderType } from '../types';
+
 import { getTextColors } from '../shared';
+import type { RootState } from '../store';
+import type { RouteLoaderType } from '../types';
 
 const Group = () => {
-  const { exercises } = useLoaderData() as GroupLoaderType;
+  const { id } = useLoaderData() as RouteLoaderType;
+  const group = useSelector(
+    (state: RootState) => state.groups.find((g) => g.id === id)!
+  );
+  const exercises = useSelector((state: RootState) =>
+    state.exercises.filter((e) => group.exercises.includes(e.id))
+  );
   const textColors = getTextColors(exercises.length);
 
   return (

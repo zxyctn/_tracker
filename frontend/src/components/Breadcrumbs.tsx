@@ -1,10 +1,13 @@
-import store from '../store';
 import { Link } from 'react-router-dom';
-import { setBreadcrumbs } from '../slices/appSlice';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-const Breadcrumbs = ({ isEdit }: { isEdit: boolean }) => {
-  const { app, sets, exercises, groups, weekdays } = store.getState();
+import store from '../store';
+import { setBreadcrumbs } from '../slices/appSlice';
+import type { RootState } from '../store';
+
+const Breadcrumbs = () => {
+  const app = useSelector((state: RootState) => state.app);
+  const edit = useSelector((state: RootState) => state.actions.edit);
 
   const handleNavigation = (breadcrumb: { name: string; path: string }) => {
     const index = app.breadcrumbs.findIndex((b) => b.name === breadcrumb.name);
@@ -16,7 +19,7 @@ const Breadcrumbs = ({ isEdit }: { isEdit: boolean }) => {
   return app.breadcrumbs.length > 0 ? (
     <div
       className={`grid max-w-max min-w-0 overflow-auto py-0.5 px-2 rounded-lg transition ease-linear duration-300 ${
-        isEdit ? 'bg-secondary-content' : 'bg-primary-content'
+        edit ? 'bg-secondary-content' : 'bg-primary-content'
       }`}
     >
       <div className='flex gap-1 w-full'>
@@ -26,8 +29,8 @@ const Breadcrumbs = ({ isEdit }: { isEdit: boolean }) => {
             key={index}
             className={`flex gap-1 font-semibold whitespace-nowrap transition ease-linear duration-300  ${
               index === app.breadcrumbs.length - 1
-                ? `${isEdit ? 'text-secondary' : 'text-primary'}`
-                : `${isEdit ? 'text-secondary/20' : 'text-primary/20'}`
+                ? `${edit ? 'text-secondary' : 'text-primary'}`
+                : `${edit ? 'text-secondary/20' : 'text-primary/20'}`
             }`}
             onClick={() => handleNavigation(breadcrumb)}
           >
