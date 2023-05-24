@@ -9,7 +9,7 @@ import { labels } from '../shared';
 import { setSet } from '../slices/setsSlice';
 import { setEdit } from '../slices/actionsSlice';
 import type { RootState } from '../store';
-import type { AppOutletProps, RouteLoaderType, SetType } from '../types';
+import type { RouteLoaderType } from '../types';
 
 const Set = () => {
   const { id } = useLoaderData() as RouteLoaderType;
