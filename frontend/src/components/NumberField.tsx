@@ -14,7 +14,6 @@ const NumberField = ({ step, field, setId }: NumberFieldProps) => {
   const set = useSelector(
     (state: RootState) => state.sets.find((s) => s.id === setId)!
   );
-  const [initialField] = useState(field);
   const [value, setValue] = useState(field.value);
 
   const updateValue = (newValue: FieldType) => {

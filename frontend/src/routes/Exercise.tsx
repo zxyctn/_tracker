@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Droppable } from '@hello-pangea/dnd';
-import { useLoaderData, useOutletContext } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import { Trash2Fill } from 'react-bootstrap-icons';
 
 import SetButton from '../components/SetButton';
 import DraggableComponent from '../components/DraggableComponent';
-import store from '../store';
 import { getTextColors, getBgColors } from '../shared';
 import { setExercise } from '../slices/exercisesSlice';
 import { setEdit } from '../slices/actionsSlice';
-import type { RootState } from '../store';
-import type { RouteLoaderType, SetType } from '../types';
 import { removeSet } from '../slices/setsSlice';
-import { removeExercise } from '../slices/exercisesSlice';
-import { useDispatch } from 'react-redux';
+import { removeSet as exerciseRemoveSet } from '../slices/exercisesSlice';
+import type { RootState } from '../store';
+import type { RouteLoaderType } from '../types';
 
 const Exercise = () => {
   const { id } = useLoaderData() as RouteLoaderType;
@@ -28,6 +26,7 @@ const Exercise = () => {
       .find((e) => e.id === id)!
       .sets.map((set) => state.sets.find((s) => s.id === set)!)
   );
+
   const dispatch = useDispatch();
 
   const [initialExercise] = useState(exercise);
@@ -36,24 +35,20 @@ const Exercise = () => {
 
   useEffect(() => {
     if (edit.value && edit.result) {
-      store.dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ value: false, result: null }));
     } else if (edit.value && edit.result === false) {
-      store.dispatch(
-        setExercise({ exercise: id as number, value: initialExercise })
-      );
-      store.dispatch(setEdit({ value: false, result: null }));
+      dispatch(setExercise({ exercise: id as number, value: initialExercise }));
+      dispatch(setEdit({ value: false, result: null }));
     }
   }, [edit]);
 
   useEffect(() => {
     if (!confirm.value && confirm.result) {
       dispatch(removeSet(confirm.id));
-      dispatch(removeExercise({ exercise: exercise.id, set: confirm.id }));
+      dispatch(exerciseRemoveSet({ exercise: exercise.id, set: confirm.id }));
     } else if (edit.value && edit.result === false) {
-      store.dispatch(
-        setExercise({ exercise: id as number, value: initialExercise })
-      );
-      store.dispatch(setEdit({ value: false, result: null }));
+      dispatch(setExercise({ exercise: id as number, value: initialExercise }));
+      dispatch(setEdit({ value: false, result: null }));
     }
   }, [edit]);
 

@@ -2,10 +2,9 @@ import { Params } from 'react-router-dom';
 import { DropResult } from '@hello-pangea/dnd';
 
 import store from './store';
-import { removeExercise, setExercise } from './slices/exercisesSlice';
-import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
-import { removeSet } from './slices/setsSlice';
+import { setExercise } from './slices/exercisesSlice';
 import { setConfirm } from './slices/actionsSlice';
+import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -151,8 +150,6 @@ export const extractID = (value: string, suffix: string): string => {
 export const onDragEndSet = (result: DropResult) => {
   const { exercises, sets } = store.getState();
   const { destination, source } = result;
-
-  console.log(result);
 
   if (!destination) return;
 

@@ -17,7 +17,7 @@ export const actionsSlice = createSlice({
     add: {
       value: false,
       result: null,
-      type: 'xxggx',
+      type: '',
       object: null,
     },
     confirm: {

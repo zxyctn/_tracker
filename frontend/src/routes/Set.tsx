@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate, useOutletContext } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 import Input from '../components/Input';
 import NumberField from '../components/NumberField';
-import store from '../store';
 import { labels } from '../shared';
 import { setSet } from '../slices/setsSlice';
 import { setEdit } from '../slices/actionsSlice';
@@ -18,25 +17,21 @@ const Set = () => {
     (state: RootState) => state.sets.find((s) => s.id === id)!
   );
   const [initialSet] = useState(set);
-  const [updatedSet, setUpdatedSet] = useState(set);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const editFn = () => {
-    store.dispatch(setEdit({ value: false, result: null }));
+    dispatch(setEdit({ value: false, result: null }));
     navigate(-1);
   };
 
   useEffect(() => {
     if (edit.value && edit.result != null) {
-      if (edit.result === false) store.dispatch(setSet(initialSet));
+      if (edit.result === false) dispatch(setSet(initialSet));
       editFn();
     }
   }, [edit]);
-
-  useEffect(() => {
-    setUpdatedSet(set);
-  }, [set]);
 
   return (
     <div className='grid gap-5'>

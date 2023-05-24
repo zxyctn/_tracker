@@ -6,17 +6,16 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
+import { useSelector } from 'react-redux';
 
 import Logo from './components/Logo';
 import Menu from './components/Menu';
+import Confirm from './components/Confirm';
 import ActionButton from './components/ActionButton';
 import Breadcrumbs from './components/Breadcrumbs';
-import store, { RootState } from './store';
 import { onDragEndSet } from './shared';
-import { setEdit } from './slices/actionsSlice';
+import type { RootState } from './store';
 import type { AppSliceType } from './types';
-import Confirm from './components/Confirm';
-import { useSelector } from 'react-redux';
 
 const App = () => {
   const state = useLoaderData() as AppSliceType;

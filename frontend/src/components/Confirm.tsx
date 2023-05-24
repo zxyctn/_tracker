@@ -1,11 +1,11 @@
-import React from 'react';
-import { RootState } from '../store';
 import { useSelector } from 'react-redux';
+
 import { getSetInfo } from '../shared';
+import type { RootState } from '../store';
 
 const Confirm = () => {
   const config = useSelector((state: RootState) => state.actions.confirm);
-  const { id, result, type, value } = config;
+  const { id, type, value } = config;
   let msg = '';
 
   switch (type) {

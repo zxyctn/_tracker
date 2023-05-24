@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { XLg, PlusLg, Check, List, PencilFill } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
 import type { RootState } from '../store';
 import type { ActionButtonProps } from '../types';
-import store from '../store';
-import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
-import { removeSet } from '../slices/setsSlice';
-import { removeExercise } from '../slices/exercisesSlice';
 
+// TODO: Rename the file to ActionButtons.tsx
 const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const [expanded, setExpanded] = useState(false);
 
