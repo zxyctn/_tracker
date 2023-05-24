@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { deactivate } from './setsSlice';
+import { removeSet } from './setsSlice';
 import type { ExerciseType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('exercises');
@@ -67,13 +67,13 @@ export const exercisesSlice = createSlice({
           );
           const set = exercise.sets.find((set) => set === action.payload.set);
           if (!set) {
-            deactivate({ id: action.payload.set });
+            removeSet(action.payload.set);
           }
         }
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
-      return state;
+      // return state;
     },
     setExercise: (
       state,

@@ -22,7 +22,6 @@ const initialState = localStorageData
             value: 12,
           },
         ],
-        active: true,
       },
       {
         id: 2,
@@ -35,7 +34,6 @@ const initialState = localStorageData
           },
           { goal: true, type: 'REP', unit: '', value: 12 },
         ],
-        active: true,
       },
       {
         id: 3,
@@ -48,7 +46,6 @@ const initialState = localStorageData
           },
           { goal: true, type: 'REP', unit: '', value: 12 },
         ],
-        active: true,
       },
       {
         id: 4,
@@ -61,7 +58,6 @@ const initialState = localStorageData
           },
           { goal: true, type: 'REP', unit: '', value: 10 },
         ],
-        active: true,
       },
       {
         id: 5,
@@ -74,7 +70,6 @@ const initialState = localStorageData
           },
           { goal: true, type: 'REP', unit: '', value: 10 },
         ],
-        active: true,
       },
       {
         id: 6,
@@ -87,7 +82,6 @@ const initialState = localStorageData
           },
           { goal: true, type: 'REP', unit: '', value: 8 },
         ],
-        active: true,
       },
       {
         id: 7,
@@ -106,7 +100,6 @@ const initialState = localStorageData
           },
           { goal: true, type: 'CAL', unit: '', value: 150 },
         ],
-        active: true,
       },
     ];
 window.localStorage.setItem('sets', JSON.stringify(initialState));
@@ -115,26 +108,6 @@ export const setsSlice = createSlice({
   name: 'sets',
   initialState: initialState,
   reducers: {
-    activate: (state, action: PayloadAction<{ id: number }>) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.id) {
-          set.active = true;
-        }
-        return set;
-      });
-      window.localStorage.setItem('sets', JSON.stringify(state));
-      return state;
-    },
-    deactivate: (state, action: PayloadAction<{ id: number }>) => {
-      state = state.map((set) => {
-        if (set.id === action.payload.id) {
-          set.active = false;
-        }
-        return set;
-      });
-      window.localStorage.setItem('sets', JSON.stringify(state));
-      return state;
-    },
     setSet: (state, action: PayloadAction<SetType>) => {
       state = state.map((set) => {
         if (set.id === action.payload.id) {
@@ -145,9 +118,13 @@ export const setsSlice = createSlice({
       window.localStorage.setItem('sets', JSON.stringify(state));
       return state;
     },
+    removeSet: (state, action: PayloadAction<number>) => {
+      state = state.filter((set) => set.id !== action.payload);
+      window.localStorage.setItem('sets', JSON.stringify(state));
+    },
   },
 });
 
-export const { activate, deactivate, setSet } = setsSlice.actions;
+export const { setSet, removeSet } = setsSlice.actions;
 
 export default setsSlice.reducer;
