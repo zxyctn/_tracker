@@ -10,8 +10,7 @@ import type { RootState } from '../store';
 import type { FieldType, NumberFieldProps } from '../types';
 
 const NumberField = ({ step, field, setId }: NumberFieldProps) => {
-  const edit = useSelector((state: RootState) => state.actions.edit);
-  const cancel = useSelector((state: RootState) => state.actions.cancel);
+  const edit = useSelector((state: RootState) => state.actions.edit.value);
   const set = useSelector(
     (state: RootState) => state.sets.find((s) => s.id === setId)!
   );
