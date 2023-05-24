@@ -19,17 +19,14 @@ export const appSlice = createSlice({
     setFilterBy: (state, action: PayloadAction<string>) => {
       state.filterBy = action.payload;
       window.localStorage.setItem('app', JSON.stringify(state));
-      return state;
     },
     setUser: (state, action: PayloadAction<UserType>) => {
       state.user = action.payload;
       window.localStorage.setItem('app', JSON.stringify(state));
-      return state;
     },
     setBreadcrumbs: (state, action: PayloadAction<BreadcumbType[]>) => {
       state.breadcrumbs = action.payload;
       window.localStorage.setItem('app', JSON.stringify(state));
-      return state;
     },
   },
 });

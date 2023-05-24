@@ -31,12 +31,10 @@ export const recordsSlice = createSlice({
     add: (state, action: PayloadAction<{ record: RecordType }>) => {
       state.push(action.payload.record);
       window.localStorage.setItem('records', JSON.stringify(state));
-      return state;
     },
     remove: (state, action: PayloadAction<{ id: number }>) => {
       state = state.filter((record) => record.id !== action.payload.id);
       window.localStorage.setItem('records', JSON.stringify(state));
-      return state;
     },
   },
 });
