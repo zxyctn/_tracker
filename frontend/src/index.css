@@ -30,4 +30,15 @@ html {
   .actionBtn {
     @apply p-0 aspect-square rounded-xl font-bold text-2xl z-20 transition-all ease-linear duration-300 m-auto;
   }
+
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
