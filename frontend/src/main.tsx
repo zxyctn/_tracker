@@ -26,7 +26,9 @@ import { setAdd } from './slices/actionsSlice';
 export function rootLoader() {
   const { app } = store.getState();
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(setAdd(false));
+  store.dispatch(
+    setAdd({ value: false, object: null, result: null, type: '' })
+  );
   return app;
 }
 
@@ -34,7 +36,9 @@ export function weekdaysLoader() {
   const { weekdays } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(setAdd(false));
+  store.dispatch(
+    setAdd({ value: false, object: null, result: null, type: '' })
+  );
   return weekdays;
 }
 
@@ -42,7 +46,9 @@ export function groupsLoader() {
   const { groups } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(setAdd(true));
+  store.dispatch(
+    setAdd({ value: true, object: null, result: null, type: 'GROUP' })
+  );
   return groups;
 }
 
@@ -59,7 +65,9 @@ export function setLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-  store.dispatch(setAdd(false));
+  store.dispatch(
+    setAdd({ value: false, object: null, result: null, type: '' })
+  );
 
   return {
     id: set,
@@ -79,7 +87,9 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-  store.dispatch(setAdd(true));
+  store.dispatch(
+    setAdd({ value: true, object: null, result: null, type: 'SET' })
+  );
 
   return {
     id: exercise,
@@ -99,7 +109,9 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-  store.dispatch(setAdd(true));
+  store.dispatch(
+    setAdd({ value: true, object: null, result: null, type: 'EXERCISE' })
+  );
 
   return {
     id: group,
@@ -110,7 +122,9 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
   const { weekday } = params;
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-  store.dispatch(setAdd(true));
+  store.dispatch(
+    setAdd({ value: true, object: null, result: null, type: 'GROUP' })
+  );
 
   return {
     id: weekday,

@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLoaderData, useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate, useOutletContext } from 'react-router-dom';
 
 import Input from '../components/Input';
 import NumberField from '../components/NumberField';
 import store from '../store';
 import { labels } from '../shared';
 import { setSet } from '../slices/setsSlice';
-import { setCancel, setComplete, setEdit } from '../slices/actionsSlice';
+import { setEdit } from '../slices/actionsSlice';
 import type { RootState } from '../store';
-import type { RouteLoaderType, SetType } from '../types';
+import type { AppOutletProps, RouteLoaderType, SetType } from '../types';
 
 const Set = () => {
   const { id } = useLoaderData() as RouteLoaderType;
   const edit = useSelector((state: RootState) => state.actions.edit);
-  const complete = useSelector((state: RootState) => state.actions.complete);
-  const cancel = useSelector((state: RootState) => state.actions.cancel);
   const set = useSelector(
     (state: RootState) => state.sets.find((s) => s.id === id)!
   );
@@ -24,18 +22,17 @@ const Set = () => {
 
   const navigate = useNavigate();
 
-  const editFn = (newSet: SetType) => {
-    store.dispatch(setSet(newSet));
-    store.dispatch(setEdit(false));
-    store.dispatch(setCancel(false));
-    store.dispatch(setComplete(false));
+  const editFn = () => {
+    store.dispatch(setEdit({ value: false, result: null }));
     navigate(-1);
   };
 
   useEffect(() => {
-    edit && cancel && editFn(initialSet);
-    edit && complete && editFn(updatedSet);
-  }, [edit, cancel, complete]);
+    if (edit.value && edit.result != null) {
+      if (edit.result === false) store.dispatch(setSet(initialSet));
+      editFn();
+    }
+  }, [edit]);
 
   useEffect(() => {
     setUpdatedSet(set);
@@ -46,7 +43,7 @@ const Set = () => {
       {set.fields
         .filter((f) => !f.goal)
         .map((f) => (
-          <Input key={f.type} name={labels[f.type]} type={!edit}>
+          <Input key={f.type} name={labels[f.type]} type={!edit.value}>
             <NumberField
               step={0.5}
               field={f}
@@ -58,7 +55,7 @@ const Set = () => {
       {set.fields.filter((f) => !f.goal).length && (
         <span
           className={`w-full text-center font-bold text-2xl ${
-            edit ? 'text-secondary' : 'text-primary'
+            edit.value ? 'text-secondary' : 'text-primary'
           }`}
         >
           ×
@@ -67,7 +64,7 @@ const Set = () => {
       {set.fields
         .filter((f) => f.goal)
         .map((f) => (
-          <Input key={f.type} name={labels[f.type]} type={!edit}>
+          <Input key={f.type} name={labels[f.type]} type={!edit.value}>
             <NumberField
               step={['REP', 'CAL'].includes(f.type) ? 1 : 0.5}
               field={f}

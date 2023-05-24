@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Droppable } from '@hello-pangea/dnd';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useOutletContext } from 'react-router-dom';
 import { Trash2Fill } from 'react-bootstrap-icons';
 
 import SetButton from '../components/SetButton';
@@ -9,71 +9,76 @@ import DraggableComponent from '../components/DraggableComponent';
 import store from '../store';
 import { getTextColors, getBgColors } from '../shared';
 import { setExercise } from '../slices/exercisesSlice';
-import { setCancel, setComplete, setEdit } from '../slices/actionsSlice';
+import { setEdit } from '../slices/actionsSlice';
 import type { RootState } from '../store';
 import type { RouteLoaderType, SetType } from '../types';
+import { removeSet } from '../slices/setsSlice';
+import { removeExercise } from '../slices/exercisesSlice';
+import { useDispatch } from 'react-redux';
 
 const Exercise = () => {
   const { id } = useLoaderData() as RouteLoaderType;
   const edit = useSelector((state: RootState) => state.actions.edit);
-  const complete = useSelector((state: RootState) => state.actions.complete);
-  const cancel = useSelector((state: RootState) => state.actions.cancel);
+  const confirm = useSelector((state: RootState) => state.actions.confirm);
   const exercise = useSelector(
     (state: RootState) => state.exercises.find((e) => e.id === id)!
   );
+  const exerciseSets = useSelector((state: RootState) =>
+    state.exercises
+      .find((e) => e.id === id)!
+      .sets.map((set) => state.sets.find((s) => s.id === set)!)
+  );
+  const dispatch = useDispatch();
 
   const [initialExercise] = useState(exercise);
-  const [sets, setSets] = useState<SetType[]>([]);
   const textColors = getTextColors(exercise.sets.length);
   const bgColors = getBgColors(exercise.sets.length);
 
   useEffect(() => {
-    setSets(
-      exercise.sets.map((set) => {
-        const found = store.getState().sets.find((s) => s.id === set);
-        if (!found) throw new Error('set not found');
-        return found;
-      })
-    );
-  }, [exercise]);
+    if (edit.value && edit.result) {
+      store.dispatch(setEdit({ value: false, result: null }));
+    } else if (edit.value && edit.result === false) {
+      store.dispatch(
+        setExercise({ exercise: id as number, value: initialExercise })
+      );
+      store.dispatch(setEdit({ value: false, result: null }));
+    }
+  }, [edit]);
 
   useEffect(() => {
-    if (edit) {
-      if (cancel) {
-        store.dispatch(
-          setExercise({ exercise: id as number, value: initialExercise })
-        );
-      }
-      if (cancel || complete) {
-        store.dispatch(setEdit(false));
-        store.dispatch(setCancel(false));
-        store.dispatch(setComplete(false));
-      }
+    if (!confirm.value && confirm.result) {
+      dispatch(removeSet(confirm.id));
+      dispatch(removeExercise({ exercise: exercise.id, set: confirm.id }));
+    } else if (edit.value && edit.result === false) {
+      store.dispatch(
+        setExercise({ exercise: id as number, value: initialExercise })
+      );
+      store.dispatch(setEdit({ value: false, result: null }));
     }
-  }, [edit, cancel, complete]);
+  }, [edit]);
 
   return (
     <>
       <Droppable droppableId={`exercise-${id}`} type='EXERCISE'>
         {(provided, snapshot) => (
           <div
-            className='grid gap-1 overflow-auto'
+            className='grid gap-1 overflow-x-auto scrollbar-hide'
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {sets.length > 0 ? (
-              sets.map((set, i) => (
+            {exerciseSets.length > 0 ? (
+              exerciseSets.map((set, i) => (
                 <DraggableComponent
                   id={`set-${set.id}`}
                   index={i}
                   key={`set-${set.id}`}
-                  isDragDisabled={!edit}
+                  isDragDisabled={!edit.value}
                 >
                   <SetButton
                     bg={bgColors[i]}
                     text={textColors[i]}
                     set={set}
-                    edit={edit}
+                    edit={edit.value}
                   />
                 </DraggableComponent>
               ))
@@ -84,8 +89,8 @@ const Exercise = () => {
           </div>
         )}
       </Droppable>
-      {/* DELETE ZONE */}
-      <Droppable droppableId={`delete`} type='EXERCISE' isDropDisabled={!edit}>
+
+      <Droppable droppableId={`exercise-delete`} type='EXERCISE'>
         {(provided, snapshot) => (
           <div
             className='fixed bottom-0 left-0 w-screen max-w-fit flex justify-left items-baseline p-5 z-50'
@@ -94,7 +99,7 @@ const Exercise = () => {
           >
             <div
               className={` transition-all ease-in-out duration-500 btn btn-error p-0 aspect-square rounded-xl font-bold text-2xl z-50 
-                ${edit ? '' : 'hidden'}
+                ${edit.value ? '' : 'hidden'}
                 ${
                   snapshot.isDraggingOver
                     ? 'w-full aspect-square h-full max-h-64'

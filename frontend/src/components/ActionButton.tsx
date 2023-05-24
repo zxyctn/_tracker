@@ -1,44 +1,74 @@
 import { useState } from 'react';
 import { XLg, PlusLg, Check, List, PencilFill } from 'react-bootstrap-icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import type { RootState } from '../store';
 import type { ActionButtonProps } from '../types';
+import store from '../store';
+import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
+import { removeSet } from '../slices/setsSlice';
+import { removeExercise } from '../slices/exercisesSlice';
 
-const ActionButton = ({
-  menuClickHandler,
-  completeEditHandler,
-  cancelEditHandler,
-  enableEditHandler,
-  theme,
-}: ActionButtonProps) => {
+const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const [expanded, setExpanded] = useState(false);
+
   const edit = useSelector((state: RootState) => state.actions.edit);
   const add = useSelector((state: RootState) => state.actions.add);
+  const confirm = useSelector((state: RootState) => state.actions.confirm);
+  const dispatch = useDispatch();
+
+  const addFn = () => {
+    // TODO: set the object
+    // TODO: set the other buttons to change the result too
+    dispatch(setAdd({ ...add, value: true, result: null }));
+  };
+
+  const cancelFn = () => {
+    if (add.value && add.object != null) {
+      dispatch(setAdd({ ...add, value: true, result: false }));
+    } else if (confirm.value) {
+      dispatch(setConfirm({ ...confirm, value: false, result: false }));
+    } else {
+      dispatch(setEdit({ value: true, result: false }));
+    }
+  };
+
+  const doneFn = () => {
+    if (add.value && add.object != null) {
+      // TODO: Add the value here
+      dispatch(setAdd({ ...add, value: true, result: true }));
+    } else if (confirm.value) {
+      dispatch(setConfirm({ ...confirm, value: false, result: true }));
+    } else {
+      dispatch(setEdit({ value: true, result: true }));
+    }
+  };
+
+  const editFn = () => {
+    dispatch(setEdit({ value: true, result: null }));
+  };
 
   return (
     <div className='w-full h-full items-end justify-end align-bottom'>
-      {edit ? (
+      {edit.value ? (
         <div className='grid grid-cols-1 overflow-auto'>
           <div className='flex gap-1.5 w-min overflow-auto p-5'>
-            <button
-              className={`${add ? '' : 'hidden'} btn btn-secondary actionBtn`}
-              onClick={completeEditHandler}
-              disabled={!add}
-            >
-              <PlusLg className='stroke-current stroke-1 p-0.5' />
-            </button>
-            <button
-              className='btn btn-accent actionBtn'
-              onClick={cancelEditHandler}
-            >
+            {!confirm.value && (
+              <button
+                className={`${
+                  add.value ? '' : 'hidden'
+                } btn btn-secondary actionBtn`}
+                onClick={addFn}
+                disabled={!add.value}
+              >
+                <PlusLg className='stroke-current stroke-1 p-0.5' />
+              </button>
+            )}
+            <button className='btn btn-accent actionBtn' onClick={cancelFn}>
               <XLg className='stroke-current stroke-1 p-1' />
             </button>
 
-            <button
-              className='btn btn-primary actionBtn'
-              onClick={completeEditHandler}
-            >
+            <button className='btn btn-primary actionBtn' onClick={doneFn}>
               <Check
                 width={36}
                 height={36}
@@ -55,7 +85,7 @@ const ActionButton = ({
                 <button
                   className={`btn btn-primary actionBtn`}
                   onClick={() => {
-                    enableEditHandler();
+                    editFn();
                     setExpanded((current) => !current);
                   }}
                 >

@@ -30,12 +30,8 @@ const NumberField = ({ step, field, setId }: NumberFieldProps) => {
   };
 
   useEffect(() => {
-    if (edit && cancel) {
-      updateValue(initialField);
-    } else if (edit) {
-      setValue(field.value);
-    }
-  }, [edit, cancel, set]);
+    edit && setValue(field.value);
+  }, [edit, set]);
 
   return (
     <div className='grid gap-1'>

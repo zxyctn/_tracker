@@ -11,35 +11,24 @@ import Logo from './components/Logo';
 import Menu from './components/Menu';
 import ActionButton from './components/ActionButton';
 import Breadcrumbs from './components/Breadcrumbs';
-import store from './store';
+import store, { RootState } from './store';
 import { onDragEndSet } from './shared';
-import { setCancel, setComplete, setEdit } from './slices/actionsSlice';
+import { setEdit } from './slices/actionsSlice';
 import type { AppSliceType } from './types';
+import Confirm from './components/Confirm';
+import { useSelector } from 'react-redux';
 
 const App = () => {
   const state = useLoaderData() as AppSliceType;
+  const confirm = useSelector(
+    (state: RootState) => state.actions.confirm.value
+  );
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const menuToggler = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const completeEdit = () => {
-    store.dispatch(setComplete(true));
-  };
-
-  const cancelEdit = () => {
-    store.dispatch(setCancel(true));
-  };
-
-  const enableEdit = () => {
-    store.dispatch(setEdit(true));
-  };
-
-  const disableEdit = () => {
-    store.dispatch(setEdit(false));
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -90,22 +79,19 @@ const App = () => {
         <div className='grid items-center justify-center row-span-auto'>
           <div className='justify-center sm:w-full p-5'>
             <div className='grow grid gap-'>
-              <DragDropContext onDragEnd={onDragEnd}>
-                <Outlet />
-              </DragDropContext>
+              {confirm ? (
+                <Confirm />
+              ) : (
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Outlet />
+                </DragDropContext>
+              )}
             </div>
           </div>
         </div>
         {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
         <div className='row-span-1 place-self-end z-30'>
-          <ActionButton
-            menuClickHandler={menuToggler}
-            completeEditHandler={completeEdit}
-            cancelEditHandler={cancelEdit}
-            enableEditHandler={enableEdit}
-            disableEditHandler={disableEdit}
-            theme={isMenuOpen}
-          />
+          <ActionButton menuClickHandler={menuToggler} theme={isMenuOpen} />
         </div>
       </div>
     </>

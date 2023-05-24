@@ -2,8 +2,10 @@ import { Params } from 'react-router-dom';
 import { DropResult } from '@hello-pangea/dnd';
 
 import store from './store';
-import { setExercise } from './slices/exercisesSlice';
+import { removeExercise, setExercise } from './slices/exercisesSlice';
 import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
+import { removeSet } from './slices/setsSlice';
+import { setConfirm } from './slices/actionsSlice';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -147,33 +149,45 @@ export const extractID = (value: string, suffix: string): string => {
 };
 
 export const onDragEndSet = (result: DropResult) => {
+  const { exercises, sets } = store.getState();
   const { destination, source } = result;
+
+  console.log(result);
+
   if (!destination) return;
+
+  const exerciseID = parseInt(extractID(source.droppableId, 'exercise'));
+  const setID = parseInt(extractID(result.draggableId, 'set'));
+
   if (destination.droppableId === source.droppableId) {
     if (destination.index === source.index) return;
-    const { exercises, sets } = store.getState();
 
-    if (destination.droppableId !== 'delete') {
-      const exerciseID = extractID(source.droppableId, 'exercise');
-      const setID = extractID(result.draggableId, 'set');
-      const exercise = exercises.find((e) => e.id === parseInt(exerciseID));
-      if (!exercise) return;
+    const exercise = exercises.find((e) => e.id === exerciseID);
+    console.log(exercise);
+    if (!exercise) return;
 
-      const orderedSets = reorder(
-        exercise.sets,
-        source.index,
-        destination.index
-      );
+    const orderedSets = reorder(exercise.sets, source.index, destination.index);
 
-      store.dispatch(
-        setExercise({
-          exercise: exercise.id,
-          value: {
-            ...exercise,
-            sets: orderedSets,
-          },
-        })
-      );
-    }
+    store.dispatch(
+      setExercise({
+        exercise: exercise.id,
+        value: {
+          ...exercise,
+          sets: orderedSets,
+        },
+      })
+    );
+  } else {
+    const set = sets.find((s) => s.id === setID);
+    if (!set) return;
+
+    store.dispatch(
+      setConfirm({
+        value: true,
+        result: null,
+        type: 'SET',
+        id: setID,
+      })
+    );
   }
 };

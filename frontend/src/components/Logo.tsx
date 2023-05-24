@@ -5,7 +5,7 @@ import type { RootState } from '../store';
 import type { LogoProps } from '../types';
 
 const Logo = ({ closeMenu }: LogoProps) => {
-  const edit = useSelector((state: RootState) => state.actions.edit);
+  const edit = useSelector((state: RootState) => state.actions.edit.value);
   return (
     <button
       className={`btn ${

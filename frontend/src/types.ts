@@ -53,10 +53,6 @@ export type LogoProps = {
 
 export type ActionButtonProps = {
   menuClickHandler: () => void;
-  completeEditHandler: () => void;
-  cancelEditHandler: () => void;
-  enableEditHandler: () => void;
-  disableEditHandler: () => void;
   theme: boolean;
 };
 
@@ -86,7 +82,6 @@ export type FieldType = {
 export type SetType = {
   id: number;
   fields: FieldType[];
-  active: boolean;
 };
 
 export type RecordType = {
@@ -136,11 +131,30 @@ export type AppSliceType = {
   breadcrumbs: BreadcumbType[];
 };
 
+export type EditType = {
+  value: boolean;
+  result: null | boolean;
+};
+
+export type AddType = {
+  value: boolean;
+  result: null | boolean;
+  type: string;
+  object: SetType | ExerciseType | GroupType | null;
+};
+
+export type ConfirmType = {
+  value: boolean;
+  result: null | boolean;
+  // msg: string;
+  type: string;
+  id: number;
+};
+
 export type ActionsSliceType = {
-  edit: boolean;
-  add: boolean;
-  complete: boolean;
-  cancel: boolean;
+  edit: EditType;
+  add: AddType;
+  confirm: ConfirmType;
 };
 
 export type UnitsType = {

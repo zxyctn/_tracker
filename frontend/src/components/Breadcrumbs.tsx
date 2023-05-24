@@ -7,7 +7,7 @@ import type { RootState } from '../store';
 
 const Breadcrumbs = () => {
   const app = useSelector((state: RootState) => state.app);
-  const edit = useSelector((state: RootState) => state.actions.edit);
+  const edit = useSelector((state: RootState) => state.actions.edit.value);
 
   const handleNavigation = (breadcrumb: { name: string; path: string }) => {
     const index = app.breadcrumbs.findIndex((b) => b.name === breadcrumb.name);
