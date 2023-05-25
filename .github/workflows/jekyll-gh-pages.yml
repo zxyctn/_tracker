@@ -35,7 +35,7 @@ jobs:
           git config user.email github-actions@github.com
           git add frontend/dist -f
           git commit -m "generated"
-          git push origin `git subtree split --prefix frontend/dist master`:gh-pages --force
+          git push origin `git subtree split --prefix frontend/dist main`:gh-pages --force
           
   Deploy:
     # Add a dependency to the build job
