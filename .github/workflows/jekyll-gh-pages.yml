@@ -32,9 +32,8 @@ jobs:
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v2
         with:
-          working-directory: frontend
           name: production-files
-          path: dist
+          path: ./frontend/dist
 
   deploy:
     name: Deploy
@@ -53,4 +52,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./frontend/dist
+          publish_dir: frontend/dist
