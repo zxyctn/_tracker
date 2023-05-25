@@ -30,8 +30,7 @@ jobs:
         run: npm run build
         
       - name: Add dist and deploy
-      - uses: actions/checkout@v3
-      - run: |
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add dist -f
