@@ -213,7 +213,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/_tracker',
+    basename: '/_tracker/',
   }
 );
 
