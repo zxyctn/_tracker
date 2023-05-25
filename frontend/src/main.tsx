@@ -146,71 +146,76 @@ export function registerLoader() {
   return {};
 }
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      errorElement: <Error />,
+      loader: rootLoader,
+      children: [
+        {
+          path: 'd',
+          element: <Weekdays />,
+          loader: weekdaysLoader,
+        },
+        {
+          path: 'd/:weekday',
+          loader: weekdayLoader,
+          element: <Weekday />,
+        },
+        {
+          path: 'd/:weekday/g/:group',
+          loader: groupLoader,
+          element: <Group />,
+        },
+        {
+          path: 'd/:weekday/g/:group/e/:exercise',
+          loader: exerciseLoader,
+          element: <Exercise />,
+        },
+        {
+          path: 'd/:weekday/g/:group/e/:exercise/s/:set',
+          loader: setLoader,
+          element: <Set />,
+        },
+        {
+          path: 'g',
+          element: <Groups />,
+          loader: groupsLoader,
+        },
+        {
+          path: 'g/:group',
+          loader: groupLoader,
+          element: <Group />,
+        },
+        {
+          path: 'g/:group/e/:exercise',
+          loader: exerciseLoader,
+          element: <Exercise />,
+        },
+        {
+          path: 'g/:group/e/:exercise/s/:set',
+          loader: setLoader,
+          element: <Set />,
+        },
+        {
+          path: 'login',
+          loader: loginLoader,
+          element: <Login />,
+        },
+        {
+          path: 'register',
+          loader: registerLoader,
+          element: <Register />,
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <App />,
-    errorElement: <Error />,
-    loader: rootLoader,
-    children: [
-      {
-        path: 'd',
-        element: <Weekdays />,
-        loader: weekdaysLoader,
-      },
-      {
-        path: 'd/:weekday',
-        loader: weekdayLoader,
-        element: <Weekday />,
-      },
-      {
-        path: 'd/:weekday/g/:group',
-        loader: groupLoader,
-        element: <Group />,
-      },
-      {
-        path: 'd/:weekday/g/:group/e/:exercise',
-        loader: exerciseLoader,
-        element: <Exercise />,
-      },
-      {
-        path: 'd/:weekday/g/:group/e/:exercise/s/:set',
-        loader: setLoader,
-        element: <Set />,
-      },
-      {
-        path: 'g',
-        element: <Groups />,
-        loader: groupsLoader,
-      },
-      {
-        path: 'g/:group',
-        loader: groupLoader,
-        element: <Group />,
-      },
-      {
-        path: 'g/:group/e/:exercise',
-        loader: exerciseLoader,
-        element: <Exercise />,
-      },
-      {
-        path: 'g/:group/e/:exercise/s/:set',
-        loader: setLoader,
-        element: <Set />,
-      },
-      {
-        path: 'login',
-        loader: loginLoader,
-        element: <Login />,
-      },
-      {
-        path: 'register',
-        loader: registerLoader,
-        element: <Register />,
-      },
-    ],
-  },
-]);
+    basename: '/_tracker',
+  }
+);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
