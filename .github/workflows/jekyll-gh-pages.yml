@@ -9,9 +9,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
+    
 
     steps:
       - name: Checkout repo
@@ -24,8 +22,11 @@ jobs:
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
+        with:
+          working-directory: frontend
 
       - name: Build project
+        working-directory: frontend
         run: npm run build
 
       - name: Upload production-ready build files
@@ -38,9 +39,6 @@ jobs:
     name: Deploy
     needs: build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
     if: github.ref == 'refs/heads/main'
 
     steps:
