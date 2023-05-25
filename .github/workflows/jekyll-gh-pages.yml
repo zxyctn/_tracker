@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -29,12 +29,11 @@ jobs:
         working-directory: frontend
         run: npm run build
         
-      - name: Add dist
-        working-directory: frontend
-        run: git add dist -f
-        
-      - name: Commit add
-        run: git commit -m "Adding dist"
-      
-      - name: Push and deploy
-        run: git subtree push --prefix frontend/dist origin gh-pages
+      - name: Add dist and deploy
+      - uses: actions/checkout@v3
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add dist -f
+          git commit -m "generated"
+          git subtree push --prefix frontend/dist origin gh-pages
