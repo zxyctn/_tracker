@@ -35,4 +35,4 @@ jobs:
           git config user.email github-actions@github.com
           git add frontend/dist -f
           git commit -m "generated"
-          git subtree push -f --prefix frontend/dist origin gh-pages
+          git subtree push --prefix frontend/dist origin gh-pages --force
