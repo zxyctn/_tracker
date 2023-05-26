@@ -41,10 +41,10 @@ jobs:
     - uses: actions/download-artifact@master
       with:
         name: page
-        path: .
+        path: ./dist
     - uses: actions/configure-pages@v1
     - uses: actions/upload-pages-artifact@v1
       with:
-        path: .
+        path: ./dist
     - id: deployment
       uses: actions/deploy-pages@main
