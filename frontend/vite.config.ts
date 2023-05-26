@@ -6,6 +6,7 @@ export default defineConfig({
   build: {
     outDir: '../dist',
   },
+  base: '/_tracker/',
   plugins: [
     react(),
     VitePWA({
