@@ -47,6 +47,7 @@ export const actionsSlice = createSlice({
         type: '',
         pages: 0,
         page: 0,
+        id: -1,
       };
     },
     nextPage: (state) => {
