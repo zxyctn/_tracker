@@ -52,6 +52,7 @@ export function groupsLoader() {
       type: 'GROUP',
       pages: 2,
       page: 0,
+      id: -1,
     })
   );
   return groups;
@@ -100,6 +101,7 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
       type: 'SET',
       pages: 3,
       page: 0,
+      id: exercise,
     })
   );
 
@@ -132,6 +134,7 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
       type: 'EXERCISE',
       pages: 2,
       page: 0,
+      id: group,
     })
   );
 
@@ -154,6 +157,7 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
       type: 'GROUP',
       pages: 2,
       page: 0,
+      id: weekday as string,
     })
   );
 
