@@ -41,8 +41,19 @@ export const units: UnitsType = {
     { label: 'KPH', value: 'KPH' },
     { label: 'MPH', value: 'MPH' },
   ],
+
+  DUR: [
+    { label: 'MIN', value: 'M' },
+    { label: 'HRS', value: 'H' },
+  ],
+  DIS: [
+    { label: 'KM', value: 'KM' },
+    { label: 'MI', value: 'MI' },
+  ],
   E: [],
   D: [],
+  REP: [],
+  CAL: [],
 };
 
 export const labels: { [key: string]: string } = {
