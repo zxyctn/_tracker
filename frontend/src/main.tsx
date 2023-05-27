@@ -22,12 +22,26 @@ import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
 import { setAdd, addNotPossible } from './slices/actionsSlice';
+import Preferences from './routes/Preferences';
 
 export function rootLoader() {
   const { app } = store.getState();
   store.dispatch(setBreadcrumbs([]));
   store.dispatch(addNotPossible);
   return app;
+}
+
+export function preferencesLoader() {
+  store.dispatch(
+    setBreadcrumbs([
+      {
+        name: 'Preferences',
+        path: '/preferences',
+      },
+    ])
+  );
+  store.dispatch(addNotPossible);
+  return {};
 }
 
 export function weekdaysLoader() {
@@ -243,6 +257,11 @@ const router = createBrowserRouter(
           path: 'register',
           loader: registerLoader,
           element: <Register />,
+        },
+        {
+          path: 'preferences',
+          loader: preferencesLoader,
+          element: <Preferences />,
         },
       ],
     },
