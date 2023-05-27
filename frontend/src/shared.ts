@@ -114,12 +114,13 @@ export const getBreadcrumbs = (params: Params) => {
 
   const prefix = weekday ? `/d/${weekday}` : '';
 
-  const breadcrumbs = <BreadcumbType[]>[
-    weekday && {
+  const breadcrumbs = <BreadcumbType[]>[];
+
+  weekday &&
+    breadcrumbs.push({
       name: weekday,
       path: `/d/${weekday}`,
-    },
-  ];
+    });
 
   group &&
     breadcrumbs.push({
