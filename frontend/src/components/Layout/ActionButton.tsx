@@ -57,8 +57,10 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
       }
 
       dispatch(setAdd({ ...add, value: false, result: true }));
+      dispatch(setEdit({ value: false, result: null }));
     } else if (confirm.value) {
       dispatch(setConfirm({ ...confirm, value: false, result: true }));
+      dispatch(setEdit({ value: false, result: null }));
     } else {
       dispatch(setEdit({ value: true, result: true }));
     }
