@@ -3,7 +3,7 @@ import Input from '../components/Input/Input';
 import RadioGroup from '../components/Input/RadioGroup';
 import { RootState } from '../store';
 import { useDispatch } from 'react-redux';
-import { setTheme } from '../slices/appSlice';
+import { setFilterBy, setTheme } from '../slices/appSlice';
 
 const ThemeColors = ({ theme }: { theme: string }) => {
   return (
@@ -36,20 +36,45 @@ const Preferences = () => {
     },
   ];
 
+  const filterByOptions = [
+    {
+      label: 'Weekdays',
+      value: 'weekdays',
+    },
+    {
+      label: 'Groups',
+      value: 'groups',
+    },
+  ];
+
   const dispatch = useDispatch();
 
   const themeChange = (theme: string) => {
     dispatch(setTheme(theme));
   };
 
+  const filterByChange = (filter: string) => {
+    dispatch(setFilterBy(filter));
+  };
+
   return (
-    <div className='grid gap-5'>
-      <Input name='theme' type={true}>
+    <div className='grid gap-10'>
+      <Input name='theme' type={true} key='theme'>
         <RadioGroup
           edit={true}
           onChange={themeChange}
           initial={theme}
           options={themes}
+          theme={false}
+        />
+      </Input>
+
+      <Input name='filter by' type={true} key='filters'>
+        <RadioGroup
+          edit={true}
+          onChange={filterByChange}
+          initial={filterBy}
+          options={filterByOptions}
           theme={false}
         />
       </Input>
