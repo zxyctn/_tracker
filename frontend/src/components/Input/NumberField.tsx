@@ -57,6 +57,7 @@ const NumberField = ({ step, field, setId, updateValue }: NumberFieldProps) => {
         layout='flex'
         initial={field.unit}
         edit={edit}
+        theme={edit}
       />
     </div>
   );

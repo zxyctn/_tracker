@@ -9,6 +9,7 @@ const RadioGroup = ({
   edit,
   onChange,
   layout = 'grid',
+  theme = true,
 }: RadioGroupProps) => {
   const [checked, setChecked] = useState(initial);
 
@@ -26,6 +27,7 @@ const RadioGroup = ({
           checked={checked === option.value}
           changeHandler={handleChange}
           edit={edit}
+          theme={theme}
         />
       ))}
     </div>

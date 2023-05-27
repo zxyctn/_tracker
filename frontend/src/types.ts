@@ -7,6 +7,7 @@ export type InputProps = {
 type Option = {
   label: string;
   value: string;
+  component?: React.ReactNode;
 };
 
 interface MultiSelectOption extends Option {
@@ -28,6 +29,7 @@ export type RadioGroupProps = {
   initial: string;
   layout?: string;
   edit: boolean;
+  theme?: boolean;
   onChange: (option: string) => void;
 };
 
@@ -36,6 +38,7 @@ export type RadioProps = {
   checked: boolean;
   changeHandler: (option: string) => void;
   edit: boolean;
+  theme?: boolean;
 };
 
 export type RadioCircleProps = {
@@ -141,6 +144,7 @@ export type AppSliceType = {
   filterBy: string;
   user: null | UserType;
   breadcrumbs: BreadcumbType[];
+  theme: string;
 };
 
 export type EditType = {
