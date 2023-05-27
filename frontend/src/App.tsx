@@ -20,6 +20,7 @@ import type { AppSliceType } from './types';
 
 const App = () => {
   const state = useLoaderData() as AppSliceType;
+  const theme = useSelector((state: RootState) => state.app.theme);
   const confirm = useSelector(
     (state: RootState) => state.actions.confirm.value
   );
@@ -66,6 +67,12 @@ const App = () => {
       }
     }
   }, [state, navigate]);
+
+  useEffect(() => {
+    const html = document.getElementsByTagName('html')[0] as HTMLElement;
+    html.className = theme;
+    html.setAttribute('data-theme', theme);
+  }, [theme]);
 
   return (
     <>

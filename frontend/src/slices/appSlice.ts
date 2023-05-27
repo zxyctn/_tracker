@@ -9,6 +9,7 @@ const initialState = localStorageData
       filterBy: 'weekdays',
       user: null,
       breadcrumbs: <BreadcumbType[]>[],
+      theme: 'dark',
     };
 window.localStorage.setItem('app', JSON.stringify(initialState));
 
@@ -28,9 +29,14 @@ export const appSlice = createSlice({
       state.breadcrumbs = action.payload;
       window.localStorage.setItem('app', JSON.stringify(state));
     },
+    setTheme: (state, action: PayloadAction<string>) => {
+      state.theme = action.payload;
+      window.localStorage.setItem('app', JSON.stringify(state));
+    },
   },
 });
 
-export const { setFilterBy, setUser, setBreadcrumbs } = appSlice.actions;
+export const { setFilterBy, setUser, setBreadcrumbs, setTheme } =
+  appSlice.actions;
 
 export default appSlice.reducer;
