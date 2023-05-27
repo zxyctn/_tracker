@@ -20,7 +20,7 @@ const Radio = ({
       onClick={() => edit && changeHandler(option.value)}
       key={option.label}
     >
-      <div className='flex w-full justify-between items-center gap-10'>
+      <div className='flex w-full justify-between items-center gap-7'>
         <div className='flex gap-2 items-center'>
           <RadioCircle checked={checked} />
           {option.label}
