@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 
-import Input from '../components/Input';
-import NumberField from '../components/NumberField';
-import { labels } from '../shared';
+import Fields from '../components/Set/Fields';
 import { setSet } from '../slices/setsSlice';
 import { setEdit } from '../slices/actionsSlice';
 import type { RootState } from '../store';
-import type { RouteLoaderType } from '../types';
+import type { FieldType, RouteLoaderType } from '../types';
 
 const Set = () => {
   const { id } = useLoaderData() as RouteLoaderType;
@@ -33,43 +31,18 @@ const Set = () => {
     }
   }, [edit]);
 
-  return (
-    <div className='grid gap-5'>
-      {set.fields
-        .filter((f) => !f.goal)
-        .map((f) => (
-          <Input key={f.type} name={labels[f.type]} type={!edit.value}>
-            <NumberField
-              step={0.5}
-              field={f}
-              goal={f.goal || false}
-              setId={set.id}
-            />
-          </Input>
-        ))}
-      {set.fields.filter((f) => !f.goal).length && (
-        <span
-          className={`w-full text-center font-bold text-2xl ${
-            edit.value ? 'text-secondary' : 'text-primary'
-          }`}
-        >
-          ×
-        </span>
-      )}
-      {set.fields
-        .filter((f) => f.goal)
-        .map((f) => (
-          <Input key={f.type} name={labels[f.type]} type={!edit.value}>
-            <NumberField
-              step={['REP', 'CAL'].includes(f.type) ? 1 : 0.5}
-              field={f}
-              goal={true}
-              setId={set.id}
-            />
-          </Input>
-        ))}
-    </div>
-  );
+  const updateValue = (newValue: FieldType) => {
+    dispatch(
+      setSet({
+        ...set,
+        fields: set.fields.map((f) =>
+          f.type === newValue.type ? newValue : f
+        ),
+      })
+    );
+  };
+
+  return <Fields set={set} edit={edit.value} updateValue={updateValue} />;
 };
 
 export default Set;
