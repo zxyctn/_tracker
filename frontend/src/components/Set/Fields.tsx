@@ -27,7 +27,7 @@ const Fields = ({
             />
           </Input>
         ))}
-      {set.fields.filter((f) => !f.goal).length && (
+      {set.fields.filter((f) => !f.goal).length > 0 && (
         <span
           className={`w-full text-center font-bold text-2xl ${
             edit ? 'text-secondary' : 'text-primary'
