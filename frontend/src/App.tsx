@@ -8,11 +8,12 @@ import {
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useSelector } from 'react-redux';
 
-import Logo from './components/Logo';
-import Menu from './components/Menu';
-import Confirm from './components/Confirm';
-import ActionButton from './components/ActionButton';
-import Breadcrumbs from './components/Breadcrumbs';
+import Add from './components/Add/Add';
+import Logo from './components/Layout/Logo';
+import Menu from './components/Layout/Menu';
+import Confirm from './components/Layout/Confirm';
+import ActionButton from './components/Layout/ActionButton';
+import Breadcrumbs from './components/Layout/Breadcrumbs';
 import { onDragEndSet } from './shared';
 import type { RootState } from './store';
 import type { AppSliceType } from './types';
@@ -22,6 +23,7 @@ const App = () => {
   const confirm = useSelector(
     (state: RootState) => state.actions.confirm.value
   );
+  const add = useSelector((state: RootState) => state.actions.add.value);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -80,6 +82,8 @@ const App = () => {
             <div className='grow grid gap-'>
               {confirm ? (
                 <Confirm />
+              ) : add ? (
+                <Add />
               ) : (
                 <DragDropContext onDragEnd={onDragEnd}>
                   <Outlet />

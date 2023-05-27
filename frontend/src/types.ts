@@ -9,12 +9,18 @@ type Option = {
   value: string;
 };
 
+interface MultiSelectOption extends Option {
+  checked: boolean;
+}
+
 export type MultiselectProps = {
-  options: Option[];
+  options: MultiSelectOption[];
+  setOptions: (options: string[]) => void;
 };
 
 export type MultiselectOptionProps = {
-  option: Option;
+  option: MultiSelectOption;
+  setOption: (option: string) => void;
 };
 
 export type RadioGroupProps = {
@@ -45,6 +51,7 @@ export type NumberFieldProps = {
   goal: boolean;
   field: FieldType;
   setId: number;
+  updateValue: (newValue: FieldType) => void;
 };
 
 export type LogoProps = {
@@ -69,6 +76,11 @@ export type SetComponentProps = {
   selected: boolean;
   edit: boolean;
   bg: string;
+};
+
+export type DeleteZoneProps = {
+  droppableId: string;
+  type: string;
 };
 
 // Data types
@@ -138,9 +150,14 @@ export type EditType = {
 
 export type AddType = {
   value: boolean;
+  possible: boolean;
   result: null | boolean;
   type: string;
   object: SetType | ExerciseType | GroupType | null;
+  prototype: SetType | null;
+  pages: number;
+  page: number;
+  id: number | string;
 };
 
 export type ConfirmType = {

@@ -21,14 +21,12 @@ import Set from './routes/Set';
 import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
-import { setAdd } from './slices/actionsSlice';
+import { setAdd, addNotPossible } from './slices/actionsSlice';
 
 export function rootLoader() {
   const { app } = store.getState();
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(
-    setAdd({ value: false, object: null, result: null, type: '' })
-  );
+  store.dispatch(addNotPossible);
   return app;
 }
 
@@ -36,9 +34,7 @@ export function weekdaysLoader() {
   const { weekdays } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(
-    setAdd({ value: false, object: null, result: null, type: '' })
-  );
+  store.dispatch(addNotPossible);
   return weekdays;
 }
 
@@ -47,7 +43,16 @@ export function groupsLoader() {
 
   store.dispatch(setBreadcrumbs([]));
   store.dispatch(
-    setAdd({ value: true, object: null, result: null, type: 'GROUP' })
+    setAdd({
+      value: false,
+      possible: true,
+      object: null,
+      result: null,
+      prototype: null,
+      type: 'GROUP',
+      pages: 2,
+      page: 0,
+    })
   );
   return groups;
 }
@@ -65,9 +70,7 @@ export function setLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-  store.dispatch(
-    setAdd({ value: false, object: null, result: null, type: '' })
-  );
+  store.dispatch(addNotPossible);
 
   return {
     id: set,
@@ -88,7 +91,16 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
   store.dispatch(
-    setAdd({ value: true, object: null, result: null, type: 'SET' })
+    setAdd({
+      value: false,
+      possible: true,
+      object: null,
+      result: null,
+      prototype: null,
+      type: 'SET',
+      pages: 3,
+      page: 0,
+    })
   );
 
   return {
@@ -109,8 +121,18 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+
   store.dispatch(
-    setAdd({ value: true, object: null, result: null, type: 'EXERCISE' })
+    setAdd({
+      value: false,
+      possible: true,
+      object: null,
+      result: null,
+      prototype: null,
+      type: 'EXERCISE',
+      pages: 2,
+      page: 0,
+    })
   );
 
   return {
@@ -123,7 +145,16 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
   store.dispatch(
-    setAdd({ value: true, object: null, result: null, type: 'GROUP' })
+    setAdd({
+      value: false,
+      possible: true,
+      object: null,
+      result: null,
+      prototype: null,
+      type: 'GROUP',
+      pages: 2,
+      page: 0,
+    })
   );
 
   return {

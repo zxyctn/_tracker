@@ -34,12 +34,41 @@ export const actionsSlice = createSlice({
     setAdd: (state, action: PayloadAction<AddType>) => {
       state.add = action.payload;
     },
+    setAddObject: (state, action: PayloadAction<AddType['object']>) => {
+      state.add.object = action.payload;
+    },
+    addNotPossible: (state) => {
+      state.add = {
+        value: false,
+        possible: false,
+        object: null,
+        result: null,
+        prototype: null,
+        type: '',
+        pages: 0,
+        page: 0,
+      };
+    },
+    nextPage: (state) => {
+      state.add.page += 1;
+    },
+    prevPage: (state) => {
+      state.add.page -= 1;
+    },
     setConfirm: (state, action: PayloadAction<ConfirmType>) => {
       state.confirm = action.payload;
     },
   },
 });
 
-export const { setEdit, setAdd, setConfirm } = actionsSlice.actions;
+export const {
+  setEdit,
+  setAdd,
+  setAddObject,
+  prevPage,
+  nextPage,
+  addNotPossible,
+  setConfirm,
+} = actionsSlice.actions;
 
 export default actionsSlice.reducer;
