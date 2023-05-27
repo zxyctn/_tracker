@@ -19,8 +19,8 @@ import type { RootState } from './store';
 import type { AppSliceType } from './types';
 
 const App = () => {
-  const state = useLoaderData() as AppSliceType;
-  const theme = useSelector((state: RootState) => state.app.theme);
+  const app = useSelector((state: RootState) => state.app);
+  const { theme, filterBy, user } = app as AppSliceType;
   const confirm = useSelector(
     (state: RootState) => state.actions.confirm.value
   );
@@ -57,16 +57,16 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (state.user !== null && location.pathname !== '/register') {
+    if (user !== null && location.pathname !== '/register') {
       navigate('/login');
     } else if (location.pathname === '/') {
-      if (state.filterBy === 'weekdays') {
+      if (filterBy === 'weekdays') {
         navigate('/d');
       } else {
         navigate('/g');
       }
     }
-  }, [state, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     const html = document.getElementsByTagName('html')[0] as HTMLElement;
