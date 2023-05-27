@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import type { RootState } from '../store';
-import type { LogoProps } from '../types';
+import type { RootState } from '../../store';
+import type { LogoProps } from '../../types';
 
 const Logo = ({ closeMenu }: LogoProps) => {
   const edit = useSelector((state: RootState) => state.actions.edit.value);

@@ -1,5 +1,5 @@
-import { setBtnClass } from '../shared';
-import type { SetComponentProps } from '../types';
+import { setBtnClass } from '../../shared';
+import type { SetComponentProps } from '../../types';
 
 const SetFields = (props: SetComponentProps) => {
   const { set } = props;

@@ -1,5 +1,5 @@
-import Input from '../components/Input';
-import TextField from '../components/TextField';
+import Input from '../components/Input/Input';
+import TextField from '../components/Input/TextField';
 
 const Login = () => {
   return (

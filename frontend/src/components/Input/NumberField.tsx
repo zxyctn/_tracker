@@ -3,33 +3,20 @@ import { Dash, Plus } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 
 import RadioGroup from './RadioGroup';
-import store from '../store';
-import { units } from '../shared';
-import { setSet } from '../slices/setsSlice';
-import type { RootState } from '../store';
-import type { FieldType, NumberFieldProps } from '../types';
+import { units } from '../../shared';
+import type { RootState } from '../../store';
+import type { NumberFieldProps } from '../../types';
 
-const NumberField = ({ step, field, setId }: NumberFieldProps) => {
+const NumberField = ({ step, field, setId, updateValue }: NumberFieldProps) => {
   const edit = useSelector((state: RootState) => state.actions.edit.value);
-  const set = useSelector(
-    (state: RootState) => state.sets.find((s) => s.id === setId)!
+  const set = useSelector((state: RootState) =>
+    state.sets.find((s) => s.id === setId)
   );
   const [value, setValue] = useState(field.value);
 
-  const updateValue = (newValue: FieldType) => {
-    store.dispatch(
-      setSet({
-        ...set,
-        fields: set.fields.map((f) =>
-          f.type === newValue.type ? newValue : f
-        ),
-      })
-    );
-  };
-
   useEffect(() => {
     edit && setValue(field.value);
-  }, [edit, set]);
+  }, [edit, set, field]);
 
   return (
     <div className='grid gap-1'>

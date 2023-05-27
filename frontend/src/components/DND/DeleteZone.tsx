@@ -2,8 +2,8 @@ import { Droppable } from '@hello-pangea/dnd';
 import { Trash2Fill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 
-import type { RootState } from '../store';
-import type { DeleteZoneProps } from '../types';
+import type { RootState } from '../../store';
+import type { DeleteZoneProps } from '../../types';
 
 const DeleteZone = ({ droppableId, type }: DeleteZoneProps) => {
   const edit = useSelector((state: RootState) => state.actions.edit.value);

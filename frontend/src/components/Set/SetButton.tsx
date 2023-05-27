@@ -4,7 +4,7 @@ import { GripVertical } from 'react-bootstrap-icons';
 
 import SetFields from './SetFields';
 import SetGoal from './SetGoal';
-import type { SetButtonProps } from '../types';
+import type { SetButtonProps } from '../../types';
 
 const SetButton = ({ set, bg, text, edit }: SetButtonProps) => {
   const [hover, setHover] = useState(false);

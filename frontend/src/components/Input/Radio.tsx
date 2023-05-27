@@ -1,5 +1,5 @@
 import RadioCircle from './RadioCircle';
-import type { RadioProps } from '../types';
+import type { RadioProps } from '../../types';
 
 const Radio = ({ option, checked, changeHandler, edit }: RadioProps) => {
   return (

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import store from '../store';
-import { setBreadcrumbs } from '../slices/appSlice';
-import type { RootState } from '../store';
+import store from '../../store';
+import { setBreadcrumbs } from '../../slices/appSlice';
+import type { RootState } from '../../store';
 
 const Breadcrumbs = () => {
   const app = useSelector((state: RootState) => state.app);

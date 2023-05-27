@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import { getSetInfo } from '../shared';
-import type { RootState } from '../store';
+import { getSetInfo } from '../../shared';
+import type { RootState } from '../../store';
 
 const Confirm = () => {
   const config = useSelector((state: RootState) => state.actions.confirm);
