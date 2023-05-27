@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { removeSet as setRemoveSet } from './setsSlice';
+import { removeSet } from './setsSlice';
 import type { ExerciseType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('exercises');
@@ -42,21 +42,20 @@ export const exercisesSlice = createSlice({
   name: 'exercises',
   initialState: initialState,
   reducers: {
-    addExercise: (
+    addExerciseSet: (
       state,
-      action: PayloadAction<{ exercise: number; set: number; record: number }>
+      action: PayloadAction<{ exercise: number; set: number }>
     ) => {
       state = state.map((exercise) => {
         if (exercise.id === action.payload.exercise) {
           exercise.sets.push(action.payload.set);
-          exercise.history.push(action.payload.record);
+          // exercise.history.push(action.payload.record);
         }
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
-      return state;
     },
-    removeSet: (
+    removeExerciseSet: (
       state,
       action: PayloadAction<{ exercise: number; set: number }>
     ) => {
@@ -67,7 +66,7 @@ export const exercisesSlice = createSlice({
           );
           const set = exercise.sets.find((set) => set === action.payload.set);
           if (!set) {
-            setRemoveSet(action.payload.set);
+            removeSet(action.payload.set);
           }
         }
         return exercise;
@@ -90,6 +89,7 @@ export const exercisesSlice = createSlice({
   },
 });
 
-export const { addExercise, removeSet, setExercise } = exercisesSlice.actions;
+export const { addExerciseSet, removeExerciseSet, setExercise } =
+  exercisesSlice.actions;
 
 export default exercisesSlice.reducer;
