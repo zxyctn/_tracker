@@ -8,7 +8,7 @@ import { setFilterBy, setTheme } from '../slices/appSlice';
 const ThemeColors = ({ theme }: { theme: string }) => {
   return (
     <span
-      className='bg-primary-focus rounded-md flex gap-1 w-max p-2'
+      className='bg-primary-content rounded-md flex gap-1 w-max p-2'
       data-theme={theme}
     >
       <div className='bg-primary w-4 h-4'></div>
