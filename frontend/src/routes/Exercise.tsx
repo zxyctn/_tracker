@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Droppable } from '@hello-pangea/dnd';
 import { useLoaderData } from 'react-router-dom';
-import { Trash2Fill } from 'react-bootstrap-icons';
 
-import SetButton from '../components/SetButton';
-import DraggableComponent from '../components/DraggableComponent';
+import SetButton from '../components/Set/SetButton';
+import DraggableComponent from '../components/DND/DraggableComponent';
+import DeleteZone from '../components/DND/DeleteZone';
 import { getTextColors, getBgColors } from '../shared';
 import { setExercise } from '../slices/exercisesSlice';
-import { setEdit } from '../slices/actionsSlice';
-import { removeSet } from '../slices/setsSlice';
-import { removeSet as exerciseRemoveSet } from '../slices/exercisesSlice';
+import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
+import { removeExerciseSet } from '../slices/exercisesSlice';
 import type { RootState } from '../store';
-import type { RouteLoaderType } from '../types';
+import type { RouteLoaderType, SetType } from '../types';
 
 const Exercise = () => {
   const { id } = useLoaderData() as RouteLoaderType;
   const edit = useSelector((state: RootState) => state.actions.edit);
   const confirm = useSelector((state: RootState) => state.actions.confirm);
+  const add = useSelector((state: RootState) => state.actions.add);
   const exercise = useSelector(
     (state: RootState) => state.exercises.find((e) => e.id === id)!
   );
@@ -44,18 +44,38 @@ const Exercise = () => {
 
   useEffect(() => {
     if (!confirm.value && confirm.result) {
-      dispatch(removeSet(confirm.id));
-      dispatch(exerciseRemoveSet({ exercise: exercise.id, set: confirm.id }));
-    } else if (edit.value && edit.result === false) {
-      dispatch(setExercise({ exercise: id as number, value: initialExercise }));
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(removeExerciseSet({ exercise: exercise.id, set: confirm.id }));
+      dispatch(setConfirm({ value: false, result: null, id: -1, type: '' }));
+    } else if (confirm.result === false) {
+      dispatch(setConfirm({ value: false, result: null, id: -1, type: '' }));
     }
-  }, [edit]);
+  }, [confirm]);
+
+  useEffect(() => {
+    const prototype =
+      exerciseSets.length > 0 ? exerciseSets[exerciseSets.length - 1] : null;
+
+    let object: SetType = {
+      id: +new Date(),
+      fields: prototype ? [...prototype.fields] : [],
+    };
+
+    dispatch(
+      setAdd({
+        ...add,
+        prototype,
+        object,
+        pages: 3,
+        page: prototype ? 2 : 0,
+        id: exercise.id,
+      })
+    );
+  }, []);
 
   return (
     <>
       <Droppable droppableId={`exercise-${id}`} type='EXERCISE'>
-        {(provided, snapshot) => (
+        {(provided) => (
           <div
             className='grid gap-1 overflow-x-auto scrollbar-hide'
             ref={provided.innerRef}
@@ -85,31 +105,7 @@ const Exercise = () => {
         )}
       </Droppable>
 
-      <Droppable droppableId={`exercise-delete`} type='EXERCISE'>
-        {(provided, snapshot) => (
-          <div
-            className='fixed bottom-0 left-0 w-screen max-w-fit flex justify-left items-baseline p-5 z-50'
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-          >
-            <div
-              className={` transition-all ease-in-out duration-500 btn btn-error p-0 aspect-square rounded-xl font-bold text-2xl z-50 
-                ${edit.value ? '' : 'hidden'}
-                ${
-                  snapshot.isDraggingOver
-                    ? 'w-full aspect-square h-full max-h-64'
-                    : 'w-min'
-                }
-              `}
-            >
-              <div className=''>
-                <Trash2Fill size={24} />
-              </div>
-            </div>
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <DeleteZone droppableId='exercise-delete' type='EXERCISE' />
     </>
   );
 };
