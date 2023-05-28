@@ -49,7 +49,16 @@ const ExerciseSets = () => {
 
     let object: SetType = {
       id: +new Date(),
-      fields: prototype ? [...prototype.fields] : [],
+      fields: prototype
+        ? [...prototype.fields]
+        : [
+            {
+              goal: true,
+              value: 0,
+              type: 'REP',
+              unit: '',
+            },
+          ],
     };
 
     dispatch(
