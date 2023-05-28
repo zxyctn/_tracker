@@ -90,7 +90,6 @@ const AddSet = () => {
   }, [object.fields]);
 
   useEffect(() => {
-    console.log(add.object);
     setObject(add.object as SetType);
   }, [add.object]);
 
