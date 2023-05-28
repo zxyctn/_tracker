@@ -19,13 +19,17 @@ import {
 } from '../../slices/actionsSlice';
 import { addSet, removeSet } from '../../slices/setsSlice';
 import {
+  addExercise,
   addExerciseSet,
   removeExercise,
   removeExerciseSet,
 } from '../../slices/exercisesSlice';
 import type { RootState } from '../../store';
-import type { ActionButtonProps, SetType } from '../../types';
-import { removeExerciseGroup } from '../../slices/groupsSlice';
+import type { ActionButtonProps, ExerciseType, SetType } from '../../types';
+import {
+  addExerciseGroup,
+  removeExerciseGroup,
+} from '../../slices/groupsSlice';
 
 // TODO: Rename the file to ActionButtons.tsx
 const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
@@ -57,14 +61,23 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const doneFn = () => {
     if (add.value && add.object != null) {
       switch (add.type) {
-        case 'SET':
+        case 'SET': {
           dispatch(addSet(add.object as SetType));
           dispatch(
             addExerciseSet({ exercise: add.id as number, set: add.object.id })
           );
-          break;
+        }
+        case 'EXERCISE': {
+          dispatch(addExercise(add.object as ExerciseType));
+          dispatch(
+            addExerciseGroup({
+              group: add.id as number,
+              exercise: add.object.id as number,
+            })
+          );
+        }
       }
-      dispatch(setAdd({ ...add, value: false, result: true }));
+      dispatch(setAdd({ ...add, object: null, value: false, result: true }));
       dispatch(setEdit({ value: false, result: null }));
     } else if (confirm.value) {
       switch (confirm.type) {

@@ -70,6 +70,10 @@ export const exercisesSlice = createSlice({
       window.localStorage.setItem('exercises', JSON.stringify(state));
       return state;
     },
+    addExercise: (state, action: PayloadAction<ExerciseType>) => {
+      state.push(action.payload);
+      window.localStorage.setItem('exercises', JSON.stringify(state));
+    },
     setExercise: (
       state,
       action: PayloadAction<{ exercise: number; value: ExerciseType }>
@@ -94,6 +98,7 @@ export const exercisesSlice = createSlice({
 export const {
   addExerciseSet,
   removeExerciseSet,
+  addExercise,
   setExercise,
   removeExercise,
 } = exercisesSlice.actions;

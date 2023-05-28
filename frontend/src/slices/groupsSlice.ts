@@ -65,10 +65,28 @@ export const groupsSlice = createSlice({
       window.localStorage.setItem('groups', JSON.stringify(state));
       return state;
     },
+    addExerciseGroup: (
+      state,
+      action: PayloadAction<{ group: number; exercise: number }>
+    ) => {
+      state = state.map((group) => {
+        if (group.id === action.payload.group) {
+          group.exercises.push(action.payload.exercise);
+        }
+        return group;
+      });
+
+      window.localStorage.setItem('groups', JSON.stringify(state));
+    },
   },
 });
 
-export const { addGroup, removeGroup, removeExerciseGroup, setGroup } =
-  groupsSlice.actions;
+export const {
+  addGroup,
+  removeGroup,
+  addExerciseGroup,
+  removeExerciseGroup,
+  setGroup,
+} = groupsSlice.actions;
 
 export default groupsSlice.reducer;
