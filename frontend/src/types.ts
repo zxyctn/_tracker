@@ -47,6 +47,10 @@ export type RadioCircleProps = {
 
 export type TextFieldProps = {
   type?: string;
+  initial?: string;
+  changeHandler?: (newValue: string) => void;
+  disabled?: boolean;
+  edit?: boolean;
 };
 
 export type NumberFieldProps = {
