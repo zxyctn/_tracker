@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { GroupType } from '../types';
+import { removeExercise } from './exercisesSlice';
 
 const localStorageData = window?.localStorage?.getItem('groups');
 const initialState = localStorageData
@@ -28,19 +29,29 @@ export const groupsSlice = createSlice({
       window.localStorage.setItem('groups', JSON.stringify(state));
     },
     removeGroup: (state, action: PayloadAction<{ id: number }>) => {
+      const group = state.find((group) => group.id === action.payload.id);
+      if (!group) return;
+
+      group.exercises.forEach((exercise) => {
+        removeExercise({ id: exercise });
+      });
+
       state = state.filter((group) => group.id !== action.payload.id);
       window.localStorage.setItem('groups', JSON.stringify(state));
     },
-    editGroup: (
+    removeExerciseGroup: (
       state,
-      action: PayloadAction<{ id: number; value: GroupType }>
+      action: PayloadAction<{ group: number; exercise: number }>
     ) => {
       state = state.map((group) => {
-        if (group.id === action.payload.id) {
-          group = action.payload.value;
+        if (group.id === action.payload.group) {
+          group.exercises = group.exercises.filter(
+            (exercise) => exercise !== action.payload.exercise
+          );
         }
         return group;
       });
+
       window.localStorage.setItem('groups', JSON.stringify(state));
     },
     setGroup: (state, action: PayloadAction<{ value: GroupType }>) => {
@@ -54,36 +65,10 @@ export const groupsSlice = createSlice({
       window.localStorage.setItem('groups', JSON.stringify(state));
       return state;
     },
-    addExercise: (
-      state,
-      action: PayloadAction<{ id: number; exercise: number }>
-    ) => {
-      state = state.map((group) => {
-        if (group.id === action.payload.id) {
-          group.exercises.push(action.payload.exercise);
-        }
-        return group;
-      });
-      window.localStorage.setItem('groups', JSON.stringify(state));
-    },
-    removeExercise: (
-      state,
-      action: PayloadAction<{ groupId: number; exercise: number }>
-    ) => {
-      state = state.map((group) => {
-        if (group.id === action.payload.groupId) {
-          group.exercises = group.exercises.filter(
-            (exercise) => exercise !== action.payload.exercise
-          );
-        }
-        return group;
-      });
-      window.localStorage.setItem('groups', JSON.stringify(state));
-    },
   },
 });
 
-export const { addGroup, removeGroup, setGroup, addExercise, removeExercise } =
+export const { addGroup, removeGroup, removeExerciseGroup, setGroup } =
   groupsSlice.actions;
 
 export default groupsSlice.reducer;

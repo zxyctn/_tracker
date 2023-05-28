@@ -121,6 +121,7 @@ export const setsSlice = createSlice({
     removeSet: (state, action: PayloadAction<number>) => {
       state = state.filter((set) => set.id !== action.payload);
       window.localStorage.setItem('sets', JSON.stringify(state));
+      return state;
     },
     addSet: (state, action: PayloadAction<SetType>) => {
       state = [...state, action.payload];

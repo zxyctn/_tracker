@@ -64,14 +64,11 @@ export const exercisesSlice = createSlice({
           exercise.sets = exercise.sets.filter(
             (set) => set !== action.payload.set
           );
-          const set = exercise.sets.find((set) => set === action.payload.set);
-          if (!set) {
-            removeSet(action.payload.set);
-          }
         }
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
+      return state;
     },
     setExercise: (
       state,
@@ -86,10 +83,19 @@ export const exercisesSlice = createSlice({
       window.localStorage.setItem('exercises', JSON.stringify(state));
       return state;
     },
+    removeExercise: (state, action: PayloadAction<{ id: number }>) => {
+      state = state.filter((e) => e.id !== action.payload.id);
+      window.localStorage.setItem('exercises', JSON.stringify(state));
+      return state;
+    },
   },
 });
 
-export const { addExerciseSet, removeExerciseSet, setExercise } =
-  exercisesSlice.actions;
+export const {
+  addExerciseSet,
+  removeExerciseSet,
+  setExercise,
+  removeExercise,
+} = exercisesSlice.actions;
 
 export default exercisesSlice.reducer;
