@@ -5,6 +5,7 @@ import type { RootState } from '../../store';
 
 const Confirm = () => {
   const config = useSelector((state: RootState) => state.actions.confirm);
+  const exercises = useSelector((state: RootState) => state.exercises);
   const { id, type, value } = config;
   let msg = '';
 
@@ -13,7 +14,7 @@ const Confirm = () => {
       msg = getSetInfo(id);
       break;
     case 'EXERCISE':
-      msg = '....';
+      msg = exercises.find((e) => e.id === id)!.name;
       break;
     default:
       break;

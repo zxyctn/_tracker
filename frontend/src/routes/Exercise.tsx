@@ -12,6 +12,7 @@ import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
 import { removeExerciseSet } from '../slices/exercisesSlice';
 import type { RootState } from '../store';
 import type { RouteLoaderType, SetType } from '../types';
+import { removeSet } from '../slices/setsSlice';
 
 const Exercise = () => {
   const { id } = useLoaderData() as RouteLoaderType;
@@ -43,15 +44,6 @@ const Exercise = () => {
   }, [edit]);
 
   useEffect(() => {
-    if (!confirm.value && confirm.result) {
-      dispatch(removeExerciseSet({ exercise: exercise.id, set: confirm.id }));
-      dispatch(setConfirm({ value: false, result: null, id: -1, type: '' }));
-    } else if (confirm.result === false) {
-      dispatch(setConfirm({ value: false, result: null, id: -1, type: '' }));
-    }
-  }, [confirm]);
-
-  useEffect(() => {
     const prototype =
       exerciseSets.length > 0 ? exerciseSets[exerciseSets.length - 1] : null;
 
@@ -68,6 +60,14 @@ const Exercise = () => {
         pages: 2,
         page: prototype ? 1 : 0,
         id: exercise.id,
+      })
+    );
+
+    dispatch(
+      setConfirm({
+        ...confirm,
+        parent: id as number,
+        type: 'SET',
       })
     );
   }, []);

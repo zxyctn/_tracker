@@ -10,13 +10,16 @@ import DraggableComponent from '../components/DND/DraggableComponent';
 import DeleteZone from '../components/DND/DeleteZone';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { setAdd, setEdit } from '../slices/actionsSlice';
-import { setGroup } from '../slices/groupsSlice';
+import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
+import { removeExerciseGroup, setGroup } from '../slices/groupsSlice';
+import { removeExercise } from '../slices/exercisesSlice';
+import { removeSet } from '../slices/setsSlice';
 
 const Group = () => {
   const { id } = useLoaderData() as RouteLoaderType;
   const edit = useSelector((state: RootState) => state.actions.edit);
   const add = useSelector((state: RootState) => state.actions.add);
+  const confirm = useSelector((state: RootState) => state.actions.confirm);
   const group = useSelector(
     (state: RootState) => state.groups.find((g) => g.id === id)!
   );
@@ -38,15 +41,6 @@ const Group = () => {
     }
   }, [edit]);
 
-  // useEffect(() => {
-  //   if (!confirm.value && confirm.result) {
-  //     dispatch(removeExerciseSet({ exercise: exercise.id, set: confirm.id }));
-  //     dispatch(setConfirm({ value: false, result: null, id: -1, type: '' }));
-  //   } else if (confirm.result === false) {
-  //     dispatch(setConfirm({ value: false, result: null, id: -1, type: '' }));
-  //   }
-  // }, [confirm]);
-
   useEffect(() => {
     dispatch(
       setAdd({
@@ -62,6 +56,14 @@ const Group = () => {
         pages: 1,
         page: 0,
         id: group.id,
+      })
+    );
+
+    dispatch(
+      setConfirm({
+        ...confirm,
+        parent: id as number,
+        type: 'EXERCISE',
       })
     );
   }, []);
