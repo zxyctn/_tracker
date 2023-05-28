@@ -170,6 +170,7 @@ export type ConfirmType = {
   // msg: string;
   type: string;
   id: number;
+  parent: number;
 };
 
 export type ActionsSliceType = {

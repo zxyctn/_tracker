@@ -19,12 +19,18 @@ export const actionsSlice = createSlice({
       result: null,
       type: '',
       object: null,
+      prototype: null,
+      possible: false,
+      pages: 0,
+      page: 0,
+      id: -1,
     },
     confirm: {
       value: false,
       result: null,
       type: '',
       id: -1,
+      parent: -1,
     },
   },
   reducers: {
@@ -58,6 +64,7 @@ export const actionsSlice = createSlice({
     },
     setConfirm: (state, action: PayloadAction<ConfirmType>) => {
       state.confirm = action.payload;
+      return state;
     },
   },
 });

@@ -173,7 +173,6 @@ export const onDragEndSet = (result: DropResult) => {
     if (destination.index === source.index) return;
 
     const exercise = exercises.find((e) => e.id === exerciseID);
-    console.log(exercise);
     if (!exercise) return;
 
     const orderedSets = reorder(exercise.sets, source.index, destination.index);
@@ -193,6 +192,7 @@ export const onDragEndSet = (result: DropResult) => {
 
     store.dispatch(
       setConfirm({
+        ...store.getState().actions.confirm,
         value: true,
         result: null,
         type: 'SET',
@@ -215,7 +215,6 @@ export const onDragEndExercise = (result: DropResult) => {
     if (destination.index === source.index) return;
 
     const group = groups.find((g) => g.id === groupID);
-    console.log(group);
     if (!group) return;
 
     const orderedSets = reorder(
@@ -238,6 +237,7 @@ export const onDragEndExercise = (result: DropResult) => {
 
     store.dispatch(
       setConfirm({
+        ...store.getState().actions.confirm,
         value: true,
         result: null,
         type: 'EXERCISE',
