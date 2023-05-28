@@ -43,7 +43,7 @@ const SetButton = ({ set, bg, text, edit }: SetButtonProps) => {
       onClick={clickHandler}
     >
       <div className='w-full h-full'>
-        <div className='flex w-full justify-between gap-5 items-center relative'>
+        <div className='flex w-full justify-between gap-5 items-center relative hover:!text-base-100'>
           {edit && (
             <span
               className={`absolute -left-6 bottom-0.5 ${hover ? 'hidden' : ''}`}
