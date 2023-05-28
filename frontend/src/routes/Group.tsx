@@ -91,7 +91,9 @@ const Group = () => {
                     edit={edit.value}
                   >
                     <Link
-                      to={`e/${exercise.id}`}
+                      to={
+                        edit.value ? `e/${exercise.id}` : `e/${exercise.id}/s`
+                      }
                       className='text-center w-full'
                     >
                       {exercise.name}

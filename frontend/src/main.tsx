@@ -16,13 +16,14 @@ import Weekdays from './routes/Weekdays';
 import Weekday from './routes/Weekday';
 import Groups from './routes/Groups';
 import Group from './routes/Group';
-import Exercise from './routes/Exercise';
+import ExerciseSets from './routes/ExerciseSets';
 import Set from './routes/Set';
 import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
 import { setAdd, addNotPossible } from './slices/actionsSlice';
 import Preferences from './routes/Preferences';
+import Exercise from './routes/Exercise';
 
 export function rootLoader() {
   const { app } = store.getState();
@@ -218,10 +219,16 @@ const router = createBrowserRouter(
           loader: groupLoader,
           element: <Group />,
         },
+
         {
           path: 'd/:weekday/g/:group/e/:exercise',
           loader: exerciseLoader,
           element: <Exercise />,
+        },
+        {
+          path: 'd/:weekday/g/:group/e/:exercise/s',
+          loader: exerciseLoader,
+          element: <ExerciseSets />,
         },
         {
           path: 'd/:weekday/g/:group/e/:exercise/s/:set',
@@ -242,6 +249,11 @@ const router = createBrowserRouter(
           path: 'g/:group/e/:exercise',
           loader: exerciseLoader,
           element: <Exercise />,
+        },
+        {
+          path: 'g/:group/e/:exercise/s',
+          loader: exerciseLoader,
+          element: <ExerciseSets />,
         },
         {
           path: 'g/:group/e/:exercise/s/:set',
