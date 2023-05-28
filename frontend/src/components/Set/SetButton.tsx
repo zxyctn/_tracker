@@ -22,7 +22,7 @@ const SetButton = ({ set, bg, text, edit }: SetButtonProps) => {
 
   const clickHandler = () => {
     if (edit) {
-      navigate(`s/${set.id}`);
+      navigate(`${set.id}`);
       setSelected(false);
     } else {
       setSelected((prev) => !prev);
