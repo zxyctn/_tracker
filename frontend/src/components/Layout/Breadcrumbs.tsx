@@ -30,7 +30,7 @@ const Breadcrumbs = () => {
             className={`flex gap-1 font-semibold whitespace-nowrap transition ease-linear duration-300  ${
               index === app.breadcrumbs.length - 1
                 ? `${edit ? 'text-secondary' : 'text-primary'}`
-                : `${edit ? 'text-secondary/20' : 'text-primary/20'}`
+                : `${edit ? 'text-secondary/30' : 'text-primary/30'}`
             }`}
             onClick={() => handleNavigation(breadcrumb)}
           >
