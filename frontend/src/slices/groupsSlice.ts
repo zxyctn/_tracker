@@ -23,14 +23,18 @@ export const groupsSlice = createSlice({
   name: 'groups',
   initialState: initialState,
   reducers: {
-    add: (state, action: PayloadAction<{ group: GroupType }>) => {
+    addGroup: (state, action: PayloadAction<{ group: GroupType }>) => {
       state.push(action.payload.group);
+      window.localStorage.setItem('groups', JSON.stringify(state));
     },
-    remove: (state, action: PayloadAction<{ id: number }>) => {
+    removeGroup: (state, action: PayloadAction<{ id: number }>) => {
       state = state.filter((group) => group.id !== action.payload.id);
       window.localStorage.setItem('groups', JSON.stringify(state));
     },
-    edit: (state, action: PayloadAction<{ id: number; value: GroupType }>) => {
+    editGroup: (
+      state,
+      action: PayloadAction<{ id: number; value: GroupType }>
+    ) => {
       state = state.map((group) => {
         if (group.id === action.payload.id) {
           group = action.payload.value;
@@ -38,6 +42,17 @@ export const groupsSlice = createSlice({
         return group;
       });
       window.localStorage.setItem('groups', JSON.stringify(state));
+    },
+    setGroup: (state, action: PayloadAction<{ value: GroupType }>) => {
+      state = state.map((group) => {
+        if (group.id === action.payload.value.id) {
+          group = action.payload.value;
+        }
+        return group;
+      });
+
+      window.localStorage.setItem('groups', JSON.stringify(state));
+      return state;
     },
     addExercise: (
       state,
@@ -68,6 +83,7 @@ export const groupsSlice = createSlice({
   },
 });
 
-export const { add, remove, addExercise, removeExercise } = groupsSlice.actions;
+export const { addGroup, removeGroup, setGroup, addExercise, removeExercise } =
+  groupsSlice.actions;
 
 export default groupsSlice.reducer;

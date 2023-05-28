@@ -5,6 +5,7 @@ import store from './store';
 import { setExercise } from './slices/exercisesSlice';
 import { setConfirm } from './slices/actionsSlice';
 import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
+import { setGroup } from './slices/groupsSlice';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -196,6 +197,51 @@ export const onDragEndSet = (result: DropResult) => {
         result: null,
         type: 'SET',
         id: setID,
+      })
+    );
+  }
+};
+
+export const onDragEndExercise = (result: DropResult) => {
+  const { exercises, groups } = store.getState();
+  const { destination, source } = result;
+
+  if (!destination) return;
+
+  const groupID = parseInt(extractID(source.droppableId, 'group'));
+  const exerciseID = parseInt(extractID(result.draggableId, 'exercise'));
+
+  if (destination.droppableId === source.droppableId) {
+    if (destination.index === source.index) return;
+
+    const group = groups.find((g) => g.id === groupID);
+    console.log(group);
+    if (!group) return;
+
+    const orderedSets = reorder(
+      group.exercises,
+      source.index,
+      destination.index
+    );
+
+    store.dispatch(
+      setGroup({
+        value: {
+          ...group,
+          exercises: orderedSets,
+        },
+      })
+    );
+  } else {
+    const exercise = exercises.find((e) => e.id === exerciseID);
+    if (!exercise) return;
+
+    store.dispatch(
+      setConfirm({
+        value: true,
+        result: null,
+        type: 'EXERCISE',
+        id: exerciseID,
       })
     );
   }

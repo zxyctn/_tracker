@@ -14,7 +14,7 @@ import Menu from './components/Layout/Menu';
 import Confirm from './components/Layout/Confirm';
 import ActionButton from './components/Layout/ActionButton';
 import Breadcrumbs from './components/Layout/Breadcrumbs';
-import { onDragEndSet } from './shared';
+import { onDragEndExercise, onDragEndSet } from './shared';
 import type { RootState } from './store';
 import type { AppSliceType } from './types';
 
@@ -50,7 +50,8 @@ const App = () => {
     switch (type) {
       case 'EXERCISE':
         onDragEndSet(result);
-
+      case 'GROUP':
+        onDragEndExercise(result);
       default:
         break;
     }
