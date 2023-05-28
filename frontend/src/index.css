@@ -9,6 +9,9 @@ html {
 }
 
 @layer components {
+  .today {
+    @apply h-min w-full btn btn-primary text-3xl transition-all !text-white dark:!text-black ease-linear duration-100;
+  }
   .coloredBtn {
     @apply h-min w-full btn btn-ghost hover:bg-primary hover:text-white dark:hover:text-black text-3xl transition-all ease-linear duration-100;
   }
