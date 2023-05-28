@@ -97,23 +97,24 @@ const AddSet = () => {
   return (
     <>
       {add.page === 0 && (
-        <div>
+        <div className='grid gap-5 md:grid-cols-3 items-center'>
           <Input name='fields' type={false}>
             <Multiselect options={fieldTypes} setOptions={setFields} />
+          </Input>
+          <span className='w-full text-center font-bold text-2xl text-secondary'>
+            ×
+          </span>
+          <Input name='unit' type={false}>
+            <RadioGroup
+              edit={true}
+              initial={goalType}
+              options={goalTypes}
+              onChange={setGoal}
+            />
           </Input>
         </div>
       )}
       {add.page === 1 && (
-        <Input name='unit' type={false}>
-          <RadioGroup
-            edit={true}
-            initial={goalType}
-            options={goalTypes}
-            onChange={setGoal}
-          />
-        </Input>
-      )}
-      {add.page === 2 && (
         <Fields edit={true} set={object} updateValue={updateValue} />
       )}
     </>

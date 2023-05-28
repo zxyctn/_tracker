@@ -65,8 +65,8 @@ const Exercise = () => {
         ...add,
         prototype,
         object,
-        pages: 3,
-        page: prototype ? 2 : 0,
+        pages: 2,
+        page: prototype ? 1 : 0,
         id: exercise.id,
       })
     );

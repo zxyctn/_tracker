@@ -113,7 +113,7 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
       result: null,
       prototype: null,
       type: 'SET',
-      pages: 3,
+      pages: 2,
       page: 0,
       id: exercise,
     })
