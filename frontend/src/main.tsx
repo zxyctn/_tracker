@@ -92,8 +92,38 @@ export function setLoader({ params }: LoaderFunctionArgs) {
     id: set,
   };
 }
-
 export function exerciseLoader({ params }: LoaderFunctionArgs) {
+  const { groups } = store.getState();
+  const group = parseInt(params.group as string);
+  const exercise = parseInt(params.exercise as string);
+
+  if (!groups.find((g) => g.id === group)?.exercises.includes(exercise)) {
+    throw new Response('Unauthorized', {
+      status: 401,
+      statusText: 'Unauthorized',
+    });
+  }
+
+  store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(
+    setAdd({
+      value: false,
+      possible: false,
+      object: null,
+      result: null,
+      prototype: null,
+      type: 'SET',
+      pages: 2,
+      page: 0,
+      id: exercise,
+    })
+  );
+
+  return {
+    id: exercise,
+  };
+}
+export function exerciseSetsLoader({ params }: LoaderFunctionArgs) {
   const { groups } = store.getState();
   const group = parseInt(params.group as string);
   const exercise = parseInt(params.exercise as string);
@@ -227,7 +257,7 @@ const router = createBrowserRouter(
         },
         {
           path: 'd/:weekday/g/:group/e/:exercise/s',
-          loader: exerciseLoader,
+          loader: exerciseSetsLoader,
           element: <ExerciseSets />,
         },
         {
@@ -252,7 +282,7 @@ const router = createBrowserRouter(
         },
         {
           path: 'g/:group/e/:exercise/s',
-          loader: exerciseLoader,
+          loader: exerciseSetsLoader,
           element: <ExerciseSets />,
         },
         {
