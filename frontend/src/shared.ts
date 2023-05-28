@@ -132,7 +132,7 @@ export const getBreadcrumbs = (params: Params) => {
   exercise &&
     breadcrumbs.push({
       name: exercises.find((e) => e.id === parseInt(exercise))?.name || '',
-      path: `${prefix}/g/${group}/e/${exercise}`,
+      path: `${prefix}/g/${group}/e/${exercise}/s`,
     });
 
   set &&
