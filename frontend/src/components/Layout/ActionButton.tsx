@@ -17,14 +17,23 @@ import {
   setConfirm,
   setEdit,
 } from '../../slices/actionsSlice';
-import { addSet } from '../../slices/setsSlice';
-import { addExerciseSet } from '../../slices/exercisesSlice';
+import { addSet, removeSet } from '../../slices/setsSlice';
+import {
+  addExerciseSet,
+  removeExercise,
+  removeExerciseSet,
+} from '../../slices/exercisesSlice';
 import type { RootState } from '../../store';
 import type { ActionButtonProps, SetType } from '../../types';
+import { removeExerciseGroup } from '../../slices/groupsSlice';
 
 // TODO: Rename the file to ActionButtons.tsx
 const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const [expanded, setExpanded] = useState(false);
+
+  const groups = useSelector((state: RootState) => state.groups);
+  const exercises = useSelector((state: RootState) => state.exercises);
+  const sets = useSelector((state: RootState) => state.sets);
 
   const edit = useSelector((state: RootState) => state.actions.edit);
   const add = useSelector((state: RootState) => state.actions.add);
@@ -55,11 +64,31 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
           );
           break;
       }
-
       dispatch(setAdd({ ...add, value: false, result: true }));
       dispatch(setEdit({ value: false, result: null }));
     } else if (confirm.value) {
-      dispatch(setConfirm({ ...confirm, value: false, result: true }));
+      switch (confirm.type) {
+        case 'SET': {
+          dispatch(removeSet(confirm.id));
+          dispatch(
+            removeExerciseSet({ exercise: confirm.parent, set: confirm.id })
+          );
+          break;
+        }
+        case 'EXERCISE': {
+          const exercise = exercises.find((e) => e.id === confirm.id)!;
+          exercise.sets.forEach((set) => {
+            dispatch(removeSet(set));
+          });
+          dispatch(removeExercise({ id: confirm.id }));
+          dispatch(
+            removeExerciseGroup({ group: confirm.parent, exercise: confirm.id })
+          );
+          break;
+        }
+      }
+
+      dispatch(setConfirm({ ...confirm, value: false, result: null }));
       dispatch(setEdit({ value: false, result: null }));
     } else {
       dispatch(setEdit({ value: true, result: true }));
