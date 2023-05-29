@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const Menu = ({ closeMenu }: { closeMenu: () => void }) => {
   const components = [
     <Link to={'/preferences'}>Preferences</Link>,
-    <Link to={'/stats'}>Statistics</Link>,
-    'Log Out', // TODO: Add log out button with a confirm modal
+    // <Link to={'/stats'}>Statistics</Link>,
+    // 'Log Out', // TODO: Add log out button with a confirm modal
     <Link to={'/register'}>Register</Link>,
     <Link to={'/login'}>Log in</Link>,
   ];
