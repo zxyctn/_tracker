@@ -6,6 +6,7 @@ import { setExercise } from './slices/exercisesSlice';
 import { setConfirm } from './slices/actionsSlice';
 import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
 import { setGroup } from './slices/groupsSlice';
+import { setWeekday } from './slices/weekdaysSlice';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',
@@ -242,6 +243,48 @@ export const onDragEndExercise = (result: DropResult) => {
         result: null,
         type: 'EXERCISE',
         id: exerciseID,
+      })
+    );
+  }
+};
+
+export const onDragEndGroup = (result: DropResult) => {
+  const { weekdays, groups } = store.getState();
+  const { destination, source } = result;
+
+  if (!destination) return;
+
+  const weekdayID = source.droppableId;
+  const groupID = parseInt(extractID(result.draggableId, 'group'));
+
+  if (destination.droppableId === source.droppableId) {
+    if (destination.index === source.index) return;
+
+    const weekday = weekdays[weekdayID];
+
+    const orderedSets = reorder(
+      weekday.groups,
+      source.index,
+      destination.index
+    );
+
+    store.dispatch(
+      setWeekday({
+        ...weekday,
+        groups: orderedSets,
+      })
+    );
+  } else {
+    const group = groups.find((g) => g.id === groupID);
+    if (!group) return;
+
+    store.dispatch(
+      setConfirm({
+        ...store.getState().actions.confirm,
+        value: true,
+        result: null,
+        type: 'GROUP',
+        id: groupID,
       })
     );
   }

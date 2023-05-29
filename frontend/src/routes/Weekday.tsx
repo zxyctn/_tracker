@@ -18,9 +18,10 @@ const Weekday = () => {
   const add = useSelector((state: RootState) => state.actions.add);
   const edit = useSelector((state: RootState) => state.actions.edit);
   const confirm = useSelector((state: RootState) => state.actions.confirm);
+  const groups = useSelector((state: RootState) => state.groups);
   const weekday = useSelector((state: RootState) => state.weekdays[id]);
-  const groups = useSelector((state: RootState) =>
-    state.groups.filter((g) => weekday.groups.includes(g.id))
+  const weekdayGroups = useSelector((state: RootState) =>
+    weekday.groups.map((g) => groups.find((group) => group.id === g)!)
   );
   const textColors = getTextColors(groups.length);
 
@@ -58,7 +59,7 @@ const Weekday = () => {
     dispatch(
       setConfirm({
         ...confirm,
-        parent: id as number,
+        parent: id as string,
         type: 'GROUP',
       })
     );
@@ -73,8 +74,8 @@ const Weekday = () => {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {groups.length > 0 ? (
-              groups.map((g, index) => (
+            {weekdayGroups.length > 0 ? (
+              weekdayGroups.map((g, index) => (
                 <DraggableComponent
                   id={`group-${g.id}`}
                   index={index}
