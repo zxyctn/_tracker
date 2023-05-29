@@ -38,11 +38,11 @@ const Weekday = () => {
 
   useEffect(() => {
     if (edit.value && edit.result) {
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
       setInitalWeekday(weekday);
     } else if (edit.value && edit.result === false) {
       dispatch(setWeekday(initialWeekday));
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
     }
   }, [edit]);
 

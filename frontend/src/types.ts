@@ -154,6 +154,7 @@ export type AppSliceType = {
 export type EditType = {
   value: boolean;
   result: null | boolean;
+  possible: boolean;
 };
 
 export type AddType = {

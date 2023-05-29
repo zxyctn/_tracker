@@ -36,10 +36,10 @@ const ExerciseSets = () => {
 
   useEffect(() => {
     if (edit.value && edit.result) {
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
     } else if (edit.value && edit.result === false) {
       dispatch(setExercise({ exercise: id as number, value: initialExercise }));
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
     }
   }, [edit]);
 

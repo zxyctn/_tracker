@@ -20,7 +20,7 @@ const Set = () => {
   const dispatch = useDispatch();
 
   const editFn = () => {
-    dispatch(setEdit({ value: false, result: null }));
+    dispatch(setEdit({ ...edit, value: false, result: null }));
     navigate(-1);
   };
 

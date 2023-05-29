@@ -35,11 +35,11 @@ const Group = () => {
 
   useEffect(() => {
     if (edit.value && edit.result) {
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
       navigate(-1);
     } else if (edit.value && edit.result === false) {
       dispatch(setGroup({ value: initialGroup }));
-      dispatch(setEdit({ value: false, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
       navigate(-1);
     }
   }, [edit]);

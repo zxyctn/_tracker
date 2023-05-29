@@ -22,14 +22,13 @@ import Set from './routes/Set';
 import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
-import { setAdd, addNotPossible } from './slices/actionsSlice';
+import { setAdd, addNotPossible, setEdit } from './slices/actionsSlice';
 import Preferences from './routes/Preferences';
 import Exercise from './routes/Exercise';
 
 export function rootLoader() {
   const { app } = store.getState();
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(addNotPossible());
   return app;
 }
 
@@ -43,6 +42,9 @@ export function preferencesLoader() {
     ])
   );
   store.dispatch(addNotPossible());
+  store.dispatch(
+    setEdit({ ...store.getState().actions.edit, possible: false })
+  );
   return {};
 }
 
@@ -50,6 +52,7 @@ export function weekdaysLoader() {
   const { weekdays } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(addNotPossible());
   return weekdays;
 }
@@ -59,6 +62,9 @@ export function groupsLoader() {
 
   store.dispatch(setBreadcrumbs([]));
   store.dispatch(addNotPossible());
+  store.dispatch(
+    setEdit({ ...store.getState().actions.edit, possible: false })
+  );
   return groups;
 }
 
@@ -75,6 +81,7 @@ export function setLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(addNotPossible());
 
   return {
@@ -94,6 +101,7 @@ export function exerciseLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(
     setAdd({
       value: false,
@@ -125,6 +133,7 @@ export function exerciseSetsLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(
     setAdd({
       value: false,
@@ -157,7 +166,7 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(
     setAdd({
       value: false,
@@ -190,7 +199,7 @@ export function groupExercisesLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(
     setAdd({
       value: false,
@@ -214,6 +223,7 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
   const { weekday } = params;
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+  store.dispatch(setEdit({ ...store.getState().actions.edit, possible: true }));
   store.dispatch(
     setAdd({
       value: false,
@@ -235,16 +245,28 @@ export function weekdayLoader({ params }: LoaderFunctionArgs) {
 
 export function loginLoader() {
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(
+    setEdit({ ...store.getState().actions.edit, possible: false })
+  );
+  store.dispatch(addNotPossible());
   return {};
 }
 
 export function logoutLoader() {
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(
+    setEdit({ ...store.getState().actions.edit, possible: false })
+  );
+  store.dispatch(addNotPossible());
   return {};
 }
 
 export function registerLoader() {
   store.dispatch(setBreadcrumbs([]));
+  store.dispatch(
+    setEdit({ ...store.getState().actions.edit, possible: false })
+  );
+  store.dispatch(addNotPossible());
   return {};
 }
 
