@@ -29,7 +29,7 @@ import Exercise from './routes/Exercise';
 export function rootLoader() {
   const { app } = store.getState();
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(addNotPossible);
+  store.dispatch(addNotPossible());
   return app;
 }
 
@@ -42,7 +42,7 @@ export function preferencesLoader() {
       },
     ])
   );
-  store.dispatch(addNotPossible);
+  store.dispatch(addNotPossible());
   return {};
 }
 
@@ -50,7 +50,7 @@ export function weekdaysLoader() {
   const { weekdays } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(addNotPossible);
+  store.dispatch(addNotPossible());
   return weekdays;
 }
 
@@ -58,19 +58,7 @@ export function groupsLoader() {
   const { groups } = store.getState();
 
   store.dispatch(setBreadcrumbs([]));
-  store.dispatch(
-    setAdd({
-      value: false,
-      possible: true,
-      object: null,
-      result: null,
-      prototype: null,
-      type: 'GROUP',
-      pages: 2,
-      page: 0,
-      id: -1,
-    })
-  );
+  store.dispatch(addNotPossible());
   return groups;
 }
 
@@ -87,7 +75,7 @@ export function setLoader({ params }: LoaderFunctionArgs) {
   }
 
   store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
-  store.dispatch(addNotPossible);
+  store.dispatch(addNotPossible());
 
   return {
     id: set,

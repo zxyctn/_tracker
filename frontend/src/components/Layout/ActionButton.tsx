@@ -179,11 +179,9 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
                 <ArrowRight className='stroke-current stroke-1 p-0.5' />
               </button>
             )}
-            {!confirm.value && !add.value && (
+            {add.possible && (
               <button
-                className={`${
-                  add.possible ? '' : 'hidden'
-                } btn btn-secondary actionBtn`}
+                className={`btn btn-secondary actionBtn`}
                 onClick={addFn}
                 disabled={add.value}
               >
