@@ -15,7 +15,7 @@ const Weekdays = () => {
   const edit = useSelector((state: RootState) => state.actions.edit);
 
   const weekdays = useSelector((state: RootState) => state.weekdays);
-  const [initialWeekdays] = useState(weekdays);
+  const [initialWeekdays, setInitialWeekdays] = useState(weekdays);
 
   const textColors = getTextColors(Object.keys(weekdays).length);
   const today = (new Date().getDay() + 6) % 7;
@@ -42,6 +42,7 @@ const Weekdays = () => {
   useEffect(() => {
     if (edit.value && edit.result) {
       dispatch(setEdit({ value: false, result: null }));
+      setInitialWeekdays(weekdays);
     } else if (edit.value && edit.result === false) {
       dispatch(set({ value: initialWeekdays }));
       dispatch(setEdit({ value: false, result: null }));
