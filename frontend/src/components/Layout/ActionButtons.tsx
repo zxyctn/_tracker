@@ -143,7 +143,7 @@ const ActionButtons = ({ menuClickHandler, theme }: ActionButtonProps) => {
       dispatch(setConfirm({ ...confirm, value: false, result: null }));
       dispatch(setEdit({ ...edit, value: false, result: null }));
     } else {
-      dispatch(setEdit({ ...edit, value: true, result: null }));
+      dispatch(setEdit({ ...edit, value: false, result: null }));
     }
   };
 
@@ -178,7 +178,7 @@ const ActionButtons = ({ menuClickHandler, theme }: ActionButtonProps) => {
                 <ArrowRight className='stroke-current stroke-1 p-0.5' />
               </button>
             )}
-            {add.possible && (
+            {add.possible && !add.value && !confirm.value && (
               <button
                 className={`btn btn-secondary actionBtn`}
                 onClick={addFn}
