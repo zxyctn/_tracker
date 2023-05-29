@@ -61,13 +61,13 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const doneFn = () => {
     if (add.value && add.object != null) {
       switch (add.type) {
-        case 'SET': {
+        case 'SET':
           dispatch(addSet(add.object as SetType));
           dispatch(
             addExerciseSet({ exercise: add.id as number, set: add.object.id })
           );
-        }
-        case 'EXERCISE': {
+          break;
+        case 'EXERCISE':
           dispatch(addExercise(add.object as ExerciseType));
           dispatch(
             addExerciseGroup({
@@ -75,20 +75,20 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
               exercise: add.object.id as number,
             })
           );
-        }
+          break;
       }
       dispatch(setAdd({ ...add, object: null, value: false, result: true }));
       dispatch(setEdit({ value: false, result: null }));
     } else if (confirm.value) {
       switch (confirm.type) {
-        case 'SET': {
+        case 'SET':
           dispatch(removeSet(confirm.id));
           dispatch(
             removeExerciseSet({ exercise: confirm.parent, set: confirm.id })
           );
           break;
-        }
-        case 'EXERCISE': {
+
+        case 'EXERCISE':
           const exercise = exercises.find((e) => e.id === confirm.id)!;
           exercise.sets.forEach((set) => {
             dispatch(removeSet(set));
@@ -98,7 +98,6 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
             removeExerciseGroup({ group: confirm.parent, exercise: confirm.id })
           );
           break;
-        }
       }
 
       dispatch(setConfirm({ ...confirm, value: false, result: null }));

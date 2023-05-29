@@ -69,6 +69,7 @@ const ExerciseSets = () => {
         pages: 2,
         page: prototype ? 1 : 0,
         id: exercise.id,
+        type: 'SET',
       })
     );
 

@@ -64,7 +64,6 @@ export const actionsSlice = createSlice({
     },
     setConfirm: (state, action: PayloadAction<ConfirmType>) => {
       state.confirm = action.payload;
-      return state;
     },
   },
 });

@@ -68,7 +68,7 @@ export const exercisesSlice = createSlice({
         return exercise;
       });
       window.localStorage.setItem('exercises', JSON.stringify(state));
-      return state;
+      // return state;
     },
     addExercise: (state, action: PayloadAction<ExerciseType>) => {
       state.push(action.payload);

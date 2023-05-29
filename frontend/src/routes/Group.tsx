@@ -12,8 +12,6 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
 import { removeExerciseGroup, setGroup } from '../slices/groupsSlice';
-import { removeExercise } from '../slices/exercisesSlice';
-import { removeSet } from '../slices/setsSlice';
 
 const Group = () => {
   const { id } = useLoaderData() as RouteLoaderType;
@@ -56,6 +54,7 @@ const Group = () => {
         pages: 1,
         page: 0,
         id: group.id,
+        type: 'EXERCISE',
       })
     );
 
