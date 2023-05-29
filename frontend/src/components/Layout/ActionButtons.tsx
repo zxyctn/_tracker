@@ -42,7 +42,6 @@ import {
   removeGroupWeekday,
 } from '../../slices/weekdaysSlice';
 
-// TODO: Rename the file to ActionButtons.tsx
 const ActionButtons = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const [expanded, setExpanded] = useState(false);
 
