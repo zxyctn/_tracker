@@ -126,7 +126,7 @@ export const getBreadcrumbs = (params: Params) => {
   group &&
     breadcrumbs.push({
       name: groups.find((g) => g.id === parseInt(group))?.name || '',
-      path: `${prefix}/g/${group}`,
+      path: `${prefix}/g/${group}/e`,
     });
 
   exercise &&

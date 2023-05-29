@@ -16,6 +16,7 @@ import Weekdays from './routes/Weekdays';
 import Weekday from './routes/Weekday';
 import Groups from './routes/Groups';
 import Group from './routes/Group';
+import GroupExercises from './routes/GroupExercises';
 import ExerciseSets from './routes/ExerciseSets';
 import Set from './routes/Set';
 import store from './store';
@@ -172,6 +173,39 @@ export function groupLoader({ params }: LoaderFunctionArgs) {
   store.dispatch(
     setAdd({
       value: false,
+      possible: false,
+      object: null,
+      result: null,
+      prototype: null,
+      type: 'EXERCISE',
+      pages: 2,
+      page: 0,
+      id: group,
+    })
+  );
+
+  return {
+    id: group,
+  };
+}
+
+export function groupExercisesLoader({ params }: LoaderFunctionArgs) {
+  const { weekday } = params;
+  const { weekdays } = store.getState();
+  const group = parseInt(params.group as string);
+
+  if (weekday && !weekdays[weekday].groups.includes(group)) {
+    throw new Response('Unauthorized', {
+      status: 401,
+      statusText: 'Unauthorized',
+    });
+  }
+
+  store.dispatch(setBreadcrumbs(getBreadcrumbs(params)));
+
+  store.dispatch(
+    setAdd({
+      value: false,
       possible: true,
       object: null,
       result: null,
@@ -249,7 +283,11 @@ const router = createBrowserRouter(
           loader: groupLoader,
           element: <Group />,
         },
-
+        {
+          path: 'd/:weekday/g/:group/e',
+          loader: groupExercisesLoader,
+          element: <GroupExercises />,
+        },
         {
           path: 'd/:weekday/g/:group/e/:exercise',
           loader: exerciseLoader,
@@ -274,6 +312,11 @@ const router = createBrowserRouter(
           path: 'g/:group',
           loader: groupLoader,
           element: <Group />,
+        },
+        {
+          path: 'g/:group/e',
+          loader: groupExercisesLoader,
+          element: <GroupExercises />,
         },
         {
           path: 'g/:group/e/:exercise',
