@@ -25,11 +25,18 @@ import {
   removeExerciseSet,
 } from '../../slices/exercisesSlice';
 import type { RootState } from '../../store';
-import type { ActionButtonProps, ExerciseType, SetType } from '../../types';
+import type {
+  ActionButtonProps,
+  ExerciseType,
+  GroupType,
+  SetType,
+} from '../../types';
 import {
   addExerciseGroup,
+  addGroup,
   removeExerciseGroup,
 } from '../../slices/groupsSlice';
+import { addGroupWeekday } from '../../slices/weekdaysSlice';
 
 // TODO: Rename the file to ActionButtons.tsx
 const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
@@ -74,6 +81,12 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
               group: add.id as number,
               exercise: add.object.id as number,
             })
+          );
+          break;
+        case 'GROUP':
+          dispatch(addGroup({ group: add.object as GroupType }));
+          dispatch(
+            addGroupWeekday({ day: add.id as string, group: add.object.id })
           );
           break;
       }
