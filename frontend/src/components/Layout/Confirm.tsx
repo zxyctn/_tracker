@@ -6,6 +6,7 @@ import type { RootState } from '../../store';
 const Confirm = () => {
   const config = useSelector((state: RootState) => state.actions.confirm);
   const exercises = useSelector((state: RootState) => state.exercises);
+  const groups = useSelector((state: RootState) => state.groups);
   const { id, type, value } = config;
   let msg = '';
 
@@ -15,6 +16,9 @@ const Confirm = () => {
       break;
     case 'EXERCISE':
       msg = exercises.find((e) => e.id === id)!.name;
+      break;
+    case 'GROUP':
+      msg = groups.find((g) => g.id === id)!.name;
       break;
     default:
       break;

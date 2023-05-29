@@ -35,8 +35,12 @@ import {
   addExerciseGroup,
   addGroup,
   removeExerciseGroup,
+  removeGroup,
 } from '../../slices/groupsSlice';
-import { addGroupWeekday } from '../../slices/weekdaysSlice';
+import {
+  addGroupWeekday,
+  removeGroupWeekday,
+} from '../../slices/weekdaysSlice';
 
 // TODO: Rename the file to ActionButtons.tsx
 const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
@@ -97,7 +101,10 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
         case 'SET':
           dispatch(removeSet(confirm.id));
           dispatch(
-            removeExerciseSet({ exercise: confirm.parent, set: confirm.id })
+            removeExerciseSet({
+              exercise: confirm.parent as number,
+              set: confirm.id,
+            })
           );
           break;
 
@@ -108,7 +115,28 @@ const ActionButton = ({ menuClickHandler, theme }: ActionButtonProps) => {
           });
           dispatch(removeExercise({ id: confirm.id }));
           dispatch(
-            removeExerciseGroup({ group: confirm.parent, exercise: confirm.id })
+            removeExerciseGroup({
+              group: confirm.parent as number,
+              exercise: confirm.id,
+            })
+          );
+          break;
+
+        case 'GROUP':
+          const group = groups.find((g) => g.id === confirm.id)!;
+          group.exercises.forEach((exercise) => {
+            const ex = exercises.find((e) => e.id === exercise)!;
+            ex.sets.forEach((set) => {
+              dispatch(removeSet(set));
+            });
+            dispatch(removeExercise({ id: ex.id }));
+          });
+          dispatch(removeGroup({ id: confirm.id }));
+          dispatch(
+            removeGroupWeekday({
+              day: confirm.parent as string,
+              id: confirm.id,
+            })
           );
           break;
       }
