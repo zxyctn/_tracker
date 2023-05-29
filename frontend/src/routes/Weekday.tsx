@@ -20,14 +20,21 @@ const Weekday = () => {
   const confirm = useSelector((state: RootState) => state.actions.confirm);
   const groups = useSelector((state: RootState) => state.groups);
   const weekday = useSelector((state: RootState) => state.weekdays[id]);
-  const weekdayGroups = useSelector((state: RootState) =>
-    weekday.groups.map((g) => groups.find((group) => group.id === g)!)
-  );
+
   const textColors = getTextColors(groups.length);
 
   const [initialWeekday, setInitalWeekday] = useState(weekday);
+  const [weekdayGroups, setWeekdayGroups] = useState(
+    weekday.groups.map((g) => groups.find((group) => group.id === g)!)
+  );
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setWeekdayGroups(
+      weekday.groups.map((g) => groups.find((group) => group.id === g)!)
+    );
+  }, [weekday]);
 
   useEffect(() => {
     if (edit.value && edit.result) {
