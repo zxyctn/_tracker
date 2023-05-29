@@ -48,9 +48,14 @@ export const weekdaysSlice = createSlice({
       ].groups.filter((group) => group !== action.payload.id);
       window.localStorage.setItem('weekdays', JSON.stringify(state));
     },
+    set: (state, action: PayloadAction<{ value: WeekdaysType }>) => {
+      state = action.payload.value;
+      window.localStorage.setItem('weekdays', JSON.stringify(state));
+      return state;
+    },
   },
 });
 
-export const { activate, deactivate, add, remove } = weekdaysSlice.actions;
+export const { activate, deactivate, add, remove, set } = weekdaysSlice.actions;
 
 export default weekdaysSlice.reducer;
