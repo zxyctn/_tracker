@@ -12,7 +12,7 @@ import Add from './components/Add/Add';
 import Logo from './components/Layout/Logo';
 import Menu from './components/Layout/Menu';
 import Confirm from './components/Layout/Confirm';
-import ActionButton from './components/Layout/ActionButton';
+import ActionButtons from './components/Layout/ActionButtons';
 import Breadcrumbs from './components/Layout/Breadcrumbs';
 import { onDragEndExercise, onDragEndGroup, onDragEndSet } from './shared';
 import type { RootState } from './store';
@@ -107,7 +107,7 @@ const App = () => {
         </div>
         {isMenuOpen && <Menu closeMenu={() => setIsMenuOpen(false)} />}
         <div className='row-span-1 place-self-end z-30'>
-          <ActionButton menuClickHandler={menuToggler} theme={isMenuOpen} />
+          <ActionButtons menuClickHandler={menuToggler} theme={isMenuOpen} />
         </div>
       </div>
     </>
