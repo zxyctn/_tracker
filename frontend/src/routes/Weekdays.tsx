@@ -1,15 +1,14 @@
-import { Link, useLoaderData } from 'react-router-dom';
-
-import { getTextColors } from '../shared';
-import type { WeekdaysType } from '../types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 import { useEffect, useState } from 'react';
-import Multiselect from '../components/Input/Multiselect';
-import { set } from '../slices/weekdaysSlice';
-import { useDispatch } from 'react-redux';
-import { setEdit } from '../slices/actionsSlice';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Input from '../components/Input/Input';
+import Multiselect from '../components/Input/Multiselect';
+import { getTextColors } from '../shared';
+import { set } from '../slices/weekdaysSlice';
+import { setEdit } from '../slices/actionsSlice';
+import type { RootState } from '../store';
+import type { WeekdaysType } from '../types';
 
 const Weekdays = () => {
   const edit = useSelector((state: RootState) => state.actions.edit);

@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Input from '../components/Input/Input';
 import RadioGroup from '../components/Input/RadioGroup';
-import { RootState } from '../store';
-import { useDispatch } from 'react-redux';
 import { setFilterBy, setTheme } from '../slices/appSlice';
+import type { RootState } from '../store';
 
 const ThemeColors = ({ theme }: { theme: string }) => {
   return (

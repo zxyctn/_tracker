@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { removeSet } from './setsSlice';
 import type { ExerciseType } from '../types';
 
 const localStorageData = window?.localStorage?.getItem('exercises');

@@ -19,12 +19,12 @@ import Group from './routes/Group';
 import GroupExercises from './routes/GroupExercises';
 import ExerciseSets from './routes/ExerciseSets';
 import Set from './routes/Set';
+import Preferences from './routes/Preferences';
+import Exercise from './routes/Exercise';
 import store from './store';
 import { getBreadcrumbs } from './shared';
 import { setBreadcrumbs } from './slices/appSlice';
 import { setAdd, addNotPossible, setEdit } from './slices/actionsSlice';
-import Preferences from './routes/Preferences';
-import Exercise from './routes/Exercise';
 
 export function rootLoader() {
   const { app } = store.getState();

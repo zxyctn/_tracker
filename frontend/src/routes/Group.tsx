@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import { RouteLoaderType } from '../types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { useDispatch } from 'react-redux';
-import { setEdit } from '../slices/actionsSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
 import TextField from '../components/Input/TextField';
 import Input from '../components/Input/Input';
 import { setGroup } from '../slices/groupsSlice';
+import { setEdit } from '../slices/actionsSlice';
+import type { RootState } from '../store';
+import type { RouteLoaderType } from '../types';
 
 const Group = () => {
   const { id } = useLoaderData() as RouteLoaderType;

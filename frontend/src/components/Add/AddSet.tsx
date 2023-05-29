@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import Input from '../Input/Input';
 import Fields from '../Set/Fields';
+import Input from '../Input/Input';
 import RadioGroup from '../Input/RadioGroup';
 import Multiselect from '../Input/Multiselect';
 import { setAddObject } from '../../slices/actionsSlice';

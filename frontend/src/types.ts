@@ -172,7 +172,6 @@ export type AddType = {
 export type ConfirmType = {
   value: boolean;
   result: null | boolean;
-  // msg: string;
   type: string;
   id: number;
   parent: number | string;

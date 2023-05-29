@@ -1,11 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { GroupType } from '../../types';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Input from '../Input/Input';
 import TextField from '../Input/TextField';
-import { useDispatch } from 'react-redux';
 import { setAddObject } from '../../slices/actionsSlice';
+import type { RootState } from '../../store';
+import type { GroupType } from '../../types';
 
 const AddGroup = () => {
   const add = useSelector((state: RootState) => state.actions.add);

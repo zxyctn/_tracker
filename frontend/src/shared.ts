@@ -4,9 +4,9 @@ import { DropResult } from '@hello-pangea/dnd';
 import store from './store';
 import { setExercise } from './slices/exercisesSlice';
 import { setConfirm } from './slices/actionsSlice';
-import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
 import { setGroup } from './slices/groupsSlice';
 import { setWeekday } from './slices/weekdaysSlice';
+import type { BreadcumbType, SetComponentProps, UnitsType } from './types';
 
 const textColors = [
   'text-light-50 dark:text-dark-50',

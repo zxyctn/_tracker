@@ -1,17 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLoaderData } from 'react-router-dom';
-
-import { getTextColors } from '../shared';
-import type { RootState } from '../store';
-import type { RouteLoaderType } from '../types';
-import Button from '../components/Layout/Button';
 import { Droppable } from '@hello-pangea/dnd';
+
 import DraggableComponent from '../components/DND/DraggableComponent';
 import DeleteZone from '../components/DND/DeleteZone';
-import { useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import Button from '../components/Layout/Button';
+import { getTextColors } from '../shared';
 import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
-import { removeExerciseGroup, setGroup } from '../slices/groupsSlice';
+import { setGroup } from '../slices/groupsSlice';
+import type { RootState } from '../store';
+import type { RouteLoaderType } from '../types';
 
 const GroupExercises = () => {
   const { id } = useLoaderData() as RouteLoaderType;

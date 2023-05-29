@@ -1,11 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { ExerciseType } from '../../types';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Input from '../Input/Input';
 import TextField from '../Input/TextField';
-import { useDispatch } from 'react-redux';
 import { setAddObject } from '../../slices/actionsSlice';
+import type { RootState } from '../../store';
+import type { ExerciseType } from '../../types';
 
 const AddExercise = () => {
   const add = useSelector((state: RootState) => state.actions.add);

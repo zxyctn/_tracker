@@ -1,10 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-  Outlet,
-  useLoaderData,
-  useNavigate,
-  useLocation,
-} from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useSelector } from 'react-redux';
 
@@ -34,7 +29,7 @@ const App = () => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    const { type, source, destination, draggableId } = result;
+    const { type, source, destination } = result;
 
     if (!destination) {
       return;

@@ -1,17 +1,16 @@
-import { Link, useLoaderData } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
-import { getTextColors } from '../shared';
-import type { RootState } from '../store';
-import type { RouteLoaderType } from '../types';
-import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
-import { setWeekday } from '../slices/weekdaysSlice';
+import { Link, useLoaderData } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Droppable } from '@hello-pangea/dnd';
+
 import DraggableComponent from '../components/DND/DraggableComponent';
 import Button from '../components/Layout/Button';
 import DeleteZone from '../components/DND/DeleteZone';
+import { getTextColors } from '../shared';
+import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
+import { setWeekday } from '../slices/weekdaysSlice';
+import type { RootState } from '../store';
+import type { RouteLoaderType } from '../types';
 
 const Weekday = () => {
   const { id } = useLoaderData() as RouteLoaderType;

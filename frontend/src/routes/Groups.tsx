@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { getTextColors } from '../shared';
-import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getTextColors } from '../shared';
 import { setEdit } from '../slices/actionsSlice';
+import type { RootState } from '../store';
 
 const Groups = () => {
   const edit = useSelector((state: RootState) => state.actions.edit);

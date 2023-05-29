@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { GroupType } from '../types';
-import { removeExercise } from './exercisesSlice';
 
 const localStorageData = window?.localStorage?.getItem('groups');
 const initialState = localStorageData
@@ -31,10 +30,6 @@ export const groupsSlice = createSlice({
     removeGroup: (state, action: PayloadAction<{ id: number }>) => {
       const group = state.find((group) => group.id === action.payload.id);
       if (!group) return;
-
-      group.exercises.forEach((exercise) => {
-        removeExercise({ id: exercise });
-      });
 
       state = state.filter((group) => group.id !== action.payload.id);
       window.localStorage.setItem('groups', JSON.stringify(state));

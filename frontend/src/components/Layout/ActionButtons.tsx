@@ -24,13 +24,6 @@ import {
   removeExercise,
   removeExerciseSet,
 } from '../../slices/exercisesSlice';
-import type { RootState } from '../../store';
-import type {
-  ActionButtonProps,
-  ExerciseType,
-  GroupType,
-  SetType,
-} from '../../types';
 import {
   addExerciseGroup,
   addGroup,
@@ -41,6 +34,13 @@ import {
   addGroupWeekday,
   removeGroupWeekday,
 } from '../../slices/weekdaysSlice';
+import type { RootState } from '../../store';
+import type {
+  ActionButtonProps,
+  ExerciseType,
+  GroupType,
+  SetType,
+} from '../../types';
 
 const ActionButtons = ({ menuClickHandler, theme }: ActionButtonProps) => {
   const [expanded, setExpanded] = useState(false);

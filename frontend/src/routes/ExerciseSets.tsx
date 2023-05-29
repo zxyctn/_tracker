@@ -9,10 +9,8 @@ import DeleteZone from '../components/DND/DeleteZone';
 import { getTextColors, getBgColors } from '../shared';
 import { setExercise } from '../slices/exercisesSlice';
 import { setAdd, setConfirm, setEdit } from '../slices/actionsSlice';
-import { removeExerciseSet } from '../slices/exercisesSlice';
 import type { RootState } from '../store';
 import type { RouteLoaderType, SetType } from '../types';
-import { removeSet } from '../slices/setsSlice';
 
 const ExerciseSets = () => {
   const { id } = useLoaderData() as RouteLoaderType;
