@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import type { WeekdaysType } from '../types';
+import type { WeekdaysType, WeekdayType } from '../types';
 
 const weekdays = [
   'monday',
@@ -42,6 +42,13 @@ export const weekdaysSlice = createSlice({
       state[action.payload.day].groups.push(action.payload.group);
       window.localStorage.setItem('weekdays', JSON.stringify(state));
     },
+    addGroupWeekday: (
+      state,
+      action: PayloadAction<{ day: string; group: number }>
+    ) => {
+      state[action.payload.day].groups.push(action.payload.group);
+      window.localStorage.setItem('weekdays', JSON.stringify(state));
+    },
     remove: (state, action: PayloadAction<{ day: string; id: number }>) => {
       state[action.payload.day].groups = state[
         action.payload.day
@@ -53,9 +60,22 @@ export const weekdaysSlice = createSlice({
       window.localStorage.setItem('weekdays', JSON.stringify(state));
       return state;
     },
+    setWeekday: (state, action: PayloadAction<WeekdayType>) => {
+      state[action.payload.day] = action.payload;
+      window.localStorage.setItem('weekdays', JSON.stringify(state));
+      return state;
+    },
   },
 });
 
-export const { activate, deactivate, add, remove, set } = weekdaysSlice.actions;
+export const {
+  activate,
+  deactivate,
+  add,
+  addGroupWeekday,
+  remove,
+  set,
+  setWeekday,
+} = weekdaysSlice.actions;
 
 export default weekdaysSlice.reducer;
